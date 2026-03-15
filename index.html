@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T-Pulse Archery | HeliTwist Original</title>
+  <meta
+    name="description"
+    content="HeliTwist Original par T-Pulse Archery. Amortisseur breveté pour stabilisateurs d’arc conçu pour réduire les vibrations, le choc du tir, le bruit et la sensibilité au vent."
+  />
+  <style>
+    :root {
+      --bg: #0b0d0c;
+      --bg-soft: #121614;
+      --card: #171c19;
+      --text: #edf4ef;
+      --muted: #a5b1aa;
+      --line: rgba(255, 255, 255, 0.08);
+      --accent: #79e26f;
+      --accent-strong: #93f785;
+      --max-width: 1120px;
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(121, 226, 111, 0.08), transparent 30%),
+        radial-gradient(circle at top left, rgba(121, 226, 111, 0.06), transparent 20%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    .container {
+      width: min(100% - 2rem, var(--max-width));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(11, 13, 12, 0.82);
+      border-bottom: 1px solid var(--line);
+    }
+    .hero-banner {
+      grid-column: 1 / -1;
+      background: #0b0d0c;
+      padding: 30px 0 20px;
+      margin: 0;
+    }
+
+    .hero-banner img {
+      display: block;
+      margin: auto;
+      max-width: 300px;
+      width: 90%;
+    }
+    .nav {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.08rem;
+      min-width: 0;
+    }
+
+    .brand-name {
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .brand-tag {
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 1.1rem;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 0 0 auto;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.2rem;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .lang-btn {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      min-width: 50px;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #081008;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0.85rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #081008;
+      box-shadow: 0 8px 24px rgba(121, 226, 111, 0.22);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-strong);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(121, 226, 111, 0.5);
+      color: var(--accent);
+    }
+
+    .hero {
+      padding: 0 0 3rem;
+      background: #0b0d0c;
+      margin-top: 0;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid rgba(121, 226, 111, 0.2);
+      border-radius: 999px;
+      background: rgba(121, 226, 111, 0.08);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.1;
+      margin: 0 0 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 7vw, 4.6rem);
+      letter-spacing: -0.03em;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 60ch;
+      margin: 0 0 1.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .pill {
+      padding: 0.55rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+    }
+
+    .hero-card,
+    .gallery-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 4px);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .carousel {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(121,226,111,0.18), transparent 55%),
+        linear-gradient(180deg, #1a221d, #0d110f);
+      padding: 1rem;
+    }
+
+    .carousel-track {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 14px;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem;
+      pointer-events: none;
+    }
+
+    .carousel-btn {
+      pointer-events: auto;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.45);
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(121,226,111,0.22);
+      border-color: rgba(121,226,111,0.4);
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 1rem 0.25rem;
+      flex-wrap: wrap;
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+    }
+
+    .carousel-dot.active {
+      background: var(--accent);
+    }
+
+    .carousel-caption {
+      padding: 1rem 1.25rem 1.2rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    section {
+      padding: 2.2rem 0;
+    }
+
+    .section-head {
+      margin-bottom: 1.5rem;
+      max-width: 62ch;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .cards {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(121, 226, 111, 0.12);
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .card p,
+    .split-text p,
+    .specs-list li,
+    .contact-card p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .split {
+      display: grid;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .split-visual {
+      min-height: 280px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at top left, rgba(121, 226, 111, 0.12), transparent 35%),
+        linear-gradient(180deg, #131715, #0d110f);
+      display: grid;
+      place-items: center;
+      padding: 1.4rem;
+      box-shadow: var(--shadow);
+    }
+
+    .diagram {
+      width: 100%;
+      max-width: 480px;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .diagram-box {
+      border: 1px solid rgba(121, 226, 111, 0.18);
+      background: rgba(255,255,255,0.02);
+      border-radius: 18px;
+      padding: 1rem;
+    }
+
+    .diagram-box strong {
+      display: block;
+      margin-bottom: 0.7rem;
+    }
+
+    .spiral-line {
+      height: 14px;
+      border-radius: 999px;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(121,226,111,0.95) 0 16px,
+          rgba(121,226,111,0.15) 16px 28px
+        );
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .spiral-line.compressed {
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(121,226,111,0.95) 0 11px,
+          rgba(121,226,111,0.15) 11px 18px
+        );
+    }
+
+    .specs-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .specs-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .specs-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .specs-list li span:first-child {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .coming-soon {
+      text-align: center;
+      padding: 1.4rem;
+      border-radius: calc(var(--radius) + 6px);
+      background:
+        linear-gradient(180deg, rgba(121,226,111,0.1), rgba(121,226,111,0.04)),
+        var(--card);
+      border: 1px solid rgba(121, 226, 111, 0.2);
+      box-shadow: var(--shadow);
+    }
+
+    .coming-soon p {
+      margin: 0 auto 1rem;
+      color: var(--muted);
+      max-width: 52ch;
+    }
+
+    .contact-card {
+      text-align: center;
+    }
+
+    .contact-email {
+      display: inline-block;
+      margin-top: 0.7rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      word-break: break-word;
+    }
+
+    .site-footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .footer-inner {
+      border-top: 1px solid var(--line);
+      padding-top: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    /* Modal contact */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+    }
+
+    .modal.open {
+      display: block;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-panel {
+      position: relative;
+      width: min(100% - 1.25rem, 620px);
+      margin: 6vh auto;
+      background: #101412;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .modal-header h3 {
+      margin: 0;
+    }
+
+    .modal-close {
+      border: 0;
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .modal-close:hover {
+      background: rgba(121,226,111,0.12);
+      color: var(--accent);
+    }
+
+    .contact-form {
+      padding: 1.2rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .form-field {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .form-field label {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      outline: none;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: rgba(121, 226, 111, 0.5);
+      box-shadow: 0 0 0 3px rgba(121, 226, 111, 0.1);
+    }
+
+    .form-field textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .form-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    @media (min-width: 760px) {
+      .nav-links {
+        display: flex;
+      }
+
+      .hero {
+        padding: 5.5rem 0 4rem;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 2.5rem;
+      }
+
+      .cards {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .split {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .specs-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .form-row.two {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 759px) {
+      .brand-tag,
+      .nav-links,
+      .header-contact-btn {
+        display: none;
+      }
+
+      .brand-name {
+        font-size: 0.9rem;
+      }
+
+      .brand-logo {
+        width: 72px;
+        height: 72px;
+      }
+
+      .nav {
+        min-height: 72px;
+      }
+
+      .header-actions {
+        gap: 0.5rem;
+      }
+
+      .lang-btn {
+        min-width: 46px;
+        padding: 0.42rem 0.65rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <img class="brand-logo" src="images/logo-t-pulse.png" alt="T-Pulse Archery logo">
+        <span class="brand-text">
+          <span class="brand-name">T-Pulse Archery</span>
+          <span class="brand-tag" data-fr="Innovation pensée par un archer" data-en="Innovation designed by an archer">Innovation pensée par un archer</span>
+        </span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#benefits" data-fr="Bénéfices" data-en="Benefits">Bénéfices</a>
+        <a href="#gallery" data-fr="Galerie" data-en="Gallery">Galerie</a>
+        <a href="#how-it-works" data-fr="Fonctionnement" data-en="How it works">Fonctionnement</a>
+        <a href="#story" data-fr="Histoire" data-en="Story">Histoire</a>
+        <a href="#specs" data-fr="Caractéristiques" data-en="Specs">Caractéristiques</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-switch">
+          <button class="lang-btn active" id="btn-fr" type="button">FR</button>
+          <button class="lang-btn" id="btn-en" type="button">EN</button>
+        </div>
+        <button class="btn btn-primary header-contact-btn" type="button" data-open-contact data-fr="Contact" data-en="Contact">Contact</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <div class="hero-banner">
+          <img src="images/t-pulse-banner.png" alt="T-Pulse Archery">
+        </div>
+
+        <div>
+          <div class="eyebrow" data-fr="Technologie brevetée" data-en="Patented technology">Technologie brevetée</div>
+
+          <h1 data-fr="HeliTwist Original" data-en="HeliTwist Original">HeliTwist Original</h1>
+
+          <p class="lead"
+            data-fr="Un amortisseur breveté pour stabilisateurs d’arc conçu pour réduire les vibrations, le choc du tir, le bruit et la sensibilité au vent, tout en améliorant le confort et la stabilité au tir."
+            data-en="A patented vibration damper for archery stabilizers designed to reduce vibration, shock at release, noise and wind sensitivity while improving shooting comfort and stability."
+          >
+            Un amortisseur breveté pour stabilisateurs d’arc conçu pour réduire les vibrations, le choc du tir, le bruit et la sensibilité au vent, tout en améliorant le confort et la stabilité au tir.
+          </p>
+
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button" data-open-contact data-fr="Nous contacter" data-en="Get in touch">Nous contacter</button>
+            <a class="btn btn-secondary" href="#gallery" data-fr="Voir les photos" data-en="View product photos">Voir les photos</a>
+          </div>
+
+          <div class="hero-meta">
+            <span class="pill">27 g</span>
+            <span class="pill">5/16 · 1/4 · M8</span>
+            <span class="pill" data-fr="Sortie prochaine" data-en="Launching soon">Sortie prochaine</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="carousel" id="heroCarousel">
+            <div class="carousel-track">
+              <div class="carousel-slide active">
+                <img src="images/helitwist-1.png" alt="Photo produit HeliTwist Original">
+              </div>
+              <div class="carousel-slide">
+                <img src="images/helitwist-2.png" alt="Packaging HeliTwist Original">
+              </div>
+              <div class="carousel-slide">
+                <img src="images/helitwist-3.png" alt="HeliTwist monté sur stabilisateur">
+              </div>
+              <div class="carousel-slide">
+                <img src="images/helitwist-4.png" alt="Vue technique ou alternative HeliTwist">
+              </div>
+              <div class="carousel-slide">
+                <img class="helitwist-animation" src="images/helitwist-compression.gif" alt="Compression HeliTwist">
+              </div>
+
+              <div class="carousel-controls">
+                <button class="carousel-btn prev" aria-label="Photo précédente">‹</button>
+                <button class="carousel-btn next" aria-label="Photo suivante">›</button>
+              </div>
+            </div>
+
+            <div class="carousel-dots">
+              <button class="carousel-dot active" aria-label="Photo 1"></button>
+              <button class="carousel-dot" aria-label="Photo 2"></button>
+              <button class="carousel-dot" aria-label="Photo 3"></button>
+              <button class="carousel-dot" aria-label="Photo 4"></button>
+            </div>
+          </div>
+
+          <div class="carousel-caption">
+            <span data-fr="Amortissement avancé pour stabilisateurs" data-en="Advanced vibration damping for stabilizers">Amortissement avancé pour stabilisateurs</span>
+            <span data-fr="Archerie / Innovation" data-en="Archery / Innovation">Archerie / Innovation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-fr="Pensé pour le ressenti réel au tir" data-en="Built for real shot feel">Pensé pour le ressenti réel au tir</h2>
+          <p
+            data-fr="HeliTwist a été développé pour améliorer l’expérience là où l’archer le ressent le plus : vibrations, choc de décoche, retour sonore et stabilité au vent."
+            data-en="HeliTwist was developed to improve the shooting experience where archers feel it most: vibration, release shock, acoustic feedback and stability in wind."
+          >
+            HeliTwist a été développé pour améliorer l’expérience là où l’archer le ressent le plus : vibrations, choc de décoche, retour sonore et stabilité au vent.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="benefit-icon">◎</div>
+            <h3 data-fr="Vibrations réduites" data-en="Reduced vibration">Vibrations réduites</h3>
+            <p
+              data-fr="Aide à absorber les vibrations résiduelles dans l’axe du tir pour une sensation plus propre et mieux contrôlée après la décoche."
+              data-en="Helps absorb residual vibration along the shooting axis for a cleaner and more controlled feeling after release."
+            >
+              Aide à absorber les vibrations résiduelles dans l’axe du tir pour une sensation plus propre et mieux contrôlée après la décoche.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="benefit-icon">↯</div>
+            <h3 data-fr="Moins de choc au tir" data-en="Less shock at release">Moins de choc au tir</h3>
+            <p
+              data-fr="Conçu pour adoucir la sensation d’impact pendant le tir et améliorer le confort sur les longues séances."
+              data-en="Designed to soften the sensation of impact during the shot and improve comfort over long training sessions."
+            >
+              Conçu pour adoucir la sensation d’impact pendant le tir et améliorer le confort sur les longues séances.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="benefit-icon">➤</div>
+            <h3 data-fr="Stabilité améliorée" data-en="Improved stability">Stabilité améliorée</h3>
+            <p
+              data-fr="La géométrie spiralée contribue aussi à la stabilité et limite les perturbations liées au vent et au mouvement post-tir."
+              data-en="The spiral geometry also helps maintain balance and reduce unwanted disturbance from wind and post-shot movement."
+            >
+              La géométrie spiralée contribue aussi à la stabilité et limite les perturbations liées au vent et au mouvement post-tir.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-fr="Galerie produit" data-en="Product gallery">Galerie produit</h2>
+          <p
+            data-fr="Montre le produit seul, le packaging, le montage sur l’arc et une vue technique ou en situation."
+            data-en="Show the product alone, the packaging, the mounted setup and any technical or lifestyle view."
+          >
+            Montre le produit seul, le packaging, le montage sur l’arc et une vue technique ou en situation.
+          </p>
+        </div>
+
+        <div class="gallery-card">
+          <div class="carousel" id="galleryCarousel">
+            <div class="carousel-track">
+              <div class="carousel-slide active">
+                <img src="images/helitwist-1.png" alt="Vue rapprochée HeliTwist">
+              </div>
+              <div class="carousel-slide">
+                <img src="images/helitwist-2.png" alt="Vue packaging HeliTwist">
+              </div>
+              <div class="carousel-slide">
+                <img src="images/helitwist-3.png" alt="HeliTwist monté sur stabilisateur">
+              </div>
+              <div class="carousel-slide">
+                <img src="images/helitwist-4.png" alt="Vue technique alternative HeliTwist">
+              </div>
+              <div class="carousel-slide">
+                <img class="helitwist-animation" src="images/helitwist-compression.gif" alt="Compression HeliTwist">
+              </div>
+
+              <div class="carousel-controls">
+                <button class="carousel-btn prev" aria-label="Photo précédente">‹</button>
+                <button class="carousel-btn next" aria-label="Photo suivante">›</button>
+              </div>
+            </div>
+
+            <div class="carousel-dots">
+              <button class="carousel-dot active" aria-label="Photo 1"></button>
+              <button class="carousel-dot" aria-label="Photo 2"></button>
+              <button class="carousel-dot" aria-label="Photo 3"></button>
+              <button class="carousel-dot" aria-label="Photo 4"></button>
+            </div>
+          </div>
+
+          <div class="carousel-caption">
+            <span data-fr="Utilise des images nettes et lumineuses" data-en="Use high-resolution images for best result">Utilise des images nettes et lumineuses</span>
+            <span data-fr="Carrousel adapté mobile" data-en="Mobile-friendly carousel">Carrousel adapté mobile</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how-it-works">
+      <div class="container split">
+        <div class="split-text">
+          <div class="section-head">
+            <h2 data-fr="Comment ça fonctionne" data-en="How it works">Comment ça fonctionne</h2>
+            <p
+              data-fr="HeliTwist utilise une structure spiralée conçue pour se comprimer pendant le tir. Cette géométrie flexible aide à absorber l’énergie tout en conservant un format léger."
+              data-en="HeliTwist uses a spiral damping structure designed to compress during the shot. This flexible geometry helps absorb energy while preserving a lightweight format."
+            >
+              HeliTwist utilise une structure spiralée conçue pour se comprimer pendant le tir. Cette géométrie flexible aide à absorber l’énergie tout en conservant un format léger.
+            </p>
+          </div>
+
+          <div class="cards" style="grid-template-columns: 1fr;">
+            <article class="card">
+              <h3 data-fr="Principe de compression spiralée" data-en="Spiral compression concept">Principe de compression spiralée</h3>
+              <p
+                data-fr="Lors de la décoche, la structure se comprime dans l’axe du tir, réduisant le transfert de vibration et adoucissant la réaction perçue de l’arc."
+                data-en="During release, the structure compresses in the axis of the shot, reducing vibration transfer and softening the perceived reaction of the bow."
+              >
+                Lors de la décoche, la structure se comprime dans l’axe du tir, réduisant le transfert de vibration et adoucissant la réaction perçue de l’arc.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3 data-fr="Bruit et comportement au vent" data-en="Noise and wind management">Bruit et comportement au vent</h3>
+              <p
+                data-fr="Le design contribue à un tir plus discret tout en offrant un profil pensé pour rester efficace en conditions extérieures variables."
+                data-en="The design is made to contribute to quieter shooting behaviour while also offering a profile intended to stay effective in varying outdoor conditions."
+              >
+                Le design contribue à un tir plus discret tout en offrant un profil pensé pour rester efficace en conditions extérieures variables.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div class="split-visual">
+          <div class="diagram">
+            <div class="diagram-box">
+              <strong data-fr="Vue A — Position au repos" data-en="View A — Rest position">Vue A — Position au repos</strong>
+              <div class="spiral-line"></div>
+            </div>
+            <div class="diagram-box">
+              <strong data-fr="Vue B — Compression pendant le tir" data-en="View B — Compression during shot">Vue B — Compression pendant le tir</strong>
+              <div class="spiral-line compressed"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story">
+      <div class="container split">
+        <div class="split-visual">
+          <div class="diagram" style="max-width: 520px;">
+            <div class="diagram-box">
+              <strong data-fr="Pensé par un archer" data-en="Designed by an archer">Pensé par un archer</strong>
+              <p
+                style="color: var(--muted); margin: 0;"
+                data-fr="Développé à partir de l’expérience du terrain et affiné par un usage prolongé de prototypes pour créer une innovation utile en conditions réelles."
+                data-en="Developed from field experience and refined through extended prototype use to create a practical innovation for real shooting conditions."
+              >
+                Développé à partir de l’expérience du terrain et affiné par un usage prolongé de prototypes pour créer une innovation utile en conditions réelles.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="split-text">
+          <div class="section-head">
+            <h2 data-fr="Pensé par un archer" data-en="Designed by an archer">Pensé par un archer</h2>
+            <p
+              data-fr="HeliTwist est né de l’observation au pas de tir, des essais et des ajustements. Après près de deux années d’utilisation de prototypes, le concept a évolué en une solution dédiée aux archers recherchant un départ de flèche plus propre."
+              data-en="HeliTwist was born from on-range observation, testing and refinement. After nearly two years of prototype use, the concept evolved into a dedicated damping solution made for archers seeking a cleaner shot response."
+            >
+              HeliTwist est né de l’observation au pas de tir, des essais et des ajustements. Après près de deux années d’utilisation de prototypes, le concept a évolué en une solution dédiée aux archers recherchant un départ de flèche plus propre.
+            </p>
+          </div>
+
+          <div class="cards" style="grid-template-columns: 1fr;">
+            <article class="card">
+              <h3 data-fr="Approche testée sur le terrain" data-en="Field-tested approach">Approche testée sur le terrain</h3>
+              <p
+                data-fr="Le produit n’a pas été imaginé seulement comme un concept. Il a été façonné par des séances de tir répétées, des réglages pratiques et des retours concrets."
+                data-en="The product was not imagined only as a concept. It was shaped through repeated shooting sessions, practical adjustments and real-world feedback."
+              >
+                Le produit n’a pas été imaginé seulement comme un concept. Il a été façonné par des séances de tir répétées, des réglages pratiques et des retours concrets.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3 data-fr="Vision de la marque" data-en="Brand vision">Vision de la marque</h3>
+              <p
+                data-fr="T-Pulse Archery se concentre sur une innovation utile : des équipements conçus pour améliorer le confort, le contrôle et l’expérience d’entraînement sans complexité inutile."
+                data-en="T-Pulse Archery focuses on useful innovation: equipment designed to improve comfort, control and training experience without unnecessary complexity."
+              >
+                T-Pulse Archery se concentre sur une innovation utile : des équipements conçus pour améliorer le confort, le contrôle et l’expérience d’entraînement sans complexité inutile.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="specs">
+      <div class="container">
+        <div class="section-head">
+          <h2 data-fr="Caractéristiques produit" data-en="Product specifications">Caractéristiques produit</h2>
+          <p data-fr="Informations techniques pour archers, archeries et partenaires." data-en="Technical information for archers, shops and partners.">
+            Informations techniques pour archers, archeries et partenaires.
+          </p>
+        </div>
+
+        <div class="specs-grid">
+          <div class="card">
+            <ul class="specs-list">
+              <li><span data-fr="Produit" data-en="Product">Produit</span><span>HeliTwist Original</span></li>
+              <li><span data-fr="Poids" data-en="Weight">Poids</span><span>27 g</span></li>
+              <li><span data-fr="Filetages" data-en="Threads">Filetages</span><span>5/16, 1/4, M8</span></li>
+              <li><span data-fr="Usage" data-en="Use">Usage</span><span data-fr="Stabilisateurs d’arc" data-en="Archery stabilizers">Stabilisateurs d’arc</span></li>
+              <li><span data-fr="Technologie" data-en="Technology">Technologie</span><span data-fr="Concept d’amortissement breveté" data-en="Patented damping concept">Concept d’amortissement breveté</span></li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 data-fr="Positionnement" data-en="Key positioning">Positionnement</h3>
+            <p
+              data-fr="Un accessoire d’archerie premium créé pour les archers recherchant une meilleure gestion des vibrations, un choc réduit au tir, moins de bruit et davantage de confort en conditions réelles."
+              data-en="A premium archery accessory created for archers looking for better vibration control, reduced release shock, lower noise and improved comfort in shooting conditions."
+            >
+              Un accessoire d’archerie premium créé pour les archers recherchant une meilleure gestion des vibrations, un choc réduit au tir, moins de bruit et davantage de confort en conditions réelles.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="coming-soon">
+          <h2 data-fr="Sortie prochaine" data-en="Launching soon">Sortie prochaine</h2>
+          <p
+            data-fr="HeliTwist Original prépare sa sortie. Pour des informations produit, une demande archerie ou une opportunité de partenariat, contacte-nous ci-dessous."
+            data-en="HeliTwist Original is preparing for release. For product information, archery shop inquiries or partnership opportunities, get in touch below."
+          >
+            HeliTwist Original prépare sa sortie. Pour des informations produit, une demande archerie ou une opportunité de partenariat, contacte-nous ci-dessous.
+          </p>
+          <button class="btn btn-primary" type="button" data-open-contact data-fr="Contacter T-Pulse Archery" data-en="Contact T-Pulse Archery">Contacter T-Pulse Archery</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="card contact-card">
+          <h2 data-fr="Contact" data-en="Contact">Contact</h2>
+          <p
+            data-fr="Archeries, archers, testeurs et partenaires peuvent contacter T-Pulse Archery ici :"
+            data-en="Archeries, archers, testers and partners can contact T-Pulse Archery here:"
+          >
+            Archeries, archers, testeurs et partenaires peuvent contacter T-Pulse Archery ici :
+          </p>
+          <a class="contact-email" href="mailto:contact@t-pulse-archery.com">
+            contact@t-pulse-archery.com
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© 2026 T-Pulse Archery. All rights reserved.</div>
+      <div data-fr="HeliTwist Original — Technologie brevetée" data-en="HeliTwist Original — Patented technology">HeliTwist Original — Technologie brevetée</div>
+    </div>
+  </footer>
+
+  <!-- Modal formulaire -->
+  <div class="modal" id="contactModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-contact></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
+      <div class="modal-header">
+        <h3 id="contactModalTitle" data-fr="Formulaire de contact" data-en="Contact form">Formulaire de contact</h3>
+        <button class="modal-close" type="button" data-close-contact aria-label="Fermer">×</button>
+      </div>
+
+      <form
+        class="contact-form"
+        action="mailto:contact@t-pulse-archery.com"
+        method="post"
+        enctype="text/plain"
+      >
+        <div class="form-row two">
+          <div class="form-field">
+            <label for="name" data-fr="Nom" data-en="Name">Nom</label>
+            <input id="name" name="name" type="text" required>
+          </div>
+
+          <div class="form-field">
+            <label for="email" data-fr="Email" data-en="Email">Email</label>
+            <input id="email" name="email" type="email" required>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="subject" data-fr="Sujet" data-en="Subject">Sujet</label>
+          <input id="subject" name="subject" type="text" required>
+        </div>
+
+        <div class="form-field">
+          <label for="message" data-fr="Message" data-en="Message">Message</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <p
+          class="form-note"
+          data-fr="Le bouton d’envoi ouvrira votre application email avec le message prérempli. Pour un formulaire qui envoie directement depuis le site sans logiciel mail, il faudra ajouter un service externe."
+          data-en="The send button will open your email app with the message prefilled. For a form that sends directly from the website without an email app, you will need to add an external form service."
+        >
+          Le bouton d’envoi ouvrira votre application email avec le message prérempli. Pour un formulaire qui envoie directement depuis le site sans logiciel mail, il faudra ajouter un service externe.
+        </p>
+
+        <button class="btn btn-primary" type="submit" data-fr="Envoyer" data-en="Send">Envoyer</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function initCarousel(carouselId) {
+      const carousel = document.getElementById(carouselId);
+      if (!carousel) return;
+
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+      const prevBtn = carousel.querySelector('.prev');
+      const nextBtn = carousel.querySelector('.next');
+
+      let current = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        current = index;
+      }
+
+      function nextSlide() {
+        showSlide((current + 1) % slides.length);
+      }
+
+      function prevSlideFn() {
+        showSlide((current - 1 + slides.length) % slides.length);
+      }
+
+      if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+      if (prevBtn) prevBtn.addEventListener('click', prevSlideFn);
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+      });
+
+      showSlide(0);
+    }
+
+    initCarousel('heroCarousel');
+    initCarousel('galleryCarousel');
+
+    // Modal contact
+    const contactModal = document.getElementById('contactModal');
+    const openButtons = document.querySelectorAll('[data-open-contact]');
+    const closeButtons = document.querySelectorAll('[data-close-contact]');
+
+    function openContactModal() {
+      contactModal.classList.add('open');
+      contactModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeContactModal() {
+      contactModal.classList.remove('open');
+      contactModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    openButtons.forEach(btn => btn.addEventListener('click', openContactModal));
+    closeButtons.forEach(btn => btn.addEventListener('click', closeContactModal));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeContactModal();
+    });
+
+    // Lang switch FR / EN
+    const btnFr = document.getElementById('btn-fr');
+    const btnEn = document.getElementById('btn-en');
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang === 'fr' ? 'fr' : 'en';
+
+      document.querySelectorAll('[data-fr][data-en]').forEach(el => {
+        el.textContent = el.getAttribute(lang === 'fr' ? 'data-fr' : 'data-en');
+      });
+
+      btnFr.classList.toggle('active', lang === 'fr');
+      btnEn.classList.toggle('active', lang === 'en');
+    }
+
+    btnFr.addEventListener('click', () => setLanguage('fr'));
+    btnEn.addEventListener('click', () => setLanguage('en'));
+
+    setLanguage('fr');
+  </script>
+</body>
+</html>
