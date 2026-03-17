@@ -3,11 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>T-Pulse Archery | HeliTwist Original</title>
-  <meta
-    name="description"
-    content="HeliTwist Original par T-Pulse Archery. Amortisseur breveté pour stabilisateurs d’arc conçu pour réduire les vibrations, le choc du tir, le bruit et la sensibilité au vent."
-  />
+
+  <title>HeliTwist Original – Amortisseur stabilisateur arc | T-Pulse Archery</title>
+
+  <meta name="description" content="HeliTwist Original, amortisseur innovant pour stabilisateurs d’arc. Réduction des vibrations, du choc et du bruit, avec un système axial unique pour améliorer stabilité et confort au tir.">
+
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://t-pulse-archery.com/">
+
+  <meta property="og:title" content="HeliTwist Original | T-Pulse Archery">
+  <meta property="og:description" content="Amortisseur breveté pour stabilisateurs d’arc. Réduction des vibrations, du choc et du bruit.">
+  <meta property="og:image" content="https://t-pulse-archery.com/images/helitwist-3.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://t-pulse-archery.com/">
+  <meta property="og:site_name" content="T-Pulse Archery">
+  <meta property="og:locale" content="fr_FR">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "HeliTwist Original",
+    "image": "https://t-pulse-archery.com/images/helitwist-3.png",
+    "description": "Amortisseur innovant pour stabilisateurs d’arc permettant de réduire les vibrations, le choc du tir et le bruit.",
+    "brand": {
+      "@type": "Brand",
+      "name": "T-Pulse Archery"
+    }
+  }
+  </script>
   <style>
     :root {
       --bg: #0b0d0c;
@@ -19,6 +43,7 @@
       --accent: #79e26f;
       --accent-strong: #93f785;
       --max-width: 1120px;
+      --story-width: 1320px;
       --radius: 20px;
       --shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
     }
@@ -67,6 +92,11 @@
       margin: 0 auto;
     }
 
+    .container-story {
+      width: min(100% - 2rem, var(--story-width));
+      margin: 0 auto;
+    }
+
     .site-header {
       position: sticky;
       top: 0;
@@ -75,19 +105,7 @@
       background: rgba(11, 13, 12, 0.82);
       border-bottom: 1px solid var(--line);
     }
-    .hero-banner {
-      grid-column: 1 / -1;
-      background: #0b0d0c;
-      padding: 30px 0 20px;
-      margin: 0;
-    }
 
-    .hero-banner img {
-      display: block;
-      margin: auto;
-      max-width: 300px;
-      width: 90%;
-    }
     .nav {
       min-height: 78px;
       display: flex;
@@ -211,30 +229,8 @@
       color: var(--accent);
     }
 
-    .hero {
-      padding: 0 0 3rem;
-      background: #0b0d0c;
-      margin-top: 0;
-    }
-
-    .hero-grid {
-      display: grid;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      gap: 0.5rem;
-      align-items: center;
-      padding: 0.45rem 0.8rem;
-      border: 1px solid rgba(121, 226, 111, 0.2);
-      border-radius: 999px;
-      background: rgba(121, 226, 111, 0.08);
-      color: var(--accent);
-      font-size: 0.85rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
+    section {
+      padding: 2.6rem 0;
     }
 
     h1, h2, h3 {
@@ -254,6 +250,55 @@
 
     h3 {
       font-size: 1.1rem;
+    }
+
+    .section-head {
+      margin-bottom: 1.5rem;
+      max-width: 62ch;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .hero {
+      padding: 0 0 3rem;
+      background: #0b0d0c;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero-banner {
+      grid-column: 1 / -1;
+      background: #0b0d0c;
+      padding: 30px 0 20px;
+      margin: 0;
+    }
+
+    .hero-banner img {
+      display: block;
+      margin: auto;
+      max-width: 300px;
+      width: 90%;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 0.5rem;
+      align-items: center;
+      padding: 0.45rem 0.8rem;
+      border: 1px solid rgba(121, 226, 111, 0.2);
+      border-radius: 999px;
+      background: rgba(121, 226, 111, 0.08);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
     }
 
     .lead {
@@ -292,6 +337,23 @@
       border-radius: calc(var(--radius) + 4px);
       overflow: hidden;
       box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 1rem;
+      background:
+        linear-gradient(135deg, rgba(121,226,111,0.18), transparent 55%),
+        linear-gradient(180deg, #1a221d, #0d110f);
+    }
+
+    .hero-image {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+      object-fit: contain;
     }
 
     .carousel {
@@ -392,20 +454,6 @@
       flex-wrap: wrap;
     }
 
-    section {
-      padding: 2.2rem 0;
-    }
-
-    .section-head {
-      margin-bottom: 1.5rem;
-      max-width: 62ch;
-    }
-
-    .section-head p {
-      color: var(--muted);
-      margin: 0;
-    }
-
     .cards {
       display: grid;
       gap: 1rem;
@@ -452,20 +500,18 @@
       background:
         radial-gradient(circle at top left, rgba(121, 226, 111, 0.12), transparent 35%),
         linear-gradient(180deg, #131715, #0d110f);
-      display: grid;
-      place-items: center;
       padding: 1.4rem;
       box-shadow: var(--shadow);
     }
 
     .diagram {
       width: 100%;
-      max-width: 480px;
       display: grid;
       gap: 1rem;
     }
 
     .diagram-box {
+      width: 100%;
       border: 1px solid rgba(121, 226, 111, 0.18);
       background: rgba(255,255,255,0.02);
       border-radius: 18px;
@@ -477,25 +523,25 @@
       margin-bottom: 0.7rem;
     }
 
-    .spiral-line {
-      height: 14px;
-      border-radius: 999px;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(121,226,111,0.95) 0 16px,
-          rgba(121,226,111,0.15) 16px 28px
-        );
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    .diagram-box img {
+      width: 50%;
+      height: auto;
+      display: block;
+      margin: 10px auto 0;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
-    .spiral-line.compressed {
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(121,226,111,0.95) 0 11px,
-          rgba(121,226,111,0.15) 11px 18px
-        );
+    .story-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.8rem);
+      line-height: 1.08;
+      margin-bottom: 1.2rem;
+    }
+
+    .story-box p {
+      font-size: 1.06rem;
+      line-height: 1.75;
+      max-width: none;
     }
 
     .specs-grid {
@@ -568,7 +614,6 @@
       gap: 0.5rem;
     }
 
-    /* Modal contact */
     .modal {
       position: fixed;
       inset: 0;
@@ -681,11 +726,11 @@
       }
 
       .hero {
-        padding: 5.5rem 0 4rem;
+        padding: 1rem 0 4rem;
       }
 
       .hero-grid {
-        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-columns: 1.05fr 0.95fr;
         gap: 2.5rem;
       }
 
@@ -698,7 +743,7 @@
       }
 
       .specs-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 0fr;
       }
 
       .footer-inner {
@@ -740,6 +785,10 @@
         min-width: 46px;
         padding: 0.42rem 0.65rem;
       }
+
+      .diagram-box img {
+        width: 72%;
+      }
     }
   </style>
 </head>
@@ -755,10 +804,10 @@
       </a>
 
       <nav class="nav-links">
+        <a href="#story" data-fr="Histoire" data-en="Story">Histoire</a>
+        <a href="#how-it-works" data-fr="Fonctionnement" data-en="How it works">Fonctionnement</a>
         <a href="#benefits" data-fr="Bénéfices" data-en="Benefits">Bénéfices</a>
         <a href="#gallery" data-fr="Galerie" data-en="Gallery">Galerie</a>
-        <a href="#how-it-works" data-fr="Fonctionnement" data-en="How it works">Fonctionnement</a>
-        <a href="#story" data-fr="Histoire" data-en="Story">Histoire</a>
         <a href="#specs" data-fr="Caractéristiques" data-en="Specs">Caractéristiques</a>
       </nav>
 
@@ -775,7 +824,6 @@
   <main id="top">
     <section class="hero">
       <div class="container hero-grid">
-
         <div class="hero-banner">
           <img src="images/t-pulse-banner.png" alt="T-Pulse Archery">
         </div>
@@ -785,7 +833,8 @@
 
           <h1 data-fr="HeliTwist Original" data-en="HeliTwist Original">HeliTwist Original</h1>
 
-          <p class="lead"
+          <p
+            class="lead"
             data-fr="Un amortisseur breveté pour stabilisateurs d’arc conçu pour réduire les vibrations, le choc du tir, le bruit et la sensibilité au vent, tout en améliorant le confort et la stabilité au tir."
             data-en="A patented vibration damper for archery stabilizers designed to reduce vibration, shock at release, noise and wind sensitivity while improving shooting comfort and stability."
           >
@@ -805,41 +854,57 @@
         </div>
 
         <div class="hero-card">
-          <div class="carousel" id="heroCarousel">
-            <div class="carousel-track">
-              <div class="carousel-slide active">
-                <img src="images/helitwist-1.png" alt="Photo produit HeliTwist Original">
-              </div>
-              <div class="carousel-slide">
-                <img src="images/helitwist-2.png" alt="Packaging HeliTwist Original">
-              </div>
-              <div class="carousel-slide">
-                <img src="images/helitwist-3.png" alt="HeliTwist monté sur stabilisateur">
-              </div>
-              <div class="carousel-slide">
-                <img src="images/helitwist-4.png" alt="Vue technique ou alternative HeliTwist">
-              </div>
-              <div class="carousel-slide">
-                <img class="helitwist-animation" src="images/helitwist-compression.gif" alt="Compression HeliTwist">
-              </div>
-
-              <div class="carousel-controls">
-                <button class="carousel-btn prev" aria-label="Photo précédente">‹</button>
-                <button class="carousel-btn next" aria-label="Photo suivante">›</button>
-              </div>
-            </div>
-
-            <div class="carousel-dots">
-              <button class="carousel-dot active" aria-label="Photo 1"></button>
-              <button class="carousel-dot" aria-label="Photo 2"></button>
-              <button class="carousel-dot" aria-label="Photo 3"></button>
-              <button class="carousel-dot" aria-label="Photo 4"></button>
-            </div>
-          </div>
+          <img
+            src="images/helitwist-2.png"
+            alt="HeliTwist monté sur stabilisateur"
+            class="hero-image"
+          />
 
           <div class="carousel-caption">
-            <span data-fr="Amortissement avancé pour stabilisateurs" data-en="Advanced vibration damping for stabilizers">Amortissement avancé pour stabilisateurs</span>
-            <span data-fr="Archerie / Innovation" data-en="Archery / Innovation">Archerie / Innovation</span>
+            <span data-fr="HeliTwist Original" data-en="HeliTwist Original">HeliTwist Original</span>
+            <span data-fr="Archerie / Innovation 2026" data-en="Archery / Innovation 2026">Archerie / Innovation</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story">
+      <div class="container">
+        <div class="split-visual">
+          <div class="diagram">
+            <div class="diagram-box story-box">
+              <h2
+                class="story-title"
+                data-fr="Pensé par un archer, guidé par l’innovation"
+                data-en="Designed by an archer, driven by innovation"
+              >
+                Pensé par un archer, guidé par l’innovation
+              </h2>
+
+              <p
+                style="color: var(--muted); margin: 0;"
+                data-fr="Passionné de tir à l’arc et d’innovation technique, j’ai imaginé et développé cet amortisseur après avoir constaté les limites des solutions actuelles. Après près de deux ans d’utilisation de mon prototype, il est temps aujourd’hui de le partager."
+                data-en="Passionate about archery and technical innovation, I designed and developed this damper after recognizing the limits of existing solutions. After nearly two years of using my prototype, the time has come to share it."
+              >
+                Passionné de tir à l’arc et d’innovation technique, j’ai imaginé et développé cet amortisseur après avoir constaté les limites des solutions actuelles. Après près de deux ans d’utilisation de mon prototype, il est temps aujourd’hui de le partager.
+              </p>
+
+              <p
+                style="color: var(--muted); margin: 12px 0 0;"
+                data-fr="Contrairement aux systèmes traditionnels reposant principalement sur le flambage transversal du matériau élastique, HeliTwist utilise une structure spiralée creuse innovante permettant un amortissement dans l’axe du tir."
+                data-en="Unlike traditional systems that rely mainly on the transverse buckling of elastic material, HeliTwist uses an innovative hollow spiral structure that provides damping along the axis of the shot."
+              >
+                Contrairement aux systèmes traditionnels reposant principalement sur le flambage transversal du matériau élastique, HeliTwist utilise une structure spiralée creuse innovante permettant un amortissement dans l’axe du tir.
+              </p>
+
+              <p
+                style="color: var(--muted); margin: 12px 0 0;"
+                data-fr="Cette conception améliore la stabilisation post-tir, la précision et le confort du tireur, tout en protégeant le matériel et en réduisant les contraintes musculaires liées aux vibrations répétées. La structure ajourée permet également de réduire la prise au vent."
+                data-en="This design improves post-shot stabilization, accuracy, and shooting comfort, while protecting equipment and reducing muscular strain caused by repeated vibrations. Its open structure also helps reduce wind drag."
+              >
+                Cette conception améliore la stabilisation post-tir, la précision et le confort du tireur, tout en protégeant le matériel et en réduisant les contraintes musculaires liées aux vibrations répétées. La structure ajourée permet également de réduire la prise au vent.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -847,16 +912,6 @@
 
     <section id="benefits">
       <div class="container">
-        <div class="section-head">
-          <h2 data-fr="Pensé pour le ressenti réel au tir" data-en="Built for real shot feel">Pensé pour le ressenti réel au tir</h2>
-          <p
-            data-fr="HeliTwist a été développé pour améliorer l’expérience là où l’archer le ressent le plus : vibrations, choc de décoche, retour sonore et stabilité au vent."
-            data-en="HeliTwist was developed to improve the shooting experience where archers feel it most: vibration, release shock, acoustic feedback and stability in wind."
-          >
-            HeliTwist a été développé pour améliorer l’expérience là où l’archer le ressent le plus : vibrations, choc de décoche, retour sonore et stabilité au vent.
-          </p>
-        </div>
-
         <div class="cards">
           <article class="card">
             <div class="benefit-icon">◎</div>
@@ -893,17 +948,79 @@
         </div>
       </div>
     </section>
+    <section id="how-it-works">
+      <div class="container split">
+        <div class="split-text">
+          <div class="section-head">
+            <h2 data-fr="Comment ça fonctionne" data-en="How it works">Comment ça fonctionne</h2>
+            <p
+              data-fr="Contrairement aux autres amortisseurs du marché, HeliTwist se distingue par une structure spiralée creuse innovante, pensée pour travailler dans l’axe du tir et de la stabilisation, et offrir un amortissement plus direct, plus stable et plus efficace."
+              data-en="Unlike other dampers on the market, HeliTwist stands out thanks to its innovative hollow spiral structure, designed to work along the axis of the shot and stabilization, delivering more direct, stable, and efficient damping."
+            >
+              Contrairement aux autres amortisseurs du marché, HeliTwist se distingue par une structure spiralée creuse innovante, pensée pour travailler dans l’axe du tir et de la stabilisation, et offrir un amortissement plus direct, plus stable et plus efficace.
+            </p>
+          </div>
 
+          <div class="cards" style="grid-template-columns: 1fr;">
+            <article class="card">
+              <h3 data-fr="Principe de compression spiralée" data-en="Spiral compression concept">Principe de compression spiralée</h3>
+              <p
+                data-fr="Lors de la décoche, la structure se comprime dans l’axe du tir, réduisant le transfert de vibration et adoucissant la réaction perçue de l’arc. Grâce à sa géométrie spiralée, HeliTwist permet également d’ajuster finement l’absorption du choc en fonction de la puissance de l’arc, simplement en modulant le poids des masses."
+                data-en="During release, the structure compresses along the axis of the shot, reducing vibration transfer and softening the perceived reaction of the bow. Thanks to its spiral geometry, HeliTwist also allows fine tuning of shock absorption according to bow power, simply by adjusting the mass weight."
+              >
+                Lors de la décoche, la structure se comprime dans l’axe du tir, réduisant le transfert de vibration et adoucissant la réaction perçue de l’arc. Grâce à sa géométrie spiralée, HeliTwist permet également d’ajuster finement l’absorption du choc en fonction de la puissance de l’arc, simplement en modulant le poids des masses.
+              </p>
+            </article>
+
+            <article class="card">
+              <h3 data-fr="Bruit et comportement au vent" data-en="Noise and wind management">Bruit et comportement au vent</h3>
+              <p
+                data-fr="Le design contribue à un tir plus discret tout en offrant un profil pensé pour rester efficace en conditions extérieures variables. Sa structure creuse et ajourée réduit la prise au vent, laissant l’air circuler à travers l’amortisseur et limitant ainsi les perturbations."
+                data-en="The design contributes to quieter shooting while remaining effective in varying outdoor conditions. Its hollow, open structure reduces wind resistance, allowing air to flow through the damper and minimizing disturbance."
+              >
+                Le design contribue à un tir plus discret tout en offrant un profil pensé pour rester efficace en conditions extérieures variables. Sa structure creuse et ajourée réduit la prise au vent, laissant l’air circuler à travers l’amortisseur et limitant ainsi les perturbations.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div class="split-visual">
+          <div class="diagram">
+            <div class="diagram-box">
+              <strong
+                data-fr="Vue A — Position au repos"
+                data-en="View A — Rest position"
+              >
+                Vue A — Position au repos
+              </strong>
+
+              <img
+                src="images/HeliTwist_Concept_Repos.png"
+                alt="HeliTwist au repos"
+              />
+            </div>
+
+            <div class="diagram-box">
+              <strong
+                data-fr="Vue B — Compression pendant le tir"
+                data-en="View B — Compression during shot"
+              >
+                Vue B — Compression pendant le tir
+              </strong>
+
+              <img
+                src="images/HeliTwist_Concept_Compress.png"
+                alt="HeliTwist en compression pendant le tir"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="gallery">
       <div class="container">
         <div class="section-head">
           <h2 data-fr="Galerie produit" data-en="Product gallery">Galerie produit</h2>
-          <p
-            data-fr="Montre le produit seul, le packaging, le montage sur l’arc et une vue technique ou en situation."
-            data-en="Show the product alone, the packaging, the mounted setup and any technical or lifestyle view."
-          >
-            Montre le produit seul, le packaging, le montage sur l’arc et une vue technique ou en situation.
-          </p>
         </div>
 
         <div class="gallery-card">
@@ -919,11 +1036,12 @@
                 <img src="images/helitwist-3.png" alt="HeliTwist monté sur stabilisateur">
               </div>
               <div class="carousel-slide">
-                <img src="images/helitwist-4.png" alt="Vue technique alternative HeliTwist">
+                <img src="images/helitwist-compression.gif" alt="Compression HeliTwist">
               </div>
               <div class="carousel-slide">
-                <img class="helitwist-animation" src="images/helitwist-compression.gif" alt="Compression HeliTwist">
+                <img src="images/helitwist-4.png" alt="Vue technique alternative HeliTwist">
               </div>
+
 
               <div class="carousel-controls">
                 <button class="carousel-btn prev" aria-label="Photo précédente">‹</button>
@@ -936,127 +1054,29 @@
               <button class="carousel-dot" aria-label="Photo 2"></button>
               <button class="carousel-dot" aria-label="Photo 3"></button>
               <button class="carousel-dot" aria-label="Photo 4"></button>
+              <button class="carousel-dot" aria-label="Photo 5"></button>
             </div>
           </div>
 
           <div class="carousel-caption">
-            <span data-fr="Utilise des images nettes et lumineuses" data-en="Use high-resolution images for best result">Utilise des images nettes et lumineuses</span>
-            <span data-fr="Carrousel adapté mobile" data-en="Mobile-friendly carousel">Carrousel adapté mobile</span>
+            <span data-fr="HeliTwist Original V1" data-en="HeliTwist Original V1">HeliTwist Original V1</span>
+            <span data-fr="T-Pulse Archery" data-en="T-Pulse Archery">T-Pulse Archery</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="how-it-works">
-      <div class="container split">
-        <div class="split-text">
-          <div class="section-head">
-            <h2 data-fr="Comment ça fonctionne" data-en="How it works">Comment ça fonctionne</h2>
-            <p
-              data-fr="HeliTwist utilise une structure spiralée conçue pour se comprimer pendant le tir. Cette géométrie flexible aide à absorber l’énergie tout en conservant un format léger."
-              data-en="HeliTwist uses a spiral damping structure designed to compress during the shot. This flexible geometry helps absorb energy while preserving a lightweight format."
-            >
-              HeliTwist utilise une structure spiralée conçue pour se comprimer pendant le tir. Cette géométrie flexible aide à absorber l’énergie tout en conservant un format léger.
-            </p>
-          </div>
 
-          <div class="cards" style="grid-template-columns: 1fr;">
-            <article class="card">
-              <h3 data-fr="Principe de compression spiralée" data-en="Spiral compression concept">Principe de compression spiralée</h3>
-              <p
-                data-fr="Lors de la décoche, la structure se comprime dans l’axe du tir, réduisant le transfert de vibration et adoucissant la réaction perçue de l’arc."
-                data-en="During release, the structure compresses in the axis of the shot, reducing vibration transfer and softening the perceived reaction of the bow."
-              >
-                Lors de la décoche, la structure se comprime dans l’axe du tir, réduisant le transfert de vibration et adoucissant la réaction perçue de l’arc.
-              </p>
-            </article>
-
-            <article class="card">
-              <h3 data-fr="Bruit et comportement au vent" data-en="Noise and wind management">Bruit et comportement au vent</h3>
-              <p
-                data-fr="Le design contribue à un tir plus discret tout en offrant un profil pensé pour rester efficace en conditions extérieures variables."
-                data-en="The design is made to contribute to quieter shooting behaviour while also offering a profile intended to stay effective in varying outdoor conditions."
-              >
-                Le design contribue à un tir plus discret tout en offrant un profil pensé pour rester efficace en conditions extérieures variables.
-              </p>
-            </article>
-          </div>
-        </div>
-
-        <div class="split-visual">
-          <div class="diagram">
-            <div class="diagram-box">
-              <strong data-fr="Vue A — Position au repos" data-en="View A — Rest position">Vue A — Position au repos</strong>
-              <div class="spiral-line"></div>
-            </div>
-            <div class="diagram-box">
-              <strong data-fr="Vue B — Compression pendant le tir" data-en="View B — Compression during shot">Vue B — Compression pendant le tir</strong>
-              <div class="spiral-line compressed"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="story">
-      <div class="container split">
-        <div class="split-visual">
-          <div class="diagram" style="max-width: 520px;">
-            <div class="diagram-box">
-              <strong data-fr="Pensé par un archer" data-en="Designed by an archer">Pensé par un archer</strong>
-              <p
-                style="color: var(--muted); margin: 0;"
-                data-fr="Développé à partir de l’expérience du terrain et affiné par un usage prolongé de prototypes pour créer une innovation utile en conditions réelles."
-                data-en="Developed from field experience and refined through extended prototype use to create a practical innovation for real shooting conditions."
-              >
-                Développé à partir de l’expérience du terrain et affiné par un usage prolongé de prototypes pour créer une innovation utile en conditions réelles.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="split-text">
-          <div class="section-head">
-            <h2 data-fr="Pensé par un archer" data-en="Designed by an archer">Pensé par un archer</h2>
-            <p
-              data-fr="HeliTwist est né de l’observation au pas de tir, des essais et des ajustements. Après près de deux années d’utilisation de prototypes, le concept a évolué en une solution dédiée aux archers recherchant un départ de flèche plus propre."
-              data-en="HeliTwist was born from on-range observation, testing and refinement. After nearly two years of prototype use, the concept evolved into a dedicated damping solution made for archers seeking a cleaner shot response."
-            >
-              HeliTwist est né de l’observation au pas de tir, des essais et des ajustements. Après près de deux années d’utilisation de prototypes, le concept a évolué en une solution dédiée aux archers recherchant un départ de flèche plus propre.
-            </p>
-          </div>
-
-          <div class="cards" style="grid-template-columns: 1fr;">
-            <article class="card">
-              <h3 data-fr="Approche testée sur le terrain" data-en="Field-tested approach">Approche testée sur le terrain</h3>
-              <p
-                data-fr="Le produit n’a pas été imaginé seulement comme un concept. Il a été façonné par des séances de tir répétées, des réglages pratiques et des retours concrets."
-                data-en="The product was not imagined only as a concept. It was shaped through repeated shooting sessions, practical adjustments and real-world feedback."
-              >
-                Le produit n’a pas été imaginé seulement comme un concept. Il a été façonné par des séances de tir répétées, des réglages pratiques et des retours concrets.
-              </p>
-            </article>
-
-            <article class="card">
-              <h3 data-fr="Vision de la marque" data-en="Brand vision">Vision de la marque</h3>
-              <p
-                data-fr="T-Pulse Archery se concentre sur une innovation utile : des équipements conçus pour améliorer le confort, le contrôle et l’expérience d’entraînement sans complexité inutile."
-                data-en="T-Pulse Archery focuses on useful innovation: equipment designed to improve comfort, control and training experience without unnecessary complexity."
-              >
-                T-Pulse Archery se concentre sur une innovation utile : des équipements conçus pour améliorer le confort, le contrôle et l’expérience d’entraînement sans complexité inutile.
-              </p>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section id="specs">
       <div class="container">
         <div class="section-head">
           <h2 data-fr="Caractéristiques produit" data-en="Product specifications">Caractéristiques produit</h2>
-          <p data-fr="Informations techniques pour archers, archeries et partenaires." data-en="Technical information for archers, shops and partners.">
-            Informations techniques pour archers, archeries et partenaires.
+          <p
+            data-fr="Informations techniques pour archers, archeries et partenaires."
+            data-en="Technical information for archers, shops and partners."
+          >
+            Informations techniques:
           </p>
         </div>
 
@@ -1069,16 +1089,6 @@
               <li><span data-fr="Usage" data-en="Use">Usage</span><span data-fr="Stabilisateurs d’arc" data-en="Archery stabilizers">Stabilisateurs d’arc</span></li>
               <li><span data-fr="Technologie" data-en="Technology">Technologie</span><span data-fr="Concept d’amortissement breveté" data-en="Patented damping concept">Concept d’amortissement breveté</span></li>
             </ul>
-          </div>
-
-          <div class="card">
-            <h3 data-fr="Positionnement" data-en="Key positioning">Positionnement</h3>
-            <p
-              data-fr="Un accessoire d’archerie premium créé pour les archers recherchant une meilleure gestion des vibrations, un choc réduit au tir, moins de bruit et davantage de confort en conditions réelles."
-              data-en="A premium archery accessory created for archers looking for better vibration control, reduced release shock, lower noise and improved comfort in shooting conditions."
-            >
-              Un accessoire d’archerie premium créé pour les archers recherchant une meilleure gestion des vibrations, un choc réduit au tir, moins de bruit et davantage de confort en conditions réelles.
-            </p>
           </div>
         </div>
       </div>
@@ -1124,7 +1134,6 @@
     </div>
   </footer>
 
-  <!-- Modal formulaire -->
   <div class="modal" id="contactModal" aria-hidden="true">
     <div class="modal-backdrop" data-close-contact></div>
     <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle">
@@ -1210,10 +1219,8 @@
       showSlide(0);
     }
 
-    initCarousel('heroCarousel');
     initCarousel('galleryCarousel');
 
-    // Modal contact
     const contactModal = document.getElementById('contactModal');
     const openButtons = document.querySelectorAll('[data-open-contact]');
     const closeButtons = document.querySelectorAll('[data-close-contact]');
@@ -1237,7 +1244,6 @@
       if (e.key === 'Escape') closeContactModal();
     });
 
-    // Lang switch FR / EN
     const btnFr = document.getElementById('btn-fr');
     const btnEn = document.getElementById('btn-en');
 
