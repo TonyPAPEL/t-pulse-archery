@@ -178,9 +178,102 @@ function tpulse_remove_sidebar(): void {
 add_action('wp', 'tpulse_remove_sidebar');
 
 add_filter('woocommerce_enqueue_styles', function (array $styles): array {
-    unset($styles['woocommerce-general']);
     return $styles;
 });
+
+function tpulse_review_model_options(): array {
+    return [
+        '' => 'Selectionnez le modele achete',
+        'HeliTwist 5/16' => 'HeliTwist 5/16',
+        'HeliTwist 1/4' => 'HeliTwist 1/4',
+        'HeliTwist M8' => 'HeliTwist M8',
+        'Jeux d archers' => 'Livre Jeux d archers',
+        'Autre achat T-Pulse' => 'Autre achat T-Pulse',
+    ];
+}
+
+function tpulse_product_review_form_args(array $args): array {
+    if (!is_product()) {
+        return $args;
+    }
+
+    $model_options = '';
+    foreach (tpulse_review_model_options() as $value => $label) {
+        $model_options .= sprintf('<option value="%s">%s</option>', esc_attr($value), esc_html($label));
+    }
+
+    $extra_fields = '<div class="tpulse-review-fields">'
+        . '<p class="comment-form-tpulse-name"><label for="tpulse_review_name">Nom, prenom ou pseudo <span class="required">*</span></label><input id="tpulse_review_name" name="tpulse_review_name" type="text" required></p>'
+        . '<p class="comment-form-tpulse-model"><label for="tpulse_review_model">Modele achete <span class="required">*</span></label><select id="tpulse_review_model" name="tpulse_review_model" required>' . $model_options . '</select></p>'
+        . '<p class="comment-form-tpulse-date"><label for="tpulse_purchase_date">Date d achat approximative <span class="required">*</span></label><input id="tpulse_purchase_date" name="tpulse_purchase_date" type="month" required></p>'
+        . '</div>';
+
+    $args['title_reply'] = 'Laisser votre avis';
+    $args['comment_notes_before'] = '<p class="comment-notes">Votre avis sera envoye a T-Pulse pour validation avant publication.</p>';
+    $args['comment_field'] = $extra_fields . '<p class="comment-form-comment"><label for="comment">Votre avis <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="7" required></textarea></p>';
+    $args['label_submit'] = 'Envoyer mon avis pour validation';
+
+    return $args;
+}
+add_filter('woocommerce_product_review_comment_form_args', 'tpulse_product_review_form_args');
+
+function tpulse_validate_product_review(array $commentdata): array {
+    if (($commentdata['comment_type'] ?? '') !== 'review') {
+        return $commentdata;
+    }
+
+    $name = sanitize_text_field(wp_unslash($_POST['tpulse_review_name'] ?? ''));
+    $model = sanitize_text_field(wp_unslash($_POST['tpulse_review_model'] ?? ''));
+    $purchase_date = sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''));
+
+    if ($name === '' || $model === '' || $purchase_date === '') {
+        wp_die('Merci de renseigner votre nom/pseudo, le modele achete et la date d achat approximative avant d envoyer votre avis.', 'Avis incomplet', ['response' => 400]);
+    }
+
+    if (!preg_match('/^\d{4}-\d{2}$/', $purchase_date)) {
+        wp_die('Merci d indiquer une date d achat au format mois/annee.', 'Date invalide', ['response' => 400]);
+    }
+
+    $commentdata['comment_author'] = $name;
+    return $commentdata;
+}
+add_filter('preprocess_comment', 'tpulse_validate_product_review');
+
+function tpulse_save_product_review_meta(int $comment_id): void {
+    $comment = get_comment($comment_id);
+    if (!$comment instanceof WP_Comment || $comment->comment_type !== 'review') {
+        return;
+    }
+
+    update_comment_meta($comment_id, 'tpulse_review_name', sanitize_text_field(wp_unslash($_POST['tpulse_review_name'] ?? '')));
+    update_comment_meta($comment_id, 'tpulse_review_model', sanitize_text_field(wp_unslash($_POST['tpulse_review_model'] ?? '')));
+    update_comment_meta($comment_id, 'tpulse_purchase_date', sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? '')));
+}
+add_action('comment_post', 'tpulse_save_product_review_meta');
+
+function tpulse_force_product_review_moderation($approved, array $commentdata) {
+    return (($commentdata['comment_type'] ?? '') === 'review') ? 0 : $approved;
+}
+add_filter('pre_comment_approved', 'tpulse_force_product_review_moderation', 10, 2);
+
+function tpulse_show_product_review_meta(WP_Comment $comment): void {
+    $model = get_comment_meta($comment->comment_ID, 'tpulse_review_model', true);
+    $purchase_date = get_comment_meta($comment->comment_ID, 'tpulse_purchase_date', true);
+
+    if (!$model && !$purchase_date) {
+        return;
+    }
+
+    echo '<p class="tpulse-review-meta">';
+    if ($model) {
+        echo '<span>Modele : ' . esc_html($model) . '</span>';
+    }
+    if ($purchase_date) {
+        echo '<span>Achat : ' . esc_html(date_i18n('m/Y', strtotime($purchase_date . '-01'))) . '</span>';
+    }
+    echo '</p>';
+}
+add_action('woocommerce_review_before_comment_text', 'tpulse_show_product_review_meta');
 
 function tpulse_register_resources(): void {
     register_post_type('tpulse_resource', [
