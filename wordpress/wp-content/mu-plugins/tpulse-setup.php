@@ -95,8 +95,10 @@ function tpulse_setup_woocommerce_product(): void {
         return;
     }
 
-    $existing_id = (int) get_option('tpulse_product_created');
-    if ($existing_id && wc_get_product($existing_id)) {
+    $existing_id = (int) wc_get_product_id_by_sku('HELITWIST-ORIGINAL');
+    $existing_product = $existing_id ? wc_get_product($existing_id) : false;
+    if ($existing_product) {
+        update_option('tpulse_product_created', $existing_id);
         return;
     }
 
