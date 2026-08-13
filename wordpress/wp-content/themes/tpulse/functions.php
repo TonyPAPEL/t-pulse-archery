@@ -262,6 +262,19 @@ add_filter('woocommerce_product_additional_information_heading', function (strin
     return tpulse_is_english() ? $heading : 'Informations complémentaires';
 });
 
+function tpulse_french_loop_add_to_cart_link(string $html, WC_Product $product): string {
+    if (tpulse_is_english()) {
+        return $html;
+    }
+
+    return strtr($html, [
+        'Add to cart:' => 'Ajouter au panier :',
+        'Select options for' => 'Choisir le modele pour',
+        'has been added to your cart' => 'a ete ajoute au panier',
+    ]);
+}
+add_filter('woocommerce_loop_add_to_cart_link', 'tpulse_french_loop_add_to_cart_link', 20, 2);
+
 function tpulse_translate_frontend_html(string $html): string {
     if (!tpulse_is_english()) {
         return strtr($html, [
