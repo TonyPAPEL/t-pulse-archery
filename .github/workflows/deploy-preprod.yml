@@ -75,7 +75,40 @@ jobs:
           $WP option update blog_public 0
           $WP plugin install woocommerce --activate
           $WP theme activate tpulse
+          shop_id="$($WP post list --post_type=page --name=boutique --field=ID --format=ids | head -n1)"
+          if [ -z "$shop_id" ]; then
+            shop_id="$($WP post create --post_type=page --post_status=publish --post_title='Boutique' --post_name=boutique --porcelain)"
+          fi
+          cart_id="$($WP post list --post_type=page --name=panier --field=ID --format=ids | head -n1)"
+          if [ -z "$cart_id" ]; then
+            cart_id="$($WP post create --post_type=page --post_status=publish --post_title='Panier' --post_name=panier --post_content='[woocommerce_cart]' --porcelain)"
+          fi
+          checkout_id="$($WP post list --post_type=page --name=commande --field=ID --format=ids | head -n1)"
+          if [ -z "$checkout_id" ]; then
+            checkout_id="$($WP post create --post_type=page --post_status=publish --post_title='Commande' --post_name=commande --post_content='[woocommerce_checkout]' --porcelain)"
+          fi
+          account_id="$($WP post list --post_type=page --name=mon-compte --field=ID --format=ids | head -n1)"
+          if [ -z "$account_id" ]; then
+            account_id="$($WP post create --post_type=page --post_status=publish --post_title='Mon compte' --post_name=mon-compte --post_content='[woocommerce_my_account]' --porcelain)"
+          fi
+          $WP option update woocommerce_shop_page_id "$shop_id"
+          $WP option update woocommerce_cart_page_id "$cart_id"
+          $WP option update woocommerce_checkout_page_id "$checkout_id"
+          $WP option update woocommerce_myaccount_page_id "$account_id"
           $WP rewrite structure '/%postname%/' --hard
+          cat > "$HOME/www/.htaccess" <<'HTACCESS'
+          # BEGIN WordPress
+          <IfModule mod_rewrite.c>
+          RewriteEngine On
+          RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+          RewriteBase /
+          RewriteRule ^index\.php$ - [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule . /index.php [L]
+          </IfModule>
+          # END WordPress
+          HTACCESS
           $WP cache flush
           REMOTE
 
