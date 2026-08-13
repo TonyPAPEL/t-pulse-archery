@@ -202,6 +202,14 @@ function tpulse_product_review_form_args(array $args): array {
         $model_options .= sprintf('<option value="%s">%s</option>', esc_attr($value), esc_html($label));
     }
 
+    $rating_field = '<div class="comment-form-rating tpulse-rating-field"><label>Votre note</label><div class="tpulse-rating-stars" role="radiogroup" aria-label="Votre note">'
+        . '<input type="radio" id="tpulse-rating-5" name="rating" value="5" checked><label for="tpulse-rating-5" title="5 sur 5">★</label>'
+        . '<input type="radio" id="tpulse-rating-4" name="rating" value="4"><label for="tpulse-rating-4" title="4 sur 5">★</label>'
+        . '<input type="radio" id="tpulse-rating-3" name="rating" value="3"><label for="tpulse-rating-3" title="3 sur 5">★</label>'
+        . '<input type="radio" id="tpulse-rating-2" name="rating" value="2"><label for="tpulse-rating-2" title="2 sur 5">★</label>'
+        . '<input type="radio" id="tpulse-rating-1" name="rating" value="1"><label for="tpulse-rating-1" title="1 sur 5">★</label>'
+        . '<span class="tpulse-rating-text">5/5 par defaut</span></div></div>';
+
     $extra_fields = '<div class="tpulse-review-fields">'
         . '<p class="comment-form-tpulse-name"><label for="tpulse_review_name">Nom, prenom ou pseudo <span class="required">*</span></label><input id="tpulse_review_name" name="tpulse_review_name" type="text" required></p>'
         . '<p class="comment-form-tpulse-model"><label for="tpulse_review_model">Modele achete <span class="required">*</span></label><select id="tpulse_review_model" name="tpulse_review_model" required>' . $model_options . '</select></p>'
@@ -209,9 +217,10 @@ function tpulse_product_review_form_args(array $args): array {
         . '</div>';
 
     $args['title_reply'] = 'Laisser votre avis';
-    $args['comment_notes_before'] = '<p class="comment-notes">Votre avis sera envoye a T-Pulse pour validation avant publication.</p>';
-    $args['comment_field'] = $extra_fields . '<p class="comment-form-comment"><label for="comment">Votre avis <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="7" required></textarea></p>';
-    $args['label_submit'] = 'Envoyer mon avis pour validation';
+    $args['comment_notes_before'] = '';
+    $args['comment_field'] = $rating_field . $extra_fields . '<p class="comment-form-comment"><label for="comment">Votre avis <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="7" required></textarea></p>';
+    $args['label_submit'] = 'Avis envoye';
+    unset($args['fields']['rating']);
 
     return $args;
 }
