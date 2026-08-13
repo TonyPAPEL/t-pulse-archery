@@ -99,6 +99,8 @@ function tpulse_translate_french_ui(string $translated, string $text, string $do
         'Proceed to checkout' => 'Passer commande',
         'Checkout' => 'Commande',
         'Cart' => 'Panier',
+        'Have a coupon?' => 'Vous avez un code promo ?',
+        'Click here to enter your code' => 'Cliquez ici pour saisir votre code',
         'Coupon' => 'Code promo',
         'Coupon code' => 'Code promo',
         'Apply coupon' => 'Appliquer le code',
@@ -108,6 +110,23 @@ function tpulse_translate_french_ui(string $translated, string $text, string $do
         'Subtotal' => 'Sous-total',
         'Total' => 'Total',
         'Remove item' => 'Retirer',
+        'First name' => 'Prenom',
+        'Last name' => 'Nom',
+        'Company name' => 'Entreprise',
+        'Country / Region' => 'Pays / Region',
+        'Street address' => 'Adresse',
+        'House number and street name' => 'Numero et nom de rue',
+        'Apartment, suite, unit, etc. (optional)' => 'Appartement, batiment, etc. (facultatif)',
+        'Apartment, suite, unit, etc.' => 'Appartement, batiment, etc.',
+        'Town / City' => 'Ville',
+        'State / County' => 'Region / Departement',
+        'Postcode / ZIP' => 'Code postal',
+        'Phone' => 'Telephone',
+        'Email address' => 'Adresse email',
+        'Order notes' => 'Notes de commande',
+        'Notes about your order, e.g. special notes for delivery.' => 'Notes concernant votre commande, par exemple une information utile pour la livraison.',
+        'Ship to a different address?' => 'Expedier a une adresse differente ?',
+        'Payment' => 'Paiement',
         'Billing details' => 'Coordonnées de facturation',
         'Your order' => 'Votre commande',
         'Place order' => 'Valider la commande',
@@ -158,6 +177,51 @@ function tpulse_translate_french_plural_ui(string $translation, string $single, 
     return $translation;
 }
 add_filter('ngettext', 'tpulse_translate_french_plural_ui', 20, 5);
+
+function tpulse_french_checkout_fields(array $fields): array {
+    if (tpulse_is_english()) {
+        return $fields;
+    }
+
+    $labels = [
+        'billing_first_name' => ['Prenom', 'Votre prenom'],
+        'billing_last_name' => ['Nom', 'Votre nom'],
+        'billing_company' => ['Entreprise', 'Nom de l entreprise'],
+        'billing_country' => ['Pays / Region', 'Pays / Region'],
+        'billing_address_1' => ['Adresse', 'Numero et nom de rue'],
+        'billing_address_2' => ['Complement d adresse', 'Appartement, batiment, lieu-dit...'],
+        'billing_city' => ['Ville', 'Ville'],
+        'billing_state' => ['Region / Departement', 'Region / Departement'],
+        'billing_postcode' => ['Code postal', 'Code postal'],
+        'billing_phone' => ['Telephone', 'Votre numero de telephone'],
+        'billing_email' => ['Adresse email', 'votre@email.fr'],
+        'shipping_first_name' => ['Prenom', 'Votre prenom'],
+        'shipping_last_name' => ['Nom', 'Votre nom'],
+        'shipping_company' => ['Entreprise', 'Nom de l entreprise'],
+        'shipping_country' => ['Pays / Region', 'Pays / Region'],
+        'shipping_address_1' => ['Adresse', 'Numero et nom de rue'],
+        'shipping_address_2' => ['Complement d adresse', 'Appartement, batiment, lieu-dit...'],
+        'shipping_city' => ['Ville', 'Ville'],
+        'shipping_state' => ['Region / Departement', 'Region / Departement'],
+        'shipping_postcode' => ['Code postal', 'Code postal'],
+        'order_comments' => ['Notes de commande', 'Information utile pour la livraison ou la commande'],
+    ];
+
+    foreach ($fields as $section => $section_fields) {
+        foreach ($section_fields as $key => $field) {
+            if (!isset($labels[$key])) {
+                continue;
+            }
+
+            [$label, $placeholder] = $labels[$key];
+            $fields[$section][$key]['label'] = $label;
+            $fields[$section][$key]['placeholder'] = $placeholder;
+        }
+    }
+
+    return $fields;
+}
+add_filter('woocommerce_checkout_fields', 'tpulse_french_checkout_fields', 20);
 
 function tpulse_french_product_tabs(array $tabs): array {
     if (tpulse_is_english()) {
