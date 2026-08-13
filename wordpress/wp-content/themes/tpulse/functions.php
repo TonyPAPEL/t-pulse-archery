@@ -271,7 +271,9 @@ function tpulse_translate_frontend_html(string $html): string {
             'process your order, support your experience throughout this website, and for other purposes described in our' => 'traiter votre commande, ameliorer votre experience sur ce site et respecter les finalites decrites dans notre',
             'Your order' => 'Votre commande',
             'Phone' => 'Telephone',
+            'phone' => 'telephone',
             'Country / Region' => 'Pays / Region',
+            'country / region' => 'pays / region',
         ]);
     }
 
