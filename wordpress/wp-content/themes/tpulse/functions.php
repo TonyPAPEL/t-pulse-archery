@@ -83,6 +83,75 @@ function tpulse_translate_book_name(string $name, WC_Product $product): string {
 }
 add_filter('woocommerce_product_get_name', 'tpulse_translate_book_name', 10, 2);
 
+function tpulse_translate_french_ui(string $translated, string $text, string $domain): string {
+    if (tpulse_is_english()) {
+        return $translated;
+    }
+
+    $translations = [
+        'Add to cart' => 'Ajouter au panier',
+        'Select options' => 'Choisir le modèle',
+        'Choose an option' => 'Choisir une option',
+        'Clear' => 'Effacer',
+        'Read more' => 'Lire la suite',
+        'View cart' => 'Voir le panier',
+        'Update cart' => 'Mettre à jour le panier',
+        'Proceed to checkout' => 'Passer commande',
+        'Checkout' => 'Commande',
+        'Cart' => 'Panier',
+        'Coupon' => 'Code promo',
+        'Coupon code' => 'Code promo',
+        'Apply coupon' => 'Appliquer le code',
+        'Product' => 'Produit',
+        'Price' => 'Prix',
+        'Quantity' => 'Quantité',
+        'Subtotal' => 'Sous-total',
+        'Total' => 'Total',
+        'Remove item' => 'Retirer',
+        'Billing details' => 'Coordonnées de facturation',
+        'Your order' => 'Votre commande',
+        'Place order' => 'Valider la commande',
+        'Related products' => 'Produits similaires',
+        'Description' => 'Description',
+        'Additional information' => 'Informations complémentaires',
+        'Reviews' => 'Avis',
+        'There are no reviews yet.' => 'Il n’y a pas encore d’avis.',
+        'Be the first to review “%s”' => 'Soyez le premier à donner votre avis sur « %s »',
+        'Your rating' => 'Votre note',
+        'Rate…' => 'Noter…',
+        'Perfect' => 'Parfait',
+        'Good' => 'Bien',
+        'Average' => 'Moyen',
+        'Not that bad' => 'Pas si mal',
+        'Very poor' => 'Très mauvais',
+        'Your review' => 'Votre avis',
+        'Submit' => 'Envoyer',
+        'Name' => 'Nom',
+        'Email' => 'Email',
+        'Save my name, email, and website in this browser for the next time I comment.' => 'Enregistrer mon nom, mon email et mon site dans ce navigateur pour la prochaine fois.',
+        'verified owner' => 'acheteur vérifié',
+        'out of 5' => 'sur 5',
+        'Rated %s out of 5' => 'Noté %s sur 5',
+        '%s has been added to your cart.' => '%s a été ajouté au panier.',
+    ];
+
+    return $translations[$text] ?? $translated;
+}
+add_filter('gettext', 'tpulse_translate_french_ui', 20, 3);
+
+function tpulse_translate_french_plural_ui(string $translation, string $single, string $plural, int $number, string $domain): string {
+    if (tpulse_is_english()) {
+        return $translation;
+    }
+
+    if ($single === '%s review for %s' || $plural === '%s reviews for %s') {
+        return $number === 1 ? '%s avis pour %s' : '%s avis pour %s';
+    }
+
+    return $translation;
+}
+add_filter('ngettext', 'tpulse_translate_french_plural_ui', 20, 5);
+
 function tpulse_translate_frontend_html(string $html): string {
     if (!tpulse_is_english()) {
         return $html;
