@@ -228,14 +228,15 @@ h3 { font-size: 1.25rem; }
 .woocommerce #review_form .stars,
 .woocommerce #review_form .comment-form-rating > select,
 .woocommerce #review_form .comment-form-rating > p.stars { display: none !important; }
-.tpulse-rating-field { margin: 1rem 0 1.2rem; }
-.tpulse-rating-stars { display: flex; flex-direction: row-reverse; justify-content: flex-end; align-items: center; gap: .25rem; }
-.tpulse-rating-stars input { position: absolute; opacity: 0; pointer-events: none; }
-.tpulse-rating-stars label { margin: 0 !important; color: rgba(255,255,255,.26) !important; cursor: pointer; font-size: 2rem !important; line-height: 1; transition: color .15s ease, transform .15s ease; }
-.tpulse-rating-stars input:checked ~ label,
-.tpulse-rating-stars label:hover,
-.tpulse-rating-stars label:hover ~ label { color: var(--pulse) !important; transform: translateY(-1px); }
-.tpulse-rating-text { margin-left: .75rem; color: var(--muted); font-size: .9rem; }
+.woocommerce #review_form .tpulse-rating-field { display: block; margin: 1rem 0 1.2rem; }
+.woocommerce #review_form .tpulse-rating-field > label { display: block; margin-bottom: .45rem; }
+.woocommerce #review_form .tpulse-rating-stars { display: inline-flex !important; flex-direction: row-reverse !important; justify-content: flex-end; align-items: center; gap: .18rem; width: auto; max-width: 100%; }
+.woocommerce #review_form .tpulse-rating-stars input[type="radio"] { display: none !important; position: absolute !important; opacity: 0 !important; width: 0 !important; height: 0 !important; margin: 0 !important; }
+.woocommerce #review_form .tpulse-rating-stars label { display: inline-block !important; width: auto !important; margin: 0 !important; padding: 0 .04rem !important; color: rgba(255,255,255,.28) !important; cursor: pointer; font-size: 2rem !important; font-weight: 900 !important; line-height: 1 !important; text-indent: 0 !important; transition: color .15s ease, transform .15s ease; }
+.woocommerce #review_form .tpulse-rating-stars input:checked ~ label,
+.woocommerce #review_form .tpulse-rating-stars label:hover,
+.woocommerce #review_form .tpulse-rating-stars label:hover ~ label { color: var(--pulse) !important; transform: translateY(-1px); }
+.woocommerce #review_form .tpulse-rating-text { display: inline-flex; align-items: center; margin-left: .75rem; color: var(--muted); font-size: .9rem; }
 .woocommerce #review_form textarea,
 .woocommerce #review_form input[type="text"],
 .woocommerce #review_form input[type="email"],

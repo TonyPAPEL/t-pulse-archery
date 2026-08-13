@@ -208,7 +208,7 @@ function tpulse_product_review_form_args(array $args): array {
         . '<input type="radio" id="tpulse-rating-3" name="rating" value="3"><label for="tpulse-rating-3" title="3 sur 5">★</label>'
         . '<input type="radio" id="tpulse-rating-2" name="rating" value="2"><label for="tpulse-rating-2" title="2 sur 5">★</label>'
         . '<input type="radio" id="tpulse-rating-1" name="rating" value="1"><label for="tpulse-rating-1" title="1 sur 5">★</label>'
-        . '<span class="tpulse-rating-text">5/5 par defaut</span></div></div>';
+        . '</div></div>';
 
     $extra_fields = '<div class="tpulse-review-fields">'
         . '<p class="comment-form-tpulse-name"><label for="tpulse_review_name">Nom, prenom ou pseudo <span class="required">*</span></label><input id="tpulse_review_name" name="tpulse_review_name" type="text" required></p>'
