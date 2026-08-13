@@ -90,35 +90,83 @@ function tpulse_ensure_woocommerce_pages(): void {
 }
 add_action('wp_loaded', 'tpulse_ensure_woocommerce_pages', 12);
 
+function tpulse_attach_product_image(WC_Product $product, string $asset_filename, string $attachment_filename, string $title): void {
+    if ($product->get_image_id()) {
+        return;
+    }
+
+    $image_path = get_template_directory() . '/assets/images/' . $asset_filename;
+    if (!file_exists($image_path)) {
+        return;
+    }
+
+    $upload = wp_upload_bits($attachment_filename, null, file_get_contents($image_path));
+    if (!empty($upload['error'])) {
+        return;
+    }
+
+    $attachment_id = wp_insert_attachment([
+        'post_mime_type' => wp_check_filetype($upload['file'])['type'] ?? 'image/png',
+        'post_title' => $title,
+        'post_status' => 'inherit',
+    ], $upload['file'], $product->get_id());
+
+    if (is_wp_error($attachment_id)) {
+        return;
+    }
+
+    require_once ABSPATH . 'wp-admin/includes/image.php';
+    wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $upload['file']));
+    $product->set_image_id((int) $attachment_id);
+    $product->save();
+}
+
 function tpulse_setup_woocommerce_product(): void {
     if (!is_blog_installed() || !class_exists('WooCommerce')) {
         return;
     }
 
     $existing_id = (int) wc_get_product_id_by_sku('HELITWIST-ORIGINAL');
-    $existing_product = $existing_id ? wc_get_product($existing_id) : false;
-    if ($existing_product) {
-        update_option('tpulse_product_created', $existing_id);
+    if (!$existing_id) {
+        $existing_id = (int) wp_insert_post([
+            'post_title' => 'HeliTwist Original',
+            'post_name' => 'helitwist-original',
+            'post_status' => 'draft',
+            'post_type' => 'product',
+        ]);
+    }
+
+    if (!$existing_id) {
         return;
     }
 
-    $product = new WC_Product_Simple();
+    wp_set_object_terms($existing_id, 'variable', 'product_type');
+
+    $product = new WC_Product_Variable($existing_id);
     $product->set_name('HeliTwist Original');
     $product->set_slug('helitwist-original');
-    $product->set_status('draft');
+    $product->set_status($product->get_status() === 'publish' ? 'publish' : 'draft');
     $product->set_catalog_visibility('visible');
     $product->set_description('Amortisseur breveté pour stabilisateurs d’arc, conçu pour réduire les vibrations, le choc du tir, le bruit et la sensibilité au vent.');
     $product->set_short_description('Structure spiralée creuse, amortissement axial et compatibilité 5/16, 1/4 et M8.');
     $product->set_sku('HELITWIST-ORIGINAL');
     $product->set_weight('0.027');
-    $product->set_manage_stock(true);
-    $product->set_stock_quantity(0);
-    $product->set_stock_status('outofstock');
+    $product->set_manage_stock(false);
+
+    $attribute = new WC_Product_Attribute();
+    $attribute->set_id(0);
+    $attribute->set_name('Filetage');
+    $attribute->set_options(['1/4', '5/16', 'M8']);
+    $attribute->set_position(0);
+    $attribute->set_visible(true);
+    $attribute->set_variation(true);
+    $product->set_attributes([$attribute]);
+    $product->set_default_attributes(['filetage' => '5/16']);
     $product->save();
 
-    $image_path = get_template_directory() . '/assets/images/helitwist-3.png';
-    if (file_exists($image_path)) {
-        $upload = wp_upload_bits('helitwist-original.png', null, file_get_contents($image_path));
+    $image_path = get_template_directory() . '/assets/images/helitwist-1.png';
+    if (get_option('tpulse_helitwist_box_image_version') !== '1' && file_exists($image_path)) {
+        $upload = wp_upload_bits('helitwist-original-boite.png', null, file_get_contents($image_path));
         if (empty($upload['error'])) {
             $attachment_id = wp_insert_attachment([
                 'post_mime_type' => 'image/png',
@@ -131,8 +179,36 @@ function tpulse_setup_woocommerce_product(): void {
                 wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $upload['file']));
                 $product->set_image_id((int) $attachment_id);
                 $product->save();
+                update_option('tpulse_helitwist_box_image_version', '1');
             }
         }
+    }
+
+    $variations = [
+        '5/16' => ['HELITWIST-516', 'HeliTwist Original - 5/16'],
+        '1/4' => ['HELITWIST-14', 'HeliTwist Original - 1/4'],
+        'M8' => ['HELITWIST-M8', 'HeliTwist Original - M8'],
+    ];
+
+    foreach ($variations as $thread => [$sku, $name]) {
+        $variation_id = (int) wc_get_product_id_by_sku($sku);
+        $variation = $variation_id ? wc_get_product($variation_id) : false;
+        if (!$variation instanceof WC_Product_Variation || (int) $variation->get_parent_id() !== $product->get_id()) {
+            $variation = new WC_Product_Variation();
+            $variation->set_parent_id($product->get_id());
+        }
+
+        $stock_quantity = $variation->get_id() ? (int) $variation->get_stock_quantity() : 10;
+        $variation->set_name($name);
+        $variation->set_status('publish');
+        $variation->set_attributes(['filetage' => $thread]);
+        $variation->set_sku($sku);
+        $variation->set_regular_price('30.50');
+        $variation->set_manage_stock(true);
+        $variation->set_stock_quantity(max(0, $stock_quantity));
+        $variation->set_stock_status($stock_quantity > 0 ? 'instock' : 'outofstock');
+        $variation->set_weight('0.027');
+        $variation->save();
     }
 
     update_option('woocommerce_currency', 'EUR');
@@ -144,13 +220,15 @@ function tpulse_setup_woocommerce_product(): void {
     update_option('woocommerce_coming_soon', 'no');
     update_option('woocommerce_store_pages_only', 'no');
     update_option('tpulse_product_created', $product->get_id());
+    update_option('tpulse_helitwist_variations_version', '1');
+    wc_delete_product_transients($product->get_id());
 }
 add_action('wp_loaded', 'tpulse_setup_woocommerce_product');
 
 function tpulse_publish_local_demo_product(): void {
     $host = wp_parse_url(home_url(), PHP_URL_HOST);
     $is_demo_environment = wp_get_environment_type() === 'local' || $host === 'preprod.t-pulse-archery.com';
-    if (!$is_demo_environment || !class_exists('WooCommerce') || get_option('tpulse_demo_product_published') === '3') {
+    if (!$is_demo_environment || !class_exists('WooCommerce') || get_option('tpulse_demo_product_published') === '4') {
         return;
     }
 
@@ -162,16 +240,14 @@ function tpulse_publish_local_demo_product(): void {
 
     $product->set_status('publish');
     $product->set_catalog_visibility('visible');
-    $product->set_regular_price('30.50');
-    $product->set_manage_stock(true);
-    $product->set_stock_quantity(10);
+    $product->set_manage_stock(false);
     $product->set_stock_status('instock');
     $product->save();
     wc_update_product_lookup_tables_column('min_max_price', $product->get_id());
     wc_update_product_lookup_tables_column('stock_quantity', $product->get_id());
     wc_delete_product_transients($product->get_id());
 
-    update_option('tpulse_demo_product_published', '3');
+    update_option('tpulse_demo_product_published', '4');
 }
 add_action('wp_loaded', 'tpulse_publish_local_demo_product', 20);
 
