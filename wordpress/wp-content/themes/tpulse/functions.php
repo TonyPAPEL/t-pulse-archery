@@ -341,7 +341,7 @@ function tpulse_translate_frontend_html(string $html): string {
 }
 
 function tpulse_start_translation_buffer(): void {
-    if (tpulse_is_english() && !is_admin()) {
+    if (!is_admin()) {
         ob_start('tpulse_translate_frontend_html');
     }
 }
