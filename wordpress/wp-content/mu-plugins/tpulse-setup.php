@@ -54,7 +54,7 @@ function tpulse_initial_setup(): void {
 add_action('init', 'tpulse_initial_setup');
 
 function tpulse_ensure_brand_pages(): void {
-    if (!is_blog_installed() || get_option('tpulse_brand_pages_created')) {
+    if (!is_blog_installed()) {
         return;
     }
 
@@ -64,8 +64,39 @@ function tpulse_ensure_brand_pages(): void {
 }
 add_action('init', 'tpulse_ensure_brand_pages', 20);
 
+function tpulse_ensure_woocommerce_pages(): void {
+    if (!is_blog_installed() || !class_exists('WooCommerce')) {
+        return;
+    }
+
+    $pages = [
+        'shop' => ['Boutique', 'boutique', ''],
+        'cart' => ['Panier', 'panier', '<!-- wp:shortcode -->[woocommerce_cart]<!-- /wp:shortcode -->'],
+        'checkout' => ['Commande', 'commande', '<!-- wp:shortcode -->[woocommerce_checkout]<!-- /wp:shortcode -->'],
+        'myaccount' => ['Mon compte', 'mon-compte', '<!-- wp:shortcode -->[woocommerce_my_account]<!-- /wp:shortcode -->'],
+    ];
+
+    foreach ($pages as $key => [$title, $slug, $content]) {
+        $option = "woocommerce_{$key}_page_id";
+        $page_id = (int) get_option($option);
+        $page = $page_id ? get_post($page_id) : null;
+        if (!$page instanceof WP_Post || $page->post_status === 'trash') {
+            $page_id = tpulse_create_page($title, $slug, $content);
+            update_option($option, $page_id);
+        }
+    }
+
+    flush_rewrite_rules();
+}
+add_action('wp_loaded', 'tpulse_ensure_woocommerce_pages', 12);
+
 function tpulse_setup_woocommerce_product(): void {
-    if (!is_blog_installed() || !class_exists('WooCommerce') || get_option('tpulse_product_created')) {
+    if (!is_blog_installed() || !class_exists('WooCommerce')) {
+        return;
+    }
+
+    $existing_id = (int) get_option('tpulse_product_created');
+    if ($existing_id && wc_get_product($existing_id)) {
         return;
     }
 
