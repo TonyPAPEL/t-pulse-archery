@@ -1,0 +1,10 @@
+# Local WordPress runtime
+wordpress-local/
+
+# Local transfer/resume artifacts
+_reprise_tpulse_wp/
+
+# OS/editor noise
+Thumbs.db
+.DS_Store
+t-pulse-f noir.png
