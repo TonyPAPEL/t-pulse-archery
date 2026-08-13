@@ -148,7 +148,9 @@ function tpulse_setup_woocommerce_product(): void {
 add_action('wp_loaded', 'tpulse_setup_woocommerce_product');
 
 function tpulse_publish_local_demo_product(): void {
-    if (wp_get_environment_type() !== 'local' || !class_exists('WooCommerce') || get_option('tpulse_demo_product_published') === '3') {
+    $host = wp_parse_url(home_url(), PHP_URL_HOST);
+    $is_demo_environment = wp_get_environment_type() === 'local' || $host === 'preprod.t-pulse-archery.com';
+    if (!$is_demo_environment || !class_exists('WooCommerce') || get_option('tpulse_demo_product_published') === '3') {
         return;
     }
 
