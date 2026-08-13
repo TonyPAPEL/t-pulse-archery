@@ -213,6 +213,19 @@ h3 { font-size: 1.25rem; }
 .woocommerce div.product .single_variation_wrap { width: 100%; }
 .woocommerce div.product .woocommerce-variation-price { margin: .65rem 0; }
 .woocommerce div.product .stock { color: var(--pulse); font-size: .9rem; font-weight: 750; }
+.woocommerce #reviews { margin-top: 2rem; padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.035); }
+.woocommerce #reviews h2,
+.woocommerce #review_form #reply-title { color: var(--paper); font-size: 1.35rem; line-height: 1.25; }
+.woocommerce #reviews .commentlist { padding-left: 0; }
+.woocommerce #reviews #comments ol.commentlist li .comment-text { border-color: var(--line); border-radius: 16px; background: rgba(0,0,0,.16); }
+.woocommerce #reviews .star-rating,
+.woocommerce p.stars a { color: var(--pulse); }
+.woocommerce #review_form textarea,
+.woocommerce #review_form input[type="text"],
+.woocommerce #review_form input[type="email"] { width: 100%; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--paper); }
+.wp-block-buttons { display: flex; flex-wrap: wrap; gap: .85rem; margin: 1.5rem 0; }
+.wp-block-button__link { display: inline-flex; align-items: center; justify-content: center; padding: .9rem 1.15rem; border-radius: 999px; background: var(--pulse); color: #071009; font-weight: 850; text-decoration: none !important; }
+.is-style-outline .wp-block-button__link { border: 1px solid var(--line); background: transparent; color: var(--paper); }
 .woocommerce table.shop_table, .woocommerce form.checkout_coupon, .woocommerce form.login, .woocommerce form.register { border-color: var(--line); border-radius: var(--radius); }
 .woocommerce input.input-text, .woocommerce textarea, .woocommerce select, .woocommerce form .form-row input.input-text {
   width: 100%; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--paper);

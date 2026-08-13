@@ -64,6 +64,20 @@ function tpulse_ensure_brand_pages(): void {
 }
 add_action('init', 'tpulse_ensure_brand_pages', 20);
 
+function tpulse_ensure_reviews_page(): void {
+    if (!is_blog_installed()) {
+        return;
+    }
+
+    $content = '<!-- wp:paragraph --><p>Vous avez teste un produit T-Pulse ? Votre retour aide les autres archers a choisir le bon materiel et nous aide a ameliorer les prochaines versions.</p><!-- /wp:paragraph -->'
+        . '<!-- wp:paragraph --><p>Les avis publies sur les fiches produits sont moderes avant publication. Les futurs achats passes par la boutique pourront afficher la mention acheteur verifie lorsque WooCommerce peut relier l avis a une commande.</p><!-- /wp:paragraph -->'
+        . '<!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/produit/helitwist-original/#reviews">Noter HeliTwist</a></div><!-- /wp:button --><!-- wp:button {"className":"is-style-outline"} --><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/produit/jeux-darchers/#reviews">Noter le livre</a></div><!-- /wp:button --></div><!-- /wp:buttons -->'
+        . '<!-- wp:paragraph --><p>Pour un retour long, une photo ou un temoignage d ancien achat, envoyez-nous aussi votre message via la page contact.</p><!-- /wp:paragraph -->';
+
+    tpulse_create_page('Retours d archers', 'retours-archers', $content);
+}
+add_action('init', 'tpulse_ensure_reviews_page', 25);
+
 function tpulse_ensure_woocommerce_pages(): void {
     if (!is_blog_installed() || !class_exists('WooCommerce')) {
         return;
@@ -392,7 +406,7 @@ function tpulse_disable_local_coming_soon(): void {
 add_action('wp_loaded', 'tpulse_disable_local_coming_soon', 30);
 
 function tpulse_enable_product_reviews(): void {
-    if (!class_exists('WooCommerce') || get_option('tpulse_product_reviews_enabled') === '1') {
+    if (!class_exists('WooCommerce') || get_option('tpulse_product_reviews_enabled') === '2') {
         return;
     }
 
@@ -401,6 +415,9 @@ function tpulse_enable_product_reviews(): void {
     update_option('woocommerce_review_rating_required', 'yes');
     update_option('woocommerce_review_rating_verification_label', 'yes');
     update_option('woocommerce_review_rating_verification_required', 'no');
+    update_option('comment_moderation', '1');
+    update_option('comments_notify', '1');
+    update_option('moderation_notify', '1');
 
     $products = wc_get_products(['limit' => -1, 'return' => 'ids']);
     foreach ($products as $product_id) {
@@ -410,7 +427,7 @@ function tpulse_enable_product_reviews(): void {
         ]);
     }
 
-    update_option('tpulse_product_reviews_enabled', '1');
+    update_option('tpulse_product_reviews_enabled', '2');
 }
 add_action('wp_loaded', 'tpulse_enable_product_reviews', 35);
 

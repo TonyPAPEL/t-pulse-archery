@@ -19,6 +19,13 @@ get_header();
     </div>
 </section>
 
+<section class="section">
+    <div class="wrap cta review-cta">
+        <div><span class="eyebrow">Retours d archers</span><h2>Votre avis aide la prochaine personne a choisir.</h2><p class="muted">Les avis produits sont lus avant publication. Les commandes passees par la boutique pourront afficher la mention acheteur verifie.</p></div>
+        <a class="button secondary" href="<?php echo esc_url(home_url('/retours-archers/')); ?>">Laisser un avis</a>
+    </div>
+</section>
+
 <section class="section alt">
     <div class="wrap feature-product">
         <div class="feature-product-media">
