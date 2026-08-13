@@ -264,7 +264,15 @@ add_filter('woocommerce_product_additional_information_heading', function (strin
 
 function tpulse_translate_frontend_html(string $html): string {
     if (!tpulse_is_english()) {
-        return $html;
+        return strtr($html, [
+            'Since your browser does not support JavaScript, or it is disabled, please ensure you click the <em>Update Totals</em> button before placing your order. You may be charged more than the amount stated above if you fail to do so.' => 'Comme votre navigateur ne prend pas en charge JavaScript ou qu il est desactive, cliquez sur le bouton de mise a jour avant de valider la commande.',
+            'Update country / region' => 'Mettre a jour le pays / region',
+            'Update totals' => 'Mettre a jour les totaux',
+            'process your order, support your experience throughout this website, and for other purposes described in our' => 'traiter votre commande, ameliorer votre experience sur ce site et respecter les finalites decrites dans notre',
+            'Your order' => 'Votre commande',
+            'Phone' => 'Telephone',
+            'Country / Region' => 'Pays / Region',
+        ]);
     }
 
     return strtr($html, [
