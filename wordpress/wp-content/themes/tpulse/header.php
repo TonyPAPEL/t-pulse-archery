@@ -26,7 +26,8 @@ if (!defined('ABSPATH')) {
                 <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html(tpulse_text('La marque', 'The brand')); ?></a>
                 <a href="<?php echo esc_url(home_url('/helitwist/')); ?>">HeliTwist</a>
                 <a href="<?php echo esc_url(tpulse_shop_url()); ?>"><?php echo esc_html(tpulse_text('Boutique', 'Shop')); ?></a>
-                <a href="<?php echo esc_url(home_url('/retours-archers/')); ?>"><?php echo esc_html(tpulse_text('Retours', 'Reviews')); ?></a>
+                <a href="<?php echo esc_url(home_url('/actualites/')); ?>"><?php echo esc_html(tpulse_text('Actualites', 'News')); ?></a>
+                <a href="<?php echo esc_url(home_url('/retours-archers/')); ?>"><?php echo esc_html(tpulse_text('Avis', 'Reviews')); ?></a>
                 <a href="<?php echo esc_url(home_url('/ressources/')); ?>"><?php echo esc_html(tpulse_text('Ressources', 'Resources')); ?></a>
                 <a href="<?php echo esc_url(home_url('/contact/')); ?>">Contact</a>
             <?php endif; ?>

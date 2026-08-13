@@ -21,7 +21,7 @@ get_header();
 
 <section class="section">
     <div class="wrap cta review-cta">
-        <div><span class="eyebrow">Retours d archers</span><h2>Votre avis aide la prochaine personne a choisir.</h2><p class="muted">Les avis produits sont lus avant publication. Les commandes passees par la boutique pourront afficher la mention acheteur verifie.</p></div>
+        <div><span class="eyebrow">Avis clients</span><h2>Vous avez teste un produit T-Pulse ?</h2><p class="muted">Partagez votre retour sur HeliTwist ou le livre. Les avis sont relus avant publication.</p></div>
         <a class="button secondary" href="<?php echo esc_url(home_url('/retours-archers/')); ?>">Laisser un avis</a>
     </div>
 </section>
@@ -77,6 +77,42 @@ get_header();
                 <p>Des outils, simulateurs, articles et futures applications Android créés pour les archers.</p>
                 <a class="text-link" href="<?php echo esc_url(home_url('/ressources/')); ?>">Voir les ressources →</a>
             </article>
+        </div>
+    </div>
+</section>
+
+<section class="section alt">
+    <div class="wrap">
+        <div class="section-head">
+            <span class="eyebrow">Actualites</span>
+            <h2>Nouveautes et projets en cours.</h2>
+            <p>Un espace pour suivre les prochains produits, les essais, les articles techniques et les coulisses de T-Pulse Archery.</p>
+        </div>
+        <div class="posts-grid">
+            <?php
+            $latest_posts = new WP_Query(['posts_per_page' => 3, 'post_status' => 'publish']);
+            if ($latest_posts->have_posts()) :
+                while ($latest_posts->have_posts()) :
+                    $latest_posts->the_post();
+                    ?>
+                    <article class="post-card">
+                        <time datetime="<?php echo esc_attr(get_the_date('c')); ?>"><?php echo esc_html(get_the_date()); ?></time>
+                        <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                        <p><?php echo esc_html(wp_strip_all_tags(get_the_excerpt())); ?></p>
+                        <a class="text-link" href="<?php the_permalink(); ?>">Lire -></a>
+                    </article>
+                    <?php
+                endwhile;
+                wp_reset_postdata();
+            else :
+                ?>
+                <article class="post-card">
+                    <time>En preparation</time>
+                    <h3>Articles et nouveautes arrivent ici.</h3>
+                    <p>Publiez vos projets, tests et actualites depuis l admin WordPress.</p>
+                    <a class="text-link" href="<?php echo esc_url(home_url('/actualites/')); ?>">Voir les actualites -></a>
+                </article>
+            <?php endif; ?>
         </div>
     </div>
 </section>

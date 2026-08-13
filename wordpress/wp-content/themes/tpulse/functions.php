@@ -274,6 +274,10 @@ function tpulse_translate_frontend_html(string $html): string {
             'phone' => 'telephone',
             'Country / Region' => 'Pays / Region',
             'country / region' => 'pays / region',
+            'has been added to your cart.' => 'a ete ajoute au panier.',
+            'View cart' => 'Voir le panier',
+            '&ldquo;' => '« ',
+            '&rdquo;' => ' »',
         ]);
     }
 

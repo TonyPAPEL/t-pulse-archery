@@ -78,6 +78,40 @@ function tpulse_ensure_reviews_page(): void {
 }
 add_action('init', 'tpulse_ensure_reviews_page', 25);
 
+function tpulse_ensure_blog_setup(): void {
+    if (!is_blog_installed()) {
+        return;
+    }
+
+    $blog_page = tpulse_create_page('Actualites', 'actualites');
+    update_option('page_for_posts', $blog_page);
+
+    foreach (['Nouveautes', 'Projets en cours', 'Articles techniques'] as $category) {
+        if (!term_exists($category, 'category')) {
+            wp_insert_term($category, 'category');
+        }
+    }
+
+    if (get_option('tpulse_blog_seeded') === '1') {
+        return;
+    }
+
+    $post_id = wp_insert_post([
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'post_title' => 'Bienvenue dans les actualites T-Pulse',
+        'post_excerpt' => 'Un espace pour suivre les nouveautes, les projets en cours et les articles techniques autour de T-Pulse Archery.',
+        'post_content' => '<p>Cette rubrique permettra de publier les nouveautes de la marque, les projets en developpement, les articles techniques et les coulisses des produits T-Pulse.</p><p>Vous pourrez modifier cet article ou en ajouter de nouveaux depuis <strong>Articles</strong> dans WordPress.</p>',
+    ]);
+
+    if (!is_wp_error($post_id)) {
+        wp_set_post_terms($post_id, ['Nouveautes'], 'category');
+    }
+
+    update_option('tpulse_blog_seeded', '1');
+}
+add_action('init', 'tpulse_ensure_blog_setup', 30);
+
 function tpulse_ensure_woocommerce_pages(): void {
     if (!is_blog_installed() || !class_exists('WooCommerce')) {
         return;
