@@ -114,6 +114,9 @@ function tpulse_translate_french_ui(string $translated, string $text, string $do
         'Related products' => 'Produits similaires',
         'Description' => 'Description',
         'Additional information' => 'Informations complémentaires',
+        'Weight' => 'Poids',
+        'Dimensions' => 'Dimensions',
+        'N/A' => 'Non renseigné',
         'Reviews' => 'Avis',
         'There are no reviews yet.' => 'Il n’y a pas encore d’avis.',
         'Be the first to review “%s”' => 'Soyez le premier à donner votre avis sur « %s »',
@@ -130,6 +133,10 @@ function tpulse_translate_french_ui(string $translated, string $text, string $do
         'Email' => 'Email',
         'Save my name, email, and website in this browser for the next time I comment.' => 'Enregistrer mon nom, mon email et mon site dans ce navigateur pour la prochaine fois.',
         'verified owner' => 'acheteur vérifié',
+        'SKU:' => 'Référence :',
+        'Category:' => 'Catégorie :',
+        'Categories:' => 'Catégories :',
+        'Uncategorized' => 'Non classé',
         'out of 5' => 'sur 5',
         'Rated %s out of 5' => 'Noté %s sur 5',
         '%s has been added to your cart.' => '%s a été ajouté au panier.',
@@ -151,6 +158,42 @@ function tpulse_translate_french_plural_ui(string $translation, string $single, 
     return $translation;
 }
 add_filter('ngettext', 'tpulse_translate_french_plural_ui', 20, 5);
+
+function tpulse_french_product_tabs(array $tabs): array {
+    if (tpulse_is_english()) {
+        return $tabs;
+    }
+
+    if (isset($tabs['description'])) {
+        $tabs['description']['title'] = 'Description';
+    }
+    if (isset($tabs['additional_information'])) {
+        $tabs['additional_information']['title'] = 'Informations complémentaires';
+    }
+    if (isset($tabs['reviews'])) {
+        $tabs['reviews']['title'] = 'Avis';
+    }
+
+    return $tabs;
+}
+add_filter('woocommerce_product_tabs', 'tpulse_french_product_tabs', 20);
+
+function tpulse_french_reviews_title(string $title, int $count, WC_Product $product): string {
+    if (tpulse_is_english()) {
+        return $title;
+    }
+
+    return sprintf(_n('%s avis pour %s', '%s avis pour %s', $count, 'tpulse'), number_format_i18n($count), esc_html($product->get_name()));
+}
+add_filter('woocommerce_reviews_title', 'tpulse_french_reviews_title', 20, 3);
+
+add_filter('woocommerce_product_description_heading', function (string $heading): string {
+    return tpulse_is_english() ? $heading : 'Description';
+});
+
+add_filter('woocommerce_product_additional_information_heading', function (string $heading): string {
+    return tpulse_is_english() ? $heading : 'Informations complémentaires';
+});
 
 function tpulse_translate_frontend_html(string $html): string {
     if (!tpulse_is_english()) {

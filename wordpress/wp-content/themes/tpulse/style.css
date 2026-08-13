@@ -204,6 +204,7 @@ h3 { font-size: 1.25rem; }
 .woocommerce div.product div.images img { border-radius: 18px; object-fit: contain; background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(137,240,113,.06)); }
 .woocommerce div.product p.price, .woocommerce div.product span.price { color: var(--pulse); font-size: 1.35rem; font-weight: 850; }
 .woocommerce div.product .woocommerce-product-details__short-description { color: var(--muted); font-size: 1rem; line-height: 1.7; }
+.woocommerce div.product .product_meta { display: none; }
 .woocommerce div.product form.cart { display: flex; flex-wrap: wrap; gap: .85rem; align-items: center; margin-top: 1.5rem; }
 .woocommerce div.product form.cart .variations { width: 100%; margin-bottom: .5rem; border-collapse: separate; border-spacing: 0 .5rem; }
 .woocommerce div.product form.cart .variations th,

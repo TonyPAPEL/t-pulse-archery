@@ -227,6 +227,7 @@ function tpulse_setup_woocommerce_product(): void {
 
     update_option('woocommerce_currency', 'EUR');
     update_option('woocommerce_default_country', 'FR');
+    update_option('woocommerce_weight_unit', 'kg');
     update_option('woocommerce_calc_taxes', 'yes');
     update_option('woocommerce_manage_stock', 'yes');
     update_option('woocommerce_enable_guest_checkout', 'yes');
