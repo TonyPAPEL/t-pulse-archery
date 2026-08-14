@@ -576,7 +576,7 @@ function tpulse_refresh_store_presentation(): void {
 add_action('wp_loaded', 'tpulse_refresh_store_presentation', 41);
 
 function tpulse_configure_default_shipping(): void {
-    if (!class_exists('WC_Shipping_Zones') || get_option('tpulse_default_shipping_version') === '2026-08-14-6') {
+    if (!class_exists('WC_Shipping_Zones') || get_option('tpulse_default_shipping_version') === '2026-08-14-7') {
         return;
     }
 
@@ -609,25 +609,11 @@ function tpulse_configure_default_shipping(): void {
         $zone->add_location('FR', 'country');
     }
 
-    $has_flat_rate = false;
     foreach ($zone->get_shipping_methods(false) as $method) {
         if ($method->id === 'flat_rate') {
-            $has_flat_rate = true;
-            update_option('woocommerce_flat_rate_' . $method->instance_id . '_settings', [
-                'title' => 'Livraison forfaitaire temporaire',
-                'tax_status' => 'none',
-                'cost' => '4.90',
-            ]);
+            $zone->delete_shipping_method($method->instance_id);
+            delete_option('woocommerce_flat_rate_' . $method->instance_id . '_settings');
         }
-    }
-
-    if (!$has_flat_rate) {
-        $instance_id = $zone->add_shipping_method('flat_rate');
-        update_option('woocommerce_flat_rate_' . $instance_id . '_settings', [
-            'title' => 'Livraison forfaitaire temporaire',
-            'tax_status' => 'none',
-            'cost' => '4.90',
-        ]);
     }
 
     global $wpdb;
@@ -673,7 +659,7 @@ function tpulse_configure_default_shipping(): void {
     }
     delete_option('sendcloudshipping_v2_service_point_v2_shipping_method_0_settings');
 
-    update_option('tpulse_default_shipping_version', '2026-08-14-6');
+    update_option('tpulse_default_shipping_version', '2026-08-14-7');
 }
 add_action('wp_loaded', 'tpulse_configure_default_shipping', 44);
 
