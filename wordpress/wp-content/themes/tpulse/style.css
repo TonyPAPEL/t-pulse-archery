@@ -3,7 +3,7 @@ Theme Name: T-Pulse Archery
 Theme URI: https://t-pulse-archery.com/
 Author: T-Pulse Archery
 Description: Theme WooCommerce sur mesure pour T-Pulse Archery.
-Version: 1.0.0
+Version: 1.1.0
 Text Domain: tpulse
 Requires at least: 6.5
 Requires PHP: 8.1
@@ -174,6 +174,19 @@ h3 { font-size: 1.25rem; }
 .entry-content { color: var(--muted); }
 .entry-content h2, .entry-content h3 { color: var(--paper); margin-top: 2rem; }
 .entry-content a { color: var(--pulse); text-decoration: underline; }
+.entry-content p, .entry-content li { max-width: 76ch; }
+.legal-document { display: grid; gap: 1rem; }
+.legal-document h2 { margin: 2rem 0 .25rem; font-size: clamp(1.45rem, 2.5vw, 2rem); letter-spacing: -.025em; }
+.legal-document h2:first-of-type { margin-top: 1rem; }
+.legal-document p, .legal-document li { color: #c5d3c9; }
+.legal-intro { max-width: 68ch; color: var(--paper) !important; font-size: 1.08rem; }
+.legal-warning, .legal-card { padding: 1.2rem 1.35rem; border: 1px solid rgba(137,240,113,.3); border-radius: 16px; background: rgba(137,240,113,.07); }
+.legal-card h2 { margin-top: 0; }
+.tpulse-required-info { display: inline; padding: .08rem .32rem; border-radius: 5px; background: #ffe58a; color: #2a2200; }
+.legal-table { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+.legal-table table { width: 100%; min-width: 560px; border-collapse: collapse; }
+.legal-table th, .legal-table td { padding: .8rem 1rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.legal-table th { color: var(--paper); background: rgba(255,255,255,.04); }
 .resource-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
 .resource-card { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); box-shadow: var(--shadow); }
 .resource-card-body { padding: 1.5rem; }
@@ -187,8 +200,10 @@ h3 { font-size: 1.25rem; }
 .resource-download { margin-top: 2rem; }
 .woocommerce .woocommerce-products-header__title,
 .woocommerce-page .entry-title { margin-bottom: 1rem; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.04em; }
+.woocommerce .woocommerce-products-header__title.page-title { font-size: clamp(2.5rem, 5vw, 4.25rem); }
 .woocommerce .woocommerce-result-count,
 .woocommerce .woocommerce-ordering { margin-bottom: 1.5rem; color: var(--muted); font-size: .9rem; }
+.shop-intro { max-width: 62ch; margin: -.25rem 0 1.5rem; color: var(--muted); font-size: 1.02rem; }
 .woocommerce .woocommerce-ordering select { min-width: 220px; padding: .65rem .85rem; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--paper); }
 .woocommerce .products ul, .woocommerce ul.products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; align-items: stretch; }
 .woocommerce ul.products::before, .woocommerce ul.products::after { display: none; }
@@ -228,6 +243,22 @@ h3 { font-size: 1.25rem; }
 .woocommerce div.product .woocommerce-tabs ul.tabs li.active { border-color: rgba(137,240,113,.65) !important; background: rgba(137,240,113,.14) !important; }
 .woocommerce div.product .woocommerce-tabs ul.tabs li a { display: inline-flex; padding: .7rem 1rem !important; color: var(--paper) !important; font-size: .9rem; font-weight: 850; text-decoration: none; }
 .woocommerce div.product .woocommerce-tabs .panel { padding: 1.35rem; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.025); }
+.woocommerce div.product .woocommerce-tabs .panel > h2:first-child { font-size: clamp(1.65rem, 3vw, 2.35rem); }
+.tpulse-product-story { display: grid; gap: .75rem; }
+.tpulse-product-story .product-intro { max-width: 68ch; color: var(--paper); font-size: 1.08rem; }
+.tpulse-product-story h2 { margin: 1.5rem 0 0; font-size: clamp(1.45rem, 2.7vw, 2.1rem); }
+.tpulse-product-story p, .tpulse-product-story li { color: var(--muted); }
+.product-benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; margin: 1rem 0; }
+.product-benefits > div { padding: 1rem; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.03); }
+.product-benefits strong, .product-benefits span { display: block; }
+.product-benefits strong { margin-bottom: .3rem; color: var(--paper); }
+.product-benefits span { color: var(--muted); font-size: .92rem; }
+.product-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem 1rem; margin: 1rem 0; padding: 1rem 1rem 1rem 2rem; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.025); }
+.product-note { padding-left: .85rem; border-left: 2px solid var(--pulse); font-size: .9rem; }
+.external-rating { margin-top: 1.25rem; padding: 1.1rem 1.2rem; border: 1px solid rgba(137,240,113,.35); border-radius: 16px; background: rgba(137,240,113,.07); }
+.external-rating-score { color: var(--pulse); font-size: 1.65rem; font-weight: 900; }
+.external-rating p { margin: .35rem 0; font-size: .9rem; }
+.external-rating a { color: var(--pulse); font-weight: 800; text-decoration: underline; }
 .woocommerce #reviews { margin-top: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
 .woocommerce #reviews h2,
 .woocommerce #review_form #reply-title { color: var(--paper); font-size: 1.35rem; line-height: 1.25; }
@@ -266,6 +297,22 @@ h3 { font-size: 1.25rem; }
 .wp-block-button__link { display: inline-flex; align-items: center; justify-content: center; padding: .9rem 1.15rem; border-radius: 999px; background: var(--pulse); color: #071009; font-weight: 850; text-decoration: none !important; }
 .is-style-outline .wp-block-button__link { border: 1px solid var(--line); background: transparent; color: var(--paper); }
 .woocommerce table.shop_table, .woocommerce form.checkout_coupon, .woocommerce form.login, .woocommerce form.register { border-color: var(--line); border-radius: var(--radius); }
+.woocommerce table.shop_table { overflow: hidden; background: rgba(255,255,255,.015); }
+.woocommerce table.shop_table th, .woocommerce table.shop_table td { padding: .9rem; border-color: var(--line); }
+.woocommerce-cart table.cart .product-thumbnail { width: 118px; }
+.woocommerce-cart table.cart img { width: 92px; min-width: 92px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); object-fit: contain; }
+.woocommerce-cart table.cart .product-name a { color: var(--paper); font-weight: 800; }
+.woocommerce-cart table.cart .product-remove a { color: #ff8585 !important; }
+.woocommerce-cart .cart-collaterals { margin-top: 2rem; }
+.woocommerce-cart .cart-collaterals .cart_totals { padding: 1.25rem; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.025); }
+.woocommerce-cart .cart-collaterals .cart_totals h2 { font-size: clamp(1.6rem, 3vw, 2.25rem); }
+.woocommerce form.checkout_coupon { padding: 1.2rem; background: rgba(255,255,255,.025); }
+.woocommerce-checkout #customer_details, .woocommerce-checkout #order_review { margin-bottom: 2rem; }
+.woocommerce-checkout #order_review_heading { font-size: clamp(1.65rem, 3vw, 2.35rem); }
+.woocommerce-checkout-review-order { padding: 1.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.025); }
+.woocommerce-checkout #payment { background: var(--panel); color: var(--paper); }
+.woocommerce-checkout #payment div.payment_box { background: var(--panel-soft); color: var(--paper); }
+.woocommerce-checkout #payment div.payment_box::before { border-bottom-color: var(--panel-soft); }
 .woocommerce input.input-text, .woocommerce textarea, .woocommerce select, .woocommerce form .form-row input.input-text {
   width: 100%; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--paper);
 }
@@ -313,8 +360,12 @@ h3 { font-size: 1.25rem; }
   .woocommerce table.shop_table_responsive tr td,
   .woocommerce-page table.shop_table_responsive tr td { padding: .75rem; }
   .tpulse-review-fields { grid-template-columns: 1fr; }
+  .product-benefits, .product-facts { grid-template-columns: 1fr; }
   .woocommerce .cart-collaterals .cart_totals,
   .woocommerce-page .cart-collaterals .cart_totals { width: 100%; }
+  .woocommerce-cart table.cart .product-thumbnail { display: block; width: 100%; text-align: right !important; }
+  .woocommerce-cart table.cart .product-thumbnail::before { float: left; content: attr(data-title) ": "; font-weight: 800; }
+  .woocommerce-cart table.cart img { display: inline-block; width: 78px; min-width: 78px; }
 }
 
 @media (max-width: 480px) {

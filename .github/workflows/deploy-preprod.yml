@@ -74,6 +74,14 @@ jobs:
           $WP option update blogdescription 'Innovation et progression pour les archers'
           $WP option update blog_public 0
           $WP plugin install woocommerce --activate
+          $WP plugin install wordfence --activate
+          $WP plugin install updraftplus --activate
+          $WP plugin install fluent-smtp --activate
+          $WP plugin install complianz-gdpr --activate
+          $WP plugin install woocommerce-gateway-stripe --activate
+          $WP language core install fr_FR --activate
+          $WP language plugin install woocommerce fr_FR || true
+          $WP option update WPLANG 'fr_FR'
           $WP theme activate tpulse
           shop_id="$($WP post list --post_type=page --name=boutique --field=ID --format=ids | head -n1)"
           if [ -z "$shop_id" ]; then

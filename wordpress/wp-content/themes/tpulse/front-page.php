@@ -4,45 +4,38 @@ get_header();
 <section class="hero brand-hero">
     <div class="wrap hero-grid">
         <div>
-            <span class="eyebrow">Innovation pour le tir à l’arc</span>
+            <span class="eyebrow"><?php echo esc_html(tpulse_text('Innovation pour le tir à l’arc', 'Innovation for archery')); ?></span>
             <h1>T-Pulse<br>Archery</h1>
-            <p class="lead">Des produits et des ressources imaginés par un archer, pour améliorer le matériel, le confort et la compréhension du tir.</p>
+            <p class="lead"><?php echo esc_html(tpulse_text('Des produits, des outils et des idées nés sur le pas de tir, pour mieux comprendre votre matériel et faire évoluer votre pratique.', 'Products, tools and ideas born on the shooting line to help you understand your equipment and develop your archery.')); ?></p>
             <div class="actions">
-                <a class="button" href="<?php echo esc_url(home_url('/helitwist/')); ?>">Découvrir HeliTwist</a>
-                <a class="button secondary" href="<?php echo esc_url(tpulse_shop_url()); ?>">Voir la boutique</a>
+                <a class="button" href="<?php echo esc_url(home_url('/helitwist/')); ?>"><?php echo esc_html(tpulse_text('Découvrir HeliTwist', 'Discover HeliTwist')); ?></a>
+                <a class="button secondary" href="<?php echo esc_url(tpulse_shop_url()); ?>"><?php echo esc_html(tpulse_text('Voir la boutique', 'Visit the shop')); ?></a>
             </div>
         </div>
         <div class="brand-stage">
             <img src="<?php echo tpulse_asset('logo-t-pulse.png'); ?>" alt="T-Pulse Archery">
-            <p>Innovation pensée par un archer</p>
+            <p><?php echo esc_html(tpulse_text('Imaginé et développé en France', 'Designed and developed in France')); ?></p>
         </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="wrap cta review-cta">
-        <div><span class="eyebrow">Avis clients</span><h2>Vous avez teste un produit T-Pulse ?</h2><p class="muted">Partagez votre retour sur HeliTwist ou le livre. Les avis sont relus avant publication.</p></div>
-        <a class="button secondary" href="<?php echo esc_url(home_url('/retours-archers/')); ?>">Laisser un avis</a>
     </div>
 </section>
 
 <section class="section alt">
     <div class="wrap feature-product">
         <div class="feature-product-media">
-            <img src="<?php echo tpulse_asset('helitwist-3.png'); ?>" alt="HeliTwist Original monté sur un stabilisateur d’arc">
+            <img src="<?php echo tpulse_asset('helitwist-3.png'); ?>" alt="<?php echo esc_attr(tpulse_text('HeliTwist Original monté sur un stabilisateur d’arc', 'HeliTwist Original fitted to a bow stabilizer')); ?>">
         </div>
         <div>
-            <span class="eyebrow">Le produit fondateur</span>
+            <span class="eyebrow"><?php echo esc_html(tpulse_text('Le produit fondateur', 'The founding product')); ?></span>
             <h2>HeliTwist Original</h2>
-            <p class="lead">Un amortisseur axial breveté pour stabilisateurs d’arc. Sa structure spiralée creuse réduit les vibrations, adoucit le choc du tir et limite la prise au vent.</p>
+            <p class="lead"><?php echo esc_html(tpulse_text('Un amortisseur axial de 27 g pour stabilisateurs d’arc. Sa structure spiralée creuse est conçue pour atténuer les vibrations, adoucir la réaction du tir et limiter la prise au vent.', 'A 27 g axial damper for bow stabilizers. Its hollow spiral structure is designed to reduce vibration, soften shot reaction and limit wind drag.')); ?></p>
             <div class="feature-points">
                 <span>27 g</span>
-                <span>5/16, 1/4 et M8</span>
-                <span>Technologie brevetée</span>
+                <span>5/16, 1/4 <?php echo esc_html(tpulse_text('et', 'and')); ?> M8</span>
+                <span><?php echo esc_html(tpulse_text('Conception T-Pulse', 'T-Pulse design')); ?></span>
             </div>
             <div class="actions">
-                <a class="button" href="<?php echo esc_url(home_url('/helitwist/')); ?>">Découvrir HeliTwist</a>
-                <a class="button secondary" href="<?php echo esc_url(home_url('/produit/helitwist-original/')); ?>">Acheter à 30,50 €</a>
+                <a class="button" href="<?php echo esc_url(home_url('/helitwist/')); ?>"><?php echo esc_html(tpulse_text('Comprendre HeliTwist', 'Understand HeliTwist')); ?></a>
+                <a class="button secondary" href="<?php echo esc_url(home_url('/produit/helitwist-original/')); ?>"><?php echo esc_html(tpulse_text('Choisir mon modèle – 30,50 €', 'Choose my model – €30.50')); ?></a>
             </div>
         </div>
     </div>
@@ -51,42 +44,49 @@ get_header();
 <section class="section">
     <div class="wrap">
         <div class="section-head">
-            <span class="eyebrow">T-Pulse aujourd’hui</span>
-            <h2>Des idées qui prennent forme.</h2>
-            <p>T-Pulse Archery évolue autour de produits techniques, de ressources pour les archers et de nouvelles solutions actuellement en développement.</p>
+            <span class="eyebrow"><?php echo esc_html(tpulse_text('T-Pulse aujourd’hui', 'T-Pulse today')); ?></span>
+            <h2><?php echo esc_html(tpulse_text('Des projets utiles, du matériel aux logiciels.', 'Useful projects, from equipment to software.')); ?></h2>
+            <p><?php echo esc_html(tpulse_text('T-Pulse Archery réunit des produits techniques, des ressources gratuites et des contenus pensés pour les archers.', 'T-Pulse Archery brings together technical products, free resources and content made for archers.')); ?></p>
         </div>
         <div class="brand-offers">
             <article class="offer-card">
                 <div class="offer-visual product-visual"><img src="<?php echo tpulse_asset('helitwist-1.png'); ?>" alt="HeliTwist Original"></div>
-                <span class="eyebrow">Produit</span>
+                <span class="eyebrow"><?php echo esc_html(tpulse_text('Amortisseur', 'Damper')); ?></span>
                 <h3>HeliTwist Original</h3>
-                <p>L’amortisseur qui a lancé T-Pulse Archery et une nouvelle approche de l’amortissement axial.</p>
-                <a class="text-link" href="<?php echo esc_url(home_url('/helitwist/')); ?>">Voir la présentation complète →</a>
+                <p><?php echo esc_html(tpulse_text('Une nouvelle approche de l’amortissement axial, disponible en trois filetages.', 'A new approach to axial damping, available with three thread options.')); ?></p>
+                <a class="text-link" href="<?php echo esc_url(home_url('/helitwist/')); ?>"><?php echo esc_html(tpulse_text('Voir la présentation complète →', 'View the full presentation →')); ?></a>
             </article>
             <article class="offer-card">
-                <div class="offer-visual book-visual"><img src="<?php echo tpulse_asset('jeux-darchers-couverture.jpg'); ?>" alt="Couverture du livre Jeux d’archers"></div>
-                <span class="eyebrow">Livre</span>
-                <h3>Jeux d’archers</h3>
-                <p>Des idées pour perfectionner vos séances d’archerie tout en vous amusant. Disponible directement dans la boutique au prix de 15 €.</p>
-                <a class="text-link" href="<?php echo esc_url(home_url('/produit/jeux-darchers/')); ?>">Découvrir le livre →</a>
+                <div class="offer-visual book-visual"><img src="<?php echo tpulse_asset('jeux-darchers-couverture.jpg'); ?>" alt="<?php echo esc_attr(tpulse_text('Couverture du livre Jeux d’archers', 'Archery Games book cover')); ?>"></div>
+                <span class="eyebrow"><?php echo esc_html(tpulse_text('Livre', 'Book')); ?></span>
+                <h3><?php echo esc_html(tpulse_text('Jeux d’archers', 'Archery Games')); ?></h3>
+                <p><?php echo esc_html(tpulse_text('26 jeux pour varier vos entraînements, progresser et retrouver une pratique plus détendue. Livre broché, 79 pages.', '26 games to vary practice, improve and enjoy a more relaxed approach. French paperback, 79 pages.')); ?></p>
+                <a class="text-link" href="<?php echo esc_url(home_url('/produit/jeux-darchers/')); ?>"><?php echo esc_html(tpulse_text('Découvrir le livre →', 'Discover the book →')); ?></a>
             </article>
             <article class="offer-card">
                 <div class="offer-visual future-visual"><span>&lt;/&gt;</span></div>
-                <span class="eyebrow">Ressources gratuites</span>
-                <h3>Logiciels et articles</h3>
-                <p>Des outils, simulateurs, articles et futures applications Android créés pour les archers.</p>
-                <a class="text-link" href="<?php echo esc_url(home_url('/ressources/')); ?>">Voir les ressources →</a>
+                <span class="eyebrow"><?php echo esc_html(tpulse_text('Ressources gratuites', 'Free resources')); ?></span>
+                <h3><?php echo esc_html(tpulse_text('Logiciels et articles', 'Software and articles')); ?></h3>
+                <p><?php echo esc_html(tpulse_text('Simulateurs, outils, articles techniques et futures applications Android créés pour les archers.', 'Simulators, tools, technical articles and future Android apps created for archers.')); ?></p>
+                <a class="text-link" href="<?php echo esc_url(home_url('/ressources/')); ?>"><?php echo esc_html(tpulse_text('Explorer les ressources →', 'Explore resources →')); ?></a>
             </article>
         </div>
     </div>
 </section>
 
 <section class="section alt">
+    <div class="wrap cta review-cta">
+        <div><span class="eyebrow"><?php echo esc_html(tpulse_text('Retours d’archers', 'Archer reviews')); ?></span><h2><?php echo esc_html(tpulse_text('Votre expérience compte.', 'Your experience matters.')); ?></h2><p class="muted"><?php echo esc_html(tpulse_text('Consultez les avis ou partagez votre retour sur HeliTwist et le livre.', 'Read reviews or share your experience with HeliTwist and the book.')); ?></p></div>
+        <a class="button secondary" href="<?php echo esc_url(home_url('/retours-archers/')); ?>"><?php echo esc_html(tpulse_text('Voir les avis', 'Read reviews')); ?></a>
+    </div>
+</section>
+
+<section class="section">
     <div class="wrap">
         <div class="section-head">
-            <span class="eyebrow">Actualites</span>
-            <h2>Nouveautes et projets en cours.</h2>
-            <p>Un espace pour suivre les prochains produits, les essais, les articles techniques et les coulisses de T-Pulse Archery.</p>
+            <span class="eyebrow"><?php echo esc_html(tpulse_text('Actualités', 'News')); ?></span>
+            <h2><?php echo esc_html(tpulse_text('Nouveautés, essais et projets en cours.', 'News, testing and current projects.')); ?></h2>
+            <p><?php echo esc_html(tpulse_text('Suivez les prochains produits, les choix de conception, les articles techniques et les coulisses de T-Pulse Archery.', 'Follow upcoming products, design decisions, technical articles and work behind the scenes at T-Pulse Archery.')); ?></p>
         </div>
         <div class="posts-grid">
             <?php
@@ -99,7 +99,7 @@ get_header();
                         <time datetime="<?php echo esc_attr(get_the_date('c')); ?>"><?php echo esc_html(get_the_date()); ?></time>
                         <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                         <p><?php echo esc_html(wp_strip_all_tags(get_the_excerpt())); ?></p>
-                        <a class="text-link" href="<?php the_permalink(); ?>">Lire -></a>
+                        <a class="text-link" href="<?php the_permalink(); ?>"><?php echo esc_html(tpulse_text('Lire l’article →', 'Read the article →')); ?></a>
                     </article>
                     <?php
                 endwhile;
@@ -107,10 +107,9 @@ get_header();
             else :
                 ?>
                 <article class="post-card">
-                    <time>En preparation</time>
-                    <h3>Articles et nouveautes arrivent ici.</h3>
-                    <p>Publiez vos projets, tests et actualites depuis l admin WordPress.</p>
-                    <a class="text-link" href="<?php echo esc_url(home_url('/actualites/')); ?>">Voir les actualites -></a>
+                    <time><?php echo esc_html(tpulse_text('En préparation', 'Coming soon')); ?></time>
+                    <h3><?php echo esc_html(tpulse_text('Le carnet de bord T-Pulse arrive.', 'The T-Pulse journal is coming.')); ?></h3>
+                    <p><?php echo esc_html(tpulse_text('Les prochains essais et projets seront publiés ici.', 'Upcoming tests and projects will be published here.')); ?></p>
                 </article>
             <?php endif; ?>
         </div>
@@ -119,8 +118,8 @@ get_header();
 
 <section class="section alt">
     <div class="wrap cta">
-        <div><span class="eyebrow">T-Pulse Archery</span><h2>Découvrez tout l’univers de la marque.</h2><p class="muted">Produits disponibles, livre et prochaines innovations.</p></div>
-        <a class="button" href="<?php echo esc_url(tpulse_shop_url()); ?>">Visiter la boutique</a>
+        <div><span class="eyebrow">T-Pulse Archery</span><h2><?php echo esc_html(tpulse_text('Découvrez les produits disponibles.', 'Discover the available products.')); ?></h2><p class="muted"><?php echo esc_html(tpulse_text('HeliTwist Original, le livre Jeux d’archers et les prochaines innovations.', 'HeliTwist Original, the Archery Games book and upcoming innovations.')); ?></p></div>
+        <a class="button" href="<?php echo esc_url(tpulse_shop_url()); ?>"><?php echo esc_html(tpulse_text('Visiter la boutique', 'Visit the shop')); ?></a>
     </div>
 </section>
 <?php

@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
             <img src="<?php echo tpulse_asset('logo-t-pulse.png'); ?>" alt="">
             <span>T-Pulse Archery</span>
         </a>
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation"><?php echo esc_html(tpulse_text('Menu', 'Menu')); ?></button>
         <nav class="main-nav" id="main-navigation" aria-label="<?php esc_attr_e('Navigation principale', 'tpulse'); ?>">
             <?php if (has_nav_menu('primary')) : ?>
                 <?php wp_nav_menu(['theme_location' => 'primary', 'container' => false, 'items_wrap' => '%3$s']); ?>
@@ -26,7 +26,7 @@ if (!defined('ABSPATH')) {
                 <a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html(tpulse_text('La marque', 'The brand')); ?></a>
                 <a href="<?php echo esc_url(home_url('/helitwist/')); ?>">HeliTwist</a>
                 <a href="<?php echo esc_url(tpulse_shop_url()); ?>"><?php echo esc_html(tpulse_text('Boutique', 'Shop')); ?></a>
-                <a href="<?php echo esc_url(home_url('/actualites/')); ?>"><?php echo esc_html(tpulse_text('Actualites', 'News')); ?></a>
+                <a href="<?php echo esc_url(home_url('/actualites/')); ?>"><?php echo esc_html(tpulse_text('Actualités', 'News')); ?></a>
                 <a href="<?php echo esc_url(home_url('/retours-archers/')); ?>"><?php echo esc_html(tpulse_text('Avis', 'Reviews')); ?></a>
                 <a href="<?php echo esc_url(home_url('/ressources/')); ?>"><?php echo esc_html(tpulse_text('Ressources', 'Resources')); ?></a>
                 <a href="<?php echo esc_url(home_url('/contact/')); ?>">Contact</a>

@@ -60,28 +60,82 @@ function tpulse_language_url(string $language): string {
     return add_query_arg('lang', $language);
 }
 
-function tpulse_translate_book_content(string $content, WC_Product $product): string {
-    if (!tpulse_is_english() || $product->get_sku() !== 'LIVRE-JEUX-DARCHERS') {
+function tpulse_english_product_content(string $sku): array {
+    $products = [
+        'HELITWIST-ORIGINAL' => [
+            'name' => 'HeliTwist Original',
+            'short' => 'A 27 g axial damper for bow stabilizers. Its hollow spiral structure is designed to reduce vibration and soften bow reaction, with a choice of 5/16, 1/4 or M8 threads.',
+            'description' => '<div class="tpulse-product-story"><p class="product-intro"><strong>HeliTwist Original</strong> was born on the shooting line from a simple need: a softer reaction after release without adding unnecessary weight to the stabilizer.</p><h2>Axial damping</h2><p>Instead of working mainly through sideways flex, its hollow spiral structure compresses along the stabilizer axis. This geometry is designed to limit vibration transfer, soften the perceived shock and allow air to pass through to reduce wind drag.</p><div class="product-benefits"><div><strong>Softer reaction</strong><span>A cleaner, more controlled post-shot feel.</span></div><div><strong>Only 27 g</strong><span>Damping designed to preserve stabilizer balance.</span></div><div><strong>Three threads</strong><span>Choose 5/16, 1/4 or M8 for your equipment.</span></div></div><h2>Choose the correct model</h2><p>Check the thread on your stabilizer or weights before ordering. Each variation has its own stock. If you are unsure, email <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> with a photo or the reference of your stabilizer.</p><ul class="product-facts"><li><strong>Use:</strong> bow stabilizers</li><li><strong>Weight:</strong> 27 g</li><li><strong>Threads:</strong> 5/16, 1/4 or M8</li><li><strong>Design:</strong> developed in France by T-Pulse Archery</li></ul><p class="product-note">Feel and behaviour may vary with the bow, stabilizer setup and weights used.</p></div>',
+        ],
+        'LIVRE-JEUX-DARCHERS' => [
+            'name' => 'Archery Games',
+            'short' => '26 archery games to vary practice, work on accuracy and enjoy a more relaxed approach, alone, with friends or at a club. French paperback, 79 pages.',
+            'description' => '<div class="tpulse-product-story"><p class="product-intro"><strong>Archery Games – Improve your shooting</strong> presents 26 games that break up repetition, create new challenges and help you improve without losing the enjoyment of shooting.</p><h2>Bring play back into practice</h2><p>Archery demands accuracy, concentration and consistency. Repeating the same end can, however, create pressure or monotony. The situations in this book give each session a different objective and encourage attention to the process rather than the score alone.</p><div class="product-benefits"><div><strong>26 varied games</strong><span>Ideas that are easy to include in practice.</span></div><div><strong>Solo or group use</strong><span>For archers, coaches, clubs and shooting partners.</span></div><div><strong>Playful progress</strong><span>Accuracy, adaptability, motivation and pressure management.</span></div></div><h2>What you will work on</h2><ul><li>Varying distances, objectives and shooting constraints.</li><li>Maintaining motivation and concentration throughout practice.</li><li>Approaching target panic in a more relaxed, less result-focused setting.</li><li>Developing adaptability and encouraging a smoother shot.</li></ul><ul class="product-facts"><li><strong>Format:</strong> paperback</li><li><strong>Language:</strong> French</li><li><strong>Length:</strong> 79 pages</li><li><strong>Size:</strong> 14.81 × 21.01 cm</li><li><strong>Sold by:</strong> shipped directly by T-Pulse Archery</li></ul><aside class="external-rating"><div><span class="external-rating-score">4.5/5</span><strong> on Amazon</strong></div><p>21 ratings recorded on 14 August 2026. These reviews were submitted on Amazon and are separate from reviews collected by T-Pulse Archery.</p><a href="https://www.amazon.fr/Jeux-darchers-Perfectionnez-darcherie-samuser/dp/B0DLWNRBPQ#customerReviews" target="_blank" rel="noopener external nofollow">Read the reviews on Amazon</a></aside></div>',
+        ],
+    ];
+
+    return $products[$sku] ?? [];
+}
+
+function tpulse_translate_product_content(string $content, WC_Product $product): string {
+    $translation = tpulse_is_english() ? tpulse_english_product_content($product->get_sku()) : [];
+    return $translation['description'] ?? $content;
+}
+add_filter('woocommerce_product_get_description', 'tpulse_translate_product_content', 10, 2);
+
+function tpulse_translate_product_short_description(string $content, WC_Product $product): string {
+    $translation = tpulse_is_english() ? tpulse_english_product_content($product->get_sku()) : [];
+    return $translation['short'] ?? $content;
+}
+add_filter('woocommerce_product_get_short_description', 'tpulse_translate_product_short_description', 10, 2);
+
+function tpulse_translate_product_name(string $name, WC_Product $product): string {
+    $translation = tpulse_is_english() ? tpulse_english_product_content($product->get_sku()) : [];
+    return $translation['name'] ?? $name;
+}
+add_filter('woocommerce_product_get_name', 'tpulse_translate_product_name', 10, 2);
+
+function tpulse_translate_managed_entry_content(string $content): string {
+    if (!tpulse_is_english() || !is_singular() || !in_the_loop() || !is_main_query()) {
         return $content;
     }
 
-    return '<h2>Improve your archery sessions while having fun</h2><p><strong>Archery Games</strong> brings together games and exercises designed to add variety to archery practice. It is intended for archers, coaches, clubs and groups who want to work on accuracy, consistency and concentration through a playful approach.</p><h3>Inside the book</h3><ul><li>Games that are easy to include in a practice session</li><li>Variations for different difficulty levels</li><li>Ideas for individual and group activities</li><li>An approach combining progress and enjoyment</li></ul><p>Physical book sold directly by T-Pulse Archery.</p>';
+    $english = get_post_meta(get_the_ID(), '_tpulse_english_content', true);
+    return is_string($english) && $english !== '' ? $english : $content;
 }
-add_filter('woocommerce_product_get_description', 'tpulse_translate_book_content', 10, 2);
+add_filter('the_content', 'tpulse_translate_managed_entry_content', 20);
 
-function tpulse_translate_book_short_description(string $content, WC_Product $product): string {
-    if (tpulse_is_english() && $product->get_sku() === 'LIVRE-JEUX-DARCHERS') {
-        return 'A collection of playful games and exercises to vary practice sessions, improve skills and enjoy archery together.';
+function tpulse_translate_managed_entry_title(string $title, int $post_id): string {
+    if (!tpulse_is_english() || is_admin() || $post_id <= 0) {
+        return $title;
     }
 
-    return $content;
-}
-add_filter('woocommerce_product_get_short_description', 'tpulse_translate_book_short_description', 10, 2);
+    $english = get_post_meta($post_id, '_tpulse_english_title', true);
+    if (is_string($english) && $english !== '') {
+        return $english;
+    }
 
-function tpulse_translate_book_name(string $name, WC_Product $product): string {
-    return tpulse_is_english() && $product->get_sku() === 'LIVRE-JEUX-DARCHERS' ? 'Archery Games' : $name;
+    $post = get_post($post_id);
+    $page_titles = [
+        'boutique' => 'Shop',
+        'panier' => 'Cart',
+        'commande' => 'Checkout',
+        'mon-compte' => 'My account',
+        'actualites' => 'News',
+    ];
+    return $post instanceof WP_Post && isset($page_titles[$post->post_name]) ? $page_titles[$post->post_name] : $title;
 }
-add_filter('woocommerce_product_get_name', 'tpulse_translate_book_name', 10, 2);
+add_filter('the_title', 'tpulse_translate_managed_entry_title', 20, 2);
+
+function tpulse_translate_managed_excerpt(string $excerpt): string {
+    if (!tpulse_is_english()) {
+        return $excerpt;
+    }
+
+    $english = get_post_meta(get_the_ID(), '_tpulse_english_excerpt', true);
+    return is_string($english) && $english !== '' ? $english : $excerpt;
+}
+add_filter('get_the_excerpt', 'tpulse_translate_managed_excerpt', 20);
 
 function tpulse_translate_french_ui(string $translated, string $text, string $domain): string {
     if (tpulse_is_english()) {
@@ -110,29 +164,29 @@ function tpulse_translate_french_ui(string $translated, string $text, string $do
         'Subtotal' => 'Sous-total',
         'Total' => 'Total',
         'Remove item' => 'Retirer',
-        'First name' => 'Prenom',
+        'First name' => 'Prénom',
         'Last name' => 'Nom',
         'Company name' => 'Entreprise',
-        'Country / Region' => 'Pays / Region',
-        'Update country / region' => 'Mettre a jour le pays / region',
+        'Country / Region' => 'Pays / région',
+        'Update country / region' => 'Mettre à jour le pays ou la région',
         'Street address' => 'Adresse',
-        'House number and street name' => 'Numero et nom de rue',
-        'Apartment, suite, unit, etc. (optional)' => 'Appartement, batiment, etc. (facultatif)',
-        'Apartment, suite, unit, etc.' => 'Appartement, batiment, etc.',
+        'House number and street name' => 'Numéro et nom de rue',
+        'Apartment, suite, unit, etc. (optional)' => 'Appartement, bâtiment, etc. (facultatif)',
+        'Apartment, suite, unit, etc.' => 'Appartement, bâtiment, etc.',
         '(optional)' => '(facultatif)',
         'optional' => 'facultatif',
         'Town / City' => 'Ville',
-        'State / County' => 'Region / Departement',
+        'State / County' => 'Région / département',
         'Postcode / ZIP' => 'Code postal',
-        'Phone' => 'Telephone',
-        'Email address' => 'Adresse email',
+        'Phone' => 'Téléphone',
+        'Email address' => 'Adresse e-mail',
         'Order notes' => 'Notes de commande',
         'Notes about your order, e.g. special notes for delivery.' => 'Notes concernant votre commande, par exemple une information utile pour la livraison.',
-        'Ship to a different address?' => 'Expedier a une adresse differente ?',
+        'Ship to a different address?' => 'Expédier à une adresse différente ?',
         'Payment' => 'Paiement',
         'Billing details' => 'Coordonnées de facturation',
         'Your order' => 'Votre commande',
-        'Place order' => 'Valider la commande',
+        'Place order' => 'Commander et payer',
         'Related products' => 'Produits similaires',
         'Description' => 'Description',
         'Additional information' => 'Informations complémentaires',
@@ -187,25 +241,25 @@ function tpulse_french_checkout_fields(array $fields): array {
     }
 
     $labels = [
-        'billing_first_name' => ['Prenom', 'Votre prenom'],
+        'billing_first_name' => ['Prénom', 'Votre prénom'],
         'billing_last_name' => ['Nom', 'Votre nom'],
-        'billing_company' => ['Entreprise', 'Nom de l entreprise'],
-        'billing_country' => ['Pays / Region', 'Pays / Region'],
-        'billing_address_1' => ['Adresse', 'Numero et nom de rue'],
-        'billing_address_2' => ['Complement d adresse', 'Appartement, batiment, lieu-dit...'],
+        'billing_company' => ['Entreprise', 'Nom de l’entreprise'],
+        'billing_country' => ['Pays / région', 'Pays / région'],
+        'billing_address_1' => ['Adresse', 'Numéro et nom de rue'],
+        'billing_address_2' => ['Complément d’adresse', 'Appartement, bâtiment, lieu-dit...'],
         'billing_city' => ['Ville', 'Ville'],
-        'billing_state' => ['Region / Departement', 'Region / Departement'],
+        'billing_state' => ['Région / département', 'Région / département'],
         'billing_postcode' => ['Code postal', 'Code postal'],
-        'billing_phone' => ['Telephone', 'Votre numero de telephone'],
-        'billing_email' => ['Adresse email', 'votre@email.fr'],
-        'shipping_first_name' => ['Prenom', 'Votre prenom'],
+        'billing_phone' => ['Téléphone', 'Votre numéro de téléphone'],
+        'billing_email' => ['Adresse e-mail', 'votre@email.fr'],
+        'shipping_first_name' => ['Prénom', 'Votre prénom'],
         'shipping_last_name' => ['Nom', 'Votre nom'],
-        'shipping_company' => ['Entreprise', 'Nom de l entreprise'],
-        'shipping_country' => ['Pays / Region', 'Pays / Region'],
-        'shipping_address_1' => ['Adresse', 'Numero et nom de rue'],
-        'shipping_address_2' => ['Complement d adresse', 'Appartement, batiment, lieu-dit...'],
+        'shipping_company' => ['Entreprise', 'Nom de l’entreprise'],
+        'shipping_country' => ['Pays / région', 'Pays / région'],
+        'shipping_address_1' => ['Adresse', 'Numéro et nom de rue'],
+        'shipping_address_2' => ['Complément d’adresse', 'Appartement, bâtiment, lieu-dit...'],
         'shipping_city' => ['Ville', 'Ville'],
-        'shipping_state' => ['Region / Departement', 'Region / Departement'],
+        'shipping_state' => ['Région / département', 'Région / département'],
         'shipping_postcode' => ['Code postal', 'Code postal'],
         'order_comments' => ['Notes de commande', 'Information utile pour la livraison ou la commande'],
     ];
@@ -279,16 +333,18 @@ function tpulse_translate_frontend_html(string $html): string {
     if (!tpulse_is_english()) {
         return strtr($html, [
             'Since your browser does not support JavaScript, or it is disabled, please ensure you click the <em>Update Totals</em> button before placing your order. You may be charged more than the amount stated above if you fail to do so.' => 'Comme votre navigateur ne prend pas en charge JavaScript ou qu il est desactive, cliquez sur le bouton de mise a jour avant de valider la commande.',
-            'Update country / region' => 'Mettre a jour le pays / region',
-            'Update totals' => 'Mettre a jour les totaux',
-            'process your order, support your experience throughout this website, and for other purposes described in our' => 'traiter votre commande, ameliorer votre experience sur ce site et respecter les finalites decrites dans notre',
+            'Update country / region' => 'Mettre à jour le pays ou la région',
+            'Update totals' => 'Mettre à jour les totaux',
+            'process your order, support your experience throughout this website, and for other purposes described in our' => 'traiter votre commande, améliorer votre expérience sur ce site et respecter les finalités décrites dans notre',
             'Your order' => 'Votre commande',
-            'Phone' => 'Telephone',
-            'phone' => 'telephone',
-            'Country / Region' => 'Pays / Region',
-            'country / region' => 'pays / region',
-            'has been added to your cart.' => 'a ete ajoute au panier.',
+            'Phone' => 'Téléphone',
+            'Country / Region' => 'Pays / région',
+            'country / region' => 'pays / région',
+            'has been added to your cart.' => 'a été ajouté au panier.',
             'View cart' => 'Voir le panier',
+            'Thumbnail image' => 'Image du produit',
+            'Cart totals' => 'Total du panier',
+            'Coupon:' => 'Code promo :',
             '&ldquo;' => '« ',
             '&rdquo;' => ' »',
         ]);
@@ -356,6 +412,8 @@ function tpulse_translate_frontend_html(string $html): string {
         'Description' => 'Description',
         'Avis' => 'Reviews',
         'Produits similaires' => 'Related products',
+        'Logiciel' => 'Software',
+        'Gratuit · GitHub' => 'Free · GitHub',
     ]);
 }
 
@@ -374,6 +432,25 @@ function tpulse_shop_url(): string {
     return function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/boutique/');
 }
 
+function tpulse_shop_page_title(string $title): string {
+    return tpulse_is_english() ? 'Shop' : 'Boutique';
+}
+add_filter('woocommerce_page_title', 'tpulse_shop_page_title');
+
+function tpulse_shop_intro(): void {
+    if (!is_shop()) {
+        return;
+    }
+
+    echo '<p class="shop-intro">' . esc_html(tpulse_text('Produits conçus par T-Pulse Archery et expédiés directement depuis la France.', 'Products designed by T-Pulse Archery and shipped directly from France.')) . '</p>';
+}
+add_action('woocommerce_archive_description', 'tpulse_shop_intro', 15);
+
+function tpulse_attribute_label(string $label): string {
+    return tpulse_is_english() && $label === 'Filetage' ? 'Thread' : $label;
+}
+add_filter('woocommerce_attribute_label', 'tpulse_attribute_label');
+
 function tpulse_asset(string $name): string {
     return esc_url(get_template_directory_uri() . '/assets/images/' . $name);
 }
@@ -390,12 +467,12 @@ add_filter('woocommerce_enqueue_styles', function (array $styles): array {
 
 function tpulse_review_model_options(): array {
     return [
-        '' => 'Selectionnez le modele achete',
+        '' => tpulse_text('Sélectionnez le modèle acheté', 'Select the purchased model'),
         'HeliTwist 5/16' => 'HeliTwist 5/16',
         'HeliTwist 1/4' => 'HeliTwist 1/4',
         'HeliTwist M8' => 'HeliTwist M8',
-        'Jeux d archers' => 'Livre Jeux d archers',
-        'Autre achat T-Pulse' => 'Autre achat T-Pulse',
+        'Jeux d archers' => tpulse_text('Livre Jeux d’archers', 'Archery Games book'),
+        'Autre achat T-Pulse' => tpulse_text('Autre achat T-Pulse', 'Other T-Pulse purchase'),
     ];
 }
 
@@ -409,24 +486,26 @@ function tpulse_product_review_form_args(array $args): array {
         $model_options .= sprintf('<option value="%s">%s</option>', esc_attr($value), esc_html($label));
     }
 
-    $rating_field = '<div class="comment-form-rating tpulse-rating-field"><label>Votre note</label><div class="tpulse-rating-stars" role="radiogroup" aria-label="Votre note">'
-        . '<input type="radio" id="tpulse-rating-5" name="rating" value="5" checked><label for="tpulse-rating-5" title="5 sur 5">★</label>'
-        . '<input type="radio" id="tpulse-rating-4" name="rating" value="4"><label for="tpulse-rating-4" title="4 sur 5">★</label>'
-        . '<input type="radio" id="tpulse-rating-3" name="rating" value="3"><label for="tpulse-rating-3" title="3 sur 5">★</label>'
-        . '<input type="radio" id="tpulse-rating-2" name="rating" value="2"><label for="tpulse-rating-2" title="2 sur 5">★</label>'
-        . '<input type="radio" id="tpulse-rating-1" name="rating" value="1"><label for="tpulse-rating-1" title="1 sur 5">★</label>'
+    $rating_label = tpulse_text('Votre note', 'Your rating');
+    $out_of_five = tpulse_text('sur 5', 'out of 5');
+    $rating_field = '<div class="comment-form-rating tpulse-rating-field"><label>' . esc_html($rating_label) . '</label><div class="tpulse-rating-stars" role="radiogroup" aria-label="' . esc_attr($rating_label) . '">'
+        . '<input type="radio" id="tpulse-rating-5" name="rating" value="5" checked><label for="tpulse-rating-5" title="5 ' . esc_attr($out_of_five) . '">★</label>'
+        . '<input type="radio" id="tpulse-rating-4" name="rating" value="4"><label for="tpulse-rating-4" title="4 ' . esc_attr($out_of_five) . '">★</label>'
+        . '<input type="radio" id="tpulse-rating-3" name="rating" value="3"><label for="tpulse-rating-3" title="3 ' . esc_attr($out_of_five) . '">★</label>'
+        . '<input type="radio" id="tpulse-rating-2" name="rating" value="2"><label for="tpulse-rating-2" title="2 ' . esc_attr($out_of_five) . '">★</label>'
+        . '<input type="radio" id="tpulse-rating-1" name="rating" value="1"><label for="tpulse-rating-1" title="1 ' . esc_attr($out_of_five) . '">★</label>'
         . '</div></div>';
 
     $extra_fields = '<div class="tpulse-review-fields">'
-        . '<p class="comment-form-tpulse-name"><label for="tpulse_review_name">Nom, prenom ou pseudo <span class="required">*</span></label><input id="tpulse_review_name" name="tpulse_review_name" type="text" required></p>'
-        . '<p class="comment-form-tpulse-model"><label for="tpulse_review_model">Modele achete <span class="required">*</span></label><select id="tpulse_review_model" name="tpulse_review_model" required>' . $model_options . '</select></p>'
-        . '<p class="comment-form-tpulse-date"><label for="tpulse_purchase_date">Date d achat approximative <span class="required">*</span></label><input id="tpulse_purchase_date" name="tpulse_purchase_date" type="month" required></p>'
+        . '<p class="comment-form-tpulse-name"><label for="tpulse_review_name">' . esc_html(tpulse_text('Nom, prénom ou pseudo', 'Name or display name')) . ' <span class="required">*</span></label><input id="tpulse_review_name" name="tpulse_review_name" type="text" autocomplete="name" required></p>'
+        . '<p class="comment-form-tpulse-model"><label for="tpulse_review_model">' . esc_html(tpulse_text('Modèle acheté', 'Purchased model')) . ' <span class="required">*</span></label><select id="tpulse_review_model" name="tpulse_review_model" required>' . $model_options . '</select></p>'
+        . '<p class="comment-form-tpulse-date"><label for="tpulse_purchase_date">' . esc_html(tpulse_text('Date d’achat approximative', 'Approximate purchase date')) . ' <span class="required">*</span></label><input id="tpulse_purchase_date" name="tpulse_purchase_date" type="month" required></p>'
         . '</div>';
 
-    $args['title_reply'] = 'Laisser votre avis';
+    $args['title_reply'] = tpulse_text('Laisser votre avis', 'Leave a review');
     $args['comment_notes_before'] = '';
-    $args['comment_field'] = $rating_field . $extra_fields . '<p class="comment-form-comment"><label for="comment">Votre avis <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="7" required></textarea></p>';
-    $args['label_submit'] = 'Avis envoye';
+    $args['comment_field'] = $rating_field . $extra_fields . '<p class="comment-form-comment"><label for="comment">' . esc_html(tpulse_text('Votre avis', 'Your review')) . ' <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="7" required></textarea></p>';
+    $args['label_submit'] = tpulse_text('Envoyer mon avis', 'Submit my review');
     unset($args['fields']['rating']);
 
     return $args;
@@ -443,11 +522,11 @@ function tpulse_validate_product_review(array $commentdata): array {
     $purchase_date = sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''));
 
     if ($name === '' || $model === '' || $purchase_date === '') {
-        wp_die('Merci de renseigner votre nom/pseudo, le modele achete et la date d achat approximative avant d envoyer votre avis.', 'Avis incomplet', ['response' => 400]);
+        wp_die(tpulse_text('Merci de renseigner votre nom ou pseudo, le modèle acheté et la date d’achat approximative avant d’envoyer votre avis.', 'Please enter your name or display name, the purchased model and the approximate purchase date before submitting your review.'), tpulse_text('Avis incomplet', 'Incomplete review'), ['response' => 400]);
     }
 
     if (!preg_match('/^\d{4}-\d{2}$/', $purchase_date)) {
-        wp_die('Merci d indiquer une date d achat au format mois/annee.', 'Date invalide', ['response' => 400]);
+        wp_die(tpulse_text('Merci d’indiquer une date d’achat au format mois/année.', 'Please enter the purchase date in month/year format.'), tpulse_text('Date invalide', 'Invalid date'), ['response' => 400]);
     }
 
     $commentdata['comment_author'] = $name;
@@ -482,10 +561,10 @@ function tpulse_show_product_review_meta(WP_Comment $comment): void {
 
     echo '<p class="tpulse-review-meta">';
     if ($model) {
-        echo '<span>Modele : ' . esc_html($model) . '</span>';
+        echo '<span>' . esc_html(tpulse_text('Modèle :', 'Model:')) . ' ' . esc_html($model) . '</span>';
     }
     if ($purchase_date) {
-        echo '<span>Achat : ' . esc_html(date_i18n('m/Y', strtotime($purchase_date . '-01'))) . '</span>';
+        echo '<span>' . esc_html(tpulse_text('Achat :', 'Purchased:')) . ' ' . esc_html(date_i18n('m/Y', strtotime($purchase_date . '-01'))) . '</span>';
     }
     echo '</p>';
 }
