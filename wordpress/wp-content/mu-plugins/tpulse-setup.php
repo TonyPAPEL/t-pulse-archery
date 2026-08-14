@@ -576,7 +576,7 @@ function tpulse_refresh_store_presentation(): void {
 add_action('wp_loaded', 'tpulse_refresh_store_presentation', 41);
 
 function tpulse_configure_default_shipping(): void {
-    if (!class_exists('WC_Shipping_Zones') || get_option('tpulse_default_shipping_version') === '2026-08-14-4') {
+    if (!class_exists('WC_Shipping_Zones') || get_option('tpulse_default_shipping_version') === '2026-08-14-6') {
         return;
     }
 
@@ -614,7 +614,7 @@ function tpulse_configure_default_shipping(): void {
         if ($method->id === 'flat_rate') {
             $has_flat_rate = true;
             update_option('woocommerce_flat_rate_' . $method->instance_id . '_settings', [
-                'title' => 'Mondial Relay - Point Relais',
+                'title' => 'Livraison forfaitaire temporaire',
                 'tax_status' => 'none',
                 'cost' => '4.90',
             ]);
@@ -624,58 +624,56 @@ function tpulse_configure_default_shipping(): void {
     if (!$has_flat_rate) {
         $instance_id = $zone->add_shipping_method('flat_rate');
         update_option('woocommerce_flat_rate_' . $instance_id . '_settings', [
-            'title' => 'Mondial Relay - Point Relais',
+            'title' => 'Livraison forfaitaire temporaire',
             'tax_status' => 'none',
             'cost' => '4.90',
         ]);
     }
 
-    $has_sendcloud_service_point = false;
-    foreach ($zone->get_shipping_methods(false) as $method) {
-        if ($method->id === 'service_point_v2_shipping_method') {
-            $has_sendcloud_service_point = true;
-            update_option('sendcloudshipping_v2_service_point_v2_shipping_method_' . $method->instance_id . '_settings', [
-                'title' => 'Mondial Relay - Point Relais',
-                'tax_status' => 'none',
-                'cost' => '4.90',
-                'carrier_select_v2' => ['mondial_relay'],
-                'free_shipping_enabled' => 'no',
-                'free_shipping_requires' => 'min_order_amount',
-                'free_shipping_min_amount' => '0',
-                'ignore_discounts' => 'no',
-            ]);
-        }
+    global $wpdb;
+    $old_sendcloud_instances = $wpdb->get_col($wpdb->prepare(
+        "SELECT instance_id FROM {$wpdb->prefix}woocommerce_shipping_zone_methods WHERE zone_id = %d AND method_id = %s",
+        $zone->get_id(),
+        'service_point_v2_shipping_method'
+    ));
+    foreach ($old_sendcloud_instances as $old_instance_id) {
+        delete_option('sendcloudshipping_v2_service_point_v2_shipping_method_' . (int) $old_instance_id . '_settings');
     }
+    $wpdb->delete(
+        $wpdb->prefix . 'woocommerce_shipping_zone_methods',
+        [
+            'zone_id' => $zone->get_id(),
+            'method_id' => 'service_point_v2_shipping_method',
+        ],
+        ['%d', '%s']
+    );
 
-    if (!$has_sendcloud_service_point) {
-        global $wpdb;
-        $wpdb->insert(
-            $wpdb->prefix . 'woocommerce_shipping_zone_methods',
-            [
-                'zone_id' => $zone->get_id(),
-                'method_id' => 'service_point_v2_shipping_method',
-                'method_order' => 2,
-                'is_enabled' => 1,
-            ],
-            ['%d', '%s', '%d', '%d']
-        );
-        $instance_id = (int) $wpdb->insert_id;
-        if ($instance_id > 0) {
-            update_option('sendcloudshipping_v2_service_point_v2_shipping_method_' . $instance_id . '_settings', [
-                'title' => 'Mondial Relay - Point Relais',
-                'tax_status' => 'none',
-                'cost' => '4.90',
-                'carrier_select_v2' => ['mondial_relay'],
-                'free_shipping_enabled' => 'no',
-                'free_shipping_requires' => 'min_order_amount',
-                'free_shipping_min_amount' => '0',
-                'ignore_discounts' => 'no',
-            ]);
-        }
+    $wpdb->insert(
+        $wpdb->prefix . 'woocommerce_shipping_zone_methods',
+        [
+            'zone_id' => $zone->get_id(),
+            'method_id' => 'service_point_v2_shipping_method',
+            'method_order' => 1,
+            'is_enabled' => 1,
+        ],
+        ['%d', '%s', '%d', '%d']
+    );
+    $instance_id = (int) $wpdb->insert_id;
+    if ($instance_id > 0) {
+        update_option('sendcloudshipping_v2_service_point_v2_shipping_method_' . $instance_id . '_settings', [
+            'title' => 'Livraison en point relais',
+            'tax_status' => 'none',
+            'cost' => '4.90',
+            'carrier_select_v2' => ['mondial_relay'],
+            'free_shipping_enabled' => 'no',
+            'free_shipping_requires' => 'min_order_amount',
+            'free_shipping_min_amount' => '0',
+            'ignore_discounts' => 'no',
+        ]);
     }
     delete_option('sendcloudshipping_v2_service_point_v2_shipping_method_0_settings');
 
-    update_option('tpulse_default_shipping_version', '2026-08-14-4');
+    update_option('tpulse_default_shipping_version', '2026-08-14-6');
 }
 add_action('wp_loaded', 'tpulse_configure_default_shipping', 44);
 
