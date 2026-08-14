@@ -769,6 +769,7 @@ function tpulse_security_auto_updates(?bool $update, object $item): ?bool {
         'fluent-smtp',
         'complianz-gdpr',
         'fluent-crm',
+        'sendcloud-connected-shipping',
     ];
 
     return isset($item->slug) && in_array($item->slug, $trusted_plugins, true) ? true : $update;

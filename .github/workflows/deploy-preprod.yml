@@ -79,6 +79,7 @@ jobs:
           $WP plugin install fluent-smtp --activate
           $WP plugin install complianz-gdpr --activate
           $WP plugin install woocommerce-gateway-stripe --activate
+          $WP plugin install sendcloud-connected-shipping --activate
           $WP language core install fr_FR --activate
           $WP language plugin install woocommerce fr_FR || true
           $WP option update WPLANG 'fr_FR'
