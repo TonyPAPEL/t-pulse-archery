@@ -3,7 +3,7 @@ Theme Name: T-Pulse Archery
 Theme URI: https://t-pulse-archery.com/
 Author: T-Pulse Archery
 Description: Theme WooCommerce sur mesure pour T-Pulse Archery.
-Version: 1.1.0
+Version: 1.1.1
 Text Domain: tpulse
 Requires at least: 6.5
 Requires PHP: 8.1
@@ -363,8 +363,8 @@ h3 { font-size: 1.25rem; }
   .product-benefits, .product-facts { grid-template-columns: 1fr; }
   .woocommerce .cart-collaterals .cart_totals,
   .woocommerce-page .cart-collaterals .cart_totals { width: 100%; }
-  .woocommerce-cart table.cart .product-thumbnail { display: block; width: 100%; text-align: right !important; }
-  .woocommerce-cart table.cart .product-thumbnail::before { float: left; content: attr(data-title) ": "; font-weight: 800; }
+  .woocommerce-cart table.cart .product-thumbnail { display: flex; width: 100%; align-items: center; justify-content: center; text-align: center !important; }
+  .woocommerce-cart table.cart .product-thumbnail::before { display: none; content: none; }
   .woocommerce-cart table.cart img { display: inline-block; width: 78px; min-width: 78px; }
 }
 
