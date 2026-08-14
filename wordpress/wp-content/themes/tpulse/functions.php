@@ -84,6 +84,10 @@ function tpulse_translate_product_content(string $content, WC_Product $product):
 add_filter('woocommerce_product_get_description', 'tpulse_translate_product_content', 10, 2);
 
 function tpulse_translate_product_short_description(string $content, WC_Product $product): string {
+    if ($product->is_type('variation')) {
+        return $content;
+    }
+
     $translation = tpulse_is_english() ? tpulse_english_product_content($product->get_sku()) : [];
     return $translation['short'] ?? $content;
 }
