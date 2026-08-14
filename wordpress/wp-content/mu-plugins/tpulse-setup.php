@@ -575,6 +575,65 @@ function tpulse_refresh_store_presentation(): void {
 }
 add_action('wp_loaded', 'tpulse_refresh_store_presentation', 41);
 
+function tpulse_configure_default_shipping(): void {
+    if (!class_exists('WC_Shipping_Zones') || get_option('tpulse_default_shipping_version') === '2026-08-14-2') {
+        return;
+    }
+
+    update_option('woocommerce_ship_to_countries', 'specific');
+    update_option('woocommerce_specific_ship_to_countries', ['FR']);
+    update_option('woocommerce_default_customer_address', 'base');
+    update_option('woocommerce_enable_shipping_calc', 'yes');
+    update_option('woocommerce_shipping_cost_requires_address', 'no');
+
+    $zone_id = 0;
+    foreach (WC_Shipping_Zones::get_zones() as $zone_data) {
+        if ($zone_data['zone_name'] === 'France métropolitaine') {
+            $zone_id = (int) $zone_data['id'];
+            break;
+        }
+    }
+
+    $default_zone = new WC_Shipping_Zone(0);
+    foreach ($default_zone->get_shipping_methods(false) as $method) {
+        if ($method->id === 'flat_rate' && $method->title === 'Mondial Relay - Point Relais') {
+            $default_zone->delete_shipping_method($method->instance_id);
+        }
+    }
+
+    $zone = $zone_id > 0 ? new WC_Shipping_Zone($zone_id) : new WC_Shipping_Zone();
+    if ($zone_id === 0) {
+        $zone->set_zone_name('France métropolitaine');
+        $zone->set_zone_order(1);
+        $zone->save();
+        $zone->add_location('FR', 'country');
+    }
+
+    $has_flat_rate = false;
+    foreach ($zone->get_shipping_methods(false) as $method) {
+        if ($method->id === 'flat_rate') {
+            $has_flat_rate = true;
+            update_option('woocommerce_flat_rate_' . $method->instance_id . '_settings', [
+                'title' => 'Mondial Relay - Point Relais',
+                'tax_status' => 'none',
+                'cost' => '4.90',
+            ]);
+        }
+    }
+
+    if (!$has_flat_rate) {
+        $instance_id = $zone->add_shipping_method('flat_rate');
+        update_option('woocommerce_flat_rate_' . $instance_id . '_settings', [
+            'title' => 'Mondial Relay - Point Relais',
+            'tax_status' => 'none',
+            'cost' => '4.90',
+        ]);
+    }
+
+    update_option('tpulse_default_shipping_version', '2026-08-14-2');
+}
+add_action('wp_loaded', 'tpulse_configure_default_shipping', 44);
+
 function tpulse_cleanup_demo_content(): void {
     if (get_option('tpulse_demo_content_cleanup_version') === '2026-08-14-1') {
         return;
