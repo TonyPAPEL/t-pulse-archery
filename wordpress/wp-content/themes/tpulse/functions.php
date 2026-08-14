@@ -89,6 +89,37 @@ function tpulse_translate_product_short_description(string $content, WC_Product 
 }
 add_filter('woocommerce_product_get_short_description', 'tpulse_translate_product_short_description', 10, 2);
 
+function tpulse_translate_product_excerpt(string $content): string {
+    if (!tpulse_is_english()) {
+        return $content;
+    }
+
+    global $product;
+    $current_product = $product instanceof WC_Product ? $product : wc_get_product(get_the_ID());
+    if (!$current_product instanceof WC_Product) {
+        return $content;
+    }
+
+    $translation = tpulse_english_product_content($current_product->get_sku());
+    return $translation['short'] ?? $content;
+}
+add_filter('woocommerce_short_description', 'tpulse_translate_product_excerpt', 20);
+
+function tpulse_language_price_format(string $format): string {
+    return tpulse_is_english() ? '%1$s%2$s' : $format;
+}
+add_filter('woocommerce_price_format', 'tpulse_language_price_format');
+
+function tpulse_language_decimal_separator(string $separator): string {
+    return tpulse_is_english() ? '.' : $separator;
+}
+add_filter('option_woocommerce_price_decimal_sep', 'tpulse_language_decimal_separator');
+
+function tpulse_language_thousand_separator(string $separator): string {
+    return tpulse_is_english() ? ',' : $separator;
+}
+add_filter('option_woocommerce_price_thousand_sep', 'tpulse_language_thousand_separator');
+
 function tpulse_translate_product_name(string $name, WC_Product $product): string {
     $translation = tpulse_is_english() ? tpulse_english_product_content($product->get_sku()) : [];
     return $translation['name'] ?? $name;
