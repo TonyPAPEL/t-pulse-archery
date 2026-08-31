@@ -256,10 +256,16 @@ h3 { font-size: 1.25rem; }
 .product-benefits span { color: var(--muted); font-size: .92rem; }
 .product-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem 1rem; margin: 1rem 0; padding: 1rem 1rem 1rem 2rem; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.025); }
 .product-note { padding-left: .85rem; border-left: 2px solid var(--pulse); font-size: .9rem; }
-.external-rating { margin-top: 1.25rem; padding: 1.1rem 1.2rem; border: 1px solid rgba(137,240,113,.35); border-radius: 16px; background: rgba(137,240,113,.07); }
-.external-rating-score { color: var(--pulse); font-size: 1.65rem; font-weight: 900; }
-.external-rating p { margin: .35rem 0; font-size: .9rem; }
+.external-rating,
+.tpulse-amazon-review-card { margin-top: 1.25rem; padding: 1.15rem 1.25rem; border: 1px solid rgba(137,240,113,.35); border-radius: 18px; background: linear-gradient(135deg, rgba(137,240,113,.12), rgba(255,255,255,.025)); box-shadow: 0 16px 40px rgba(0,0,0,.18); }
+.tpulse-amazon-rating { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .75rem; margin: .25rem 0 .5rem; }
+.external-rating-score { color: var(--pulse); font-size: clamp(1.7rem, 3vw, 2.15rem); font-weight: 950; letter-spacing: -.04em; }
+.tpulse-amazon-stars { color: var(--pulse); font-size: 1.3rem; letter-spacing: .08em; text-shadow: 0 0 18px rgba(137,240,113,.28); }
+.tpulse-amazon-rating span:last-child { color: var(--paper); font-weight: 850; }
+.external-rating p,
+.tpulse-amazon-review-card p { margin: .35rem 0 1rem; max-width: 66ch; font-size: .94rem; }
 .external-rating a { color: var(--pulse); font-weight: 800; text-decoration: underline; }
+.tpulse-amazon-review-card .button { margin-top: .25rem; }
 .woocommerce #reviews { margin-top: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
 .woocommerce #reviews h2,
 .woocommerce #review_form #reply-title { color: var(--paper); font-size: 1.35rem; line-height: 1.25; }
