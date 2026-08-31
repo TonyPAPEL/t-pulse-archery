@@ -316,7 +316,10 @@ function tpulse_setup_woocommerce_product(): void {
         'M8 + 1/4' => ['HELITWIST-M8-14', 'HeliTwist Original - M8 + 1/4', '33.50'],
     ];
 
-    foreach ($variations as $thread => [$sku, $name, $price]) {
+    foreach ($variations as $thread => $variation_data) {
+        $sku = $variation_data[0];
+        $name = $variation_data[1];
+        $price = $variation_data[2];
         $variation_id = (int) wc_get_product_id_by_sku($sku);
         $variation = $variation_id ? wc_get_product($variation_id) : false;
         if (!$variation instanceof WC_Product_Variation || (int) $variation->get_parent_id() !== $product->get_id()) {
