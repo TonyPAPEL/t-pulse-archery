@@ -272,7 +272,7 @@ function tpulse_setup_woocommerce_product(): void {
     $product->set_status($product->get_status() === 'publish' ? 'publish' : 'draft');
     $product->set_catalog_visibility('visible');
     $product->set_description('Amortisseur breveté pour stabilisateurs d’arc, conçu pour réduire les vibrations, le choc du tir, le bruit et la sensibilité au vent.');
-    $product->set_short_description('Structure spiralée creuse, amortissement axial et compatibilité 5/16, 1/4 et M8.');
+    $product->set_short_description('Structure spiralée creuse, amortissement axial et compatibilité 5/16, 1/4, M8 et versions combinées.');
     $product->set_sku('HELITWIST-ORIGINAL');
     $product->set_weight('0.027');
     $product->set_manage_stock(false);
@@ -280,7 +280,7 @@ function tpulse_setup_woocommerce_product(): void {
     $attribute = new WC_Product_Attribute();
     $attribute->set_id(0);
     $attribute->set_name('Filetage');
-    $attribute->set_options(['1/4', '5/16', 'M8']);
+    $attribute->set_options(['5/16', '1/4', 'M8', '5/16 + 1/4', 'M8 + 1/4']);
     $attribute->set_position(0);
     $attribute->set_visible(true);
     $attribute->set_variation(true);
@@ -309,12 +309,14 @@ function tpulse_setup_woocommerce_product(): void {
     }
 
     $variations = [
-        '5/16' => ['HELITWIST-516', 'HeliTwist Original - 5/16'],
-        '1/4' => ['HELITWIST-14', 'HeliTwist Original - 1/4'],
-        'M8' => ['HELITWIST-M8', 'HeliTwist Original - M8'],
+        '5/16' => ['HELITWIST-516', 'HeliTwist Original - 5/16', '30.50'],
+        '1/4' => ['HELITWIST-14', 'HeliTwist Original - 1/4', '30.50'],
+        'M8' => ['HELITWIST-M8', 'HeliTwist Original - M8', '30.50'],
+        '5/16 + 1/4' => ['HELITWIST-516-14', 'HeliTwist Original - 5/16 + 1/4', '33.50'],
+        'M8 + 1/4' => ['HELITWIST-M8-14', 'HeliTwist Original - M8 + 1/4', '33.50'],
     ];
 
-    foreach ($variations as $thread => [$sku, $name]) {
+    foreach ($variations as $thread => [$sku, $name, $price]) {
         $variation_id = (int) wc_get_product_id_by_sku($sku);
         $variation = $variation_id ? wc_get_product($variation_id) : false;
         if (!$variation instanceof WC_Product_Variation || (int) $variation->get_parent_id() !== $product->get_id()) {
@@ -327,7 +329,7 @@ function tpulse_setup_woocommerce_product(): void {
         $variation->set_status('publish');
         $variation->set_attributes(['filetage' => $thread]);
         $variation->set_sku($sku);
-        $variation->set_regular_price('30.50');
+        $variation->set_regular_price($price);
         $variation->set_manage_stock(true);
         $variation->set_stock_quantity(max(0, $stock_quantity));
         $variation->set_stock_status($stock_quantity > 0 ? 'instock' : 'outofstock');
@@ -338,14 +340,14 @@ function tpulse_setup_woocommerce_product(): void {
     update_option('woocommerce_currency', 'EUR');
     update_option('woocommerce_default_country', 'FR');
     update_option('woocommerce_weight_unit', 'kg');
-    update_option('woocommerce_calc_taxes', 'yes');
+    update_option('woocommerce_calc_taxes', 'no');
     update_option('woocommerce_manage_stock', 'yes');
     update_option('woocommerce_enable_guest_checkout', 'yes');
     update_option('woocommerce_enable_checkout_login_reminder', 'yes');
     update_option('woocommerce_coming_soon', 'no');
     update_option('woocommerce_store_pages_only', 'no');
     update_option('tpulse_product_created', $product->get_id());
-    update_option('tpulse_helitwist_variations_version', '1');
+    update_option('tpulse_helitwist_variations_version', '2');
     wc_delete_product_transients($product->get_id());
 }
 add_action('wp_loaded', 'tpulse_setup_woocommerce_product');
