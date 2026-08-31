@@ -264,7 +264,8 @@ function tpulse_setup_woocommerce_product(): void {
         return;
     }
 
-    wp_set_object_terms($existing_id, 'variable', 'product_type');
+    try {
+        wp_set_object_terms($existing_id, 'variable', 'product_type');
 
     $product = new WC_Product_Variable($existing_id);
     $product->set_name('HeliTwist Original');
@@ -317,27 +318,37 @@ function tpulse_setup_woocommerce_product(): void {
     ];
 
     foreach ($variations as $thread => $variation_data) {
-        $sku = $variation_data[0];
-        $name = $variation_data[1];
-        $price = $variation_data[2];
-        $variation_id = (int) wc_get_product_id_by_sku($sku);
-        $variation = $variation_id ? wc_get_product($variation_id) : false;
-        if (!$variation instanceof WC_Product_Variation || (int) $variation->get_parent_id() !== $product->get_id()) {
-            $variation = new WC_Product_Variation();
-            $variation->set_parent_id($product->get_id());
-        }
+        try {
+            $sku = $variation_data[0];
+            $name = $variation_data[1];
+            $price = $variation_data[2];
+            $variation_id = (int) wc_get_product_id_by_sku($sku);
+            $variation = $variation_id ? wc_get_product($variation_id) : false;
 
-        $stock_quantity = $variation->get_id() ? (int) $variation->get_stock_quantity() : 10;
-        $variation->set_name($name);
-        $variation->set_status('publish');
-        $variation->set_attributes(['filetage' => $thread]);
-        $variation->set_sku($sku);
-        $variation->set_regular_price($price);
-        $variation->set_manage_stock(true);
-        $variation->set_stock_quantity(max(0, $stock_quantity));
-        $variation->set_stock_status($stock_quantity > 0 ? 'instock' : 'outofstock');
-        $variation->set_weight('0.027');
-        $variation->save();
+            if ($variation_id && !$variation instanceof WC_Product_Variation) {
+                update_option('tpulse_helitwist_setup_error', 'SKU déjà utilisé par un autre produit : ' . $sku);
+                continue;
+            }
+
+            if (!$variation instanceof WC_Product_Variation) {
+                $variation = new WC_Product_Variation();
+            }
+
+            $variation->set_parent_id($product->get_id());
+            $stock_quantity = $variation->get_id() ? (int) $variation->get_stock_quantity() : 10;
+            $variation->set_name($name);
+            $variation->set_status('publish');
+            $variation->set_attributes(['filetage' => $thread]);
+            $variation->set_sku($sku);
+            $variation->set_regular_price($price);
+            $variation->set_manage_stock(true);
+            $variation->set_stock_quantity(max(0, $stock_quantity));
+            $variation->set_stock_status($stock_quantity > 0 ? 'instock' : 'outofstock');
+            $variation->set_weight('0.027');
+            $variation->save();
+        } catch (Throwable $variation_error) {
+            update_option('tpulse_helitwist_setup_error', $variation_error->getMessage());
+        }
     }
 
     update_option('woocommerce_currency', 'EUR');
@@ -351,7 +362,10 @@ function tpulse_setup_woocommerce_product(): void {
     update_option('woocommerce_store_pages_only', 'no');
     update_option('tpulse_product_created', $product->get_id());
     update_option('tpulse_helitwist_variations_version', '2');
-    wc_delete_product_transients($product->get_id());
+        wc_delete_product_transients($product->get_id());
+    } catch (Throwable $error) {
+        update_option('tpulse_helitwist_setup_error', $error->getMessage());
+    }
 }
 add_action('wp_loaded', 'tpulse_setup_woocommerce_product');
 
