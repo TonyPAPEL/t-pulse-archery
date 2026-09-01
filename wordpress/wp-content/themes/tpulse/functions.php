@@ -155,6 +155,16 @@ function tpulse_translate_managed_entry_title(string $title, int $post_id): stri
         return $title;
     }
 
+    if (get_post_type($post_id) === 'product' && function_exists('wc_get_product')) {
+        $product = wc_get_product($post_id);
+        if ($product instanceof WC_Product) {
+            $translation = tpulse_english_product_content($product->get_sku());
+            if (!empty($translation['name'])) {
+                return $translation['name'];
+            }
+        }
+    }
+
     $english = get_post_meta($post_id, '_tpulse_english_title', true);
     if (is_string($english) && $english !== '') {
         return $english;
@@ -312,7 +322,8 @@ function tpulse_output_seo_metadata(): void {
     echo '<link rel="alternate" hreflang="fr-FR" href="' . esc_url($french) . '">' . "\n";
     echo '<link rel="alternate" hreflang="en" href="' . esc_url($english) . '">' . "\n";
     echo '<link rel="alternate" hreflang="x-default" href="' . esc_url($french) . '">' . "\n";
-    echo '<meta property="og:type" content="' . esc_attr(is_singular(['post', 'tpulse_resource', 'product']) ? 'article' : 'website') . '">' . "\n";
+    $og_type = is_product() ? 'product' : (is_singular(['post', 'tpulse_resource']) ? 'article' : 'website');
+    echo '<meta property="og:type" content="' . esc_attr($og_type) . '">' . "\n";
     echo '<meta property="og:locale" content="' . esc_attr(tpulse_is_english() ? 'en_US' : 'fr_FR') . '">' . "\n";
     echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
     echo '<meta property="og:description" content="' . esc_attr($description) . '">' . "\n";
@@ -660,9 +671,7 @@ function tpulse_attribute_label(string $label): string {
 add_filter('woocommerce_attribute_label', 'tpulse_attribute_label');
 
 function tpulse_variation_dropdown_prompt(array $args): array {
-    if (($args['attribute'] ?? '') === 'filetage' || ($args['name'] ?? '') === 'attribute_filetage') {
-        $args['show_option_none'] = tpulse_text('Choisir le filetage', 'Choose the thread');
-    }
+    $args['show_option_none'] = tpulse_text('Choisir le filetage', 'Choose the thread');
     return $args;
 }
 add_filter('woocommerce_dropdown_variation_attribute_options_args', 'tpulse_variation_dropdown_prompt');
@@ -746,6 +755,21 @@ function tpulse_product_review_form_args(array $args): array {
     return $args;
 }
 add_filter('woocommerce_product_review_comment_form_args', 'tpulse_product_review_form_args');
+
+function tpulse_reorder_product_review_fields(array $fields): array {
+    if (!is_product()) {
+        return $fields;
+    }
+
+    $ordered = [];
+    foreach (['author', 'email', 'comment'] as $key) {
+        if (isset($fields[$key])) {
+            $ordered[$key] = $fields[$key];
+        }
+    }
+    return $ordered;
+}
+add_filter('comment_form_fields', 'tpulse_reorder_product_review_fields', 100);
 
 function tpulse_validate_product_review(array $commentdata): array {
     if (($commentdata['comment_type'] ?? '') !== 'review') {

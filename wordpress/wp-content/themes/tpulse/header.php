@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
             <span>T-Pulse Archery</span>
         </a>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation"><?php echo esc_html(tpulse_text('Menu', 'Menu')); ?></button>
-        <nav class="main-nav" id="main-navigation" aria-label="<?php esc_attr_e('Navigation principale', 'tpulse'); ?>">
+        <nav class="main-nav" id="main-navigation" aria-label="<?php echo esc_attr(tpulse_text('Navigation principale', 'Main navigation')); ?>">
             <?php if (has_nav_menu('primary')) : ?>
                 <?php wp_nav_menu(['theme_location' => 'primary', 'container' => false, 'items_wrap' => '%3$s']); ?>
             <?php else : ?>

@@ -619,7 +619,7 @@ function tpulse_set_book_cover(): void {
 add_action('wp_loaded', 'tpulse_set_book_cover', 30);
 
 function tpulse_refresh_commercial_content(): void {
-    if (!class_exists('WooCommerce') || get_option('tpulse_commercial_content_version') === '2026-09-01-2') {
+    if (!class_exists('WooCommerce') || get_option('tpulse_commercial_content_version') === '2026-09-01-3') {
         return;
     }
 
@@ -632,7 +632,7 @@ function tpulse_refresh_commercial_content(): void {
             '<p class="product-intro"><strong>HeliTwist Original</strong> est né sur le pas de tir, à partir d’un besoin simple : obtenir une réaction plus douce après la décoche sans alourdir inutilement la stabilisation.</p>' .
             '<h2>Un amortissement dans l’axe du tir</h2>' .
             '<p>À la différence d’un amortisseur qui travaille principalement par flexion latérale, sa structure spiralée creuse se comprime dans l’axe de la stabilisation. Cette géométrie est conçue pour limiter le transfert des vibrations, atténuer le choc ressenti et laisser circuler l’air afin de réduire la prise au vent.</p>' .
-            '<div class="product-benefits"><div><strong>Réaction plus douce</strong><span>Une sensation post-tir plus propre et mieux maîtrisée.</span></div><div><strong>Seulement 27 g</strong><span>Un amortissement pensé pour préserver l’équilibre de la stabilisation.</span></div><div><strong>Trois filetages</strong><span>Choisissez 5/16, 1/4 ou M8 selon votre matériel.</span></div></div>' .
+            '<div class="product-benefits"><div><strong>Réaction plus douce</strong><span>Une sensation post-tir plus propre et mieux maîtrisée.</span></div><div><strong>Seulement 27 g</strong><span>Un amortissement pensé pour préserver l’équilibre de la stabilisation.</span></div><div><strong>Cinq configurations</strong><span>Choisissez 5/16, 1/4, M8 ou une version combinée.</span></div></div>' .
             '<h2>Bien choisir votre modèle</h2>' .
             '<p>Vérifiez le filetage de votre stabilisateur ou de vos masses avant de commander. Chaque variante possède son propre stock. En cas de doute, écrivez à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> avec une photo ou la référence de votre stabilisation.</p>' .
             '<ul class="product-facts"><li><strong>Usage :</strong> stabilisateurs d’arc</li><li><strong>Poids :</strong> 27 g</li><li><strong>Filetages :</strong> 5/16, 1/4, M8 ou versions combinées</li><li><strong>Propriété industrielle :</strong> demande de brevet déposée, FR2506128</li></ul>' .
@@ -672,7 +672,7 @@ function tpulse_refresh_commercial_content(): void {
     }
 
     update_option('woocommerce_dimension_unit', 'cm');
-    update_option('tpulse_commercial_content_version', '2026-09-01-2');
+    update_option('tpulse_commercial_content_version', '2026-09-01-3');
 }
 add_action('wp_loaded', 'tpulse_refresh_commercial_content', 40);
 
