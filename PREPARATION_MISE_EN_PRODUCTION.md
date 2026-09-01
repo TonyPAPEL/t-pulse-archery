@@ -1,80 +1,63 @@
-# T-Pulse Archery - préparation de la mise en production
+# T-Pulse Archery - checklist avant mise en production
 
-Dernière mise à jour : 14 août 2026.
+Dernière mise à jour : 1er septembre 2026.
 
-Ce document centralise tout ce qui doit être confirmé par Tony avant d'accepter une vraie commande. Les occurrences `[À COMPLÉTER : ...]` sont également visibles sur les pages de préproduction concernées.
+Cette liste ne contient plus que les contrôles ou actions qui nécessitent l'intervention de Tony. Les corrections de contenu, de traduction, de produit, d'avis, de SEO et d'interface sont gérées dans le dépôt et déployées en préproduction.
 
-## Bloquants avant ouverture des ventes
+## À faire avant d'accepter une commande réelle
 
-- [ ] Créer ou confirmer l'entreprise et renseigner son statut exact : micro-entreprise/EI ou société.
-- [ ] Renseigner le nom légal, la forme juridique, l'adresse professionnelle, le SIREN/SIRET, le registre éventuel, le téléphone et le directeur de publication.
-- [ ] Confirmer le régime de TVA. En cas de franchise en base, utiliser la mention `TVA non applicable, art. 293 B du CGI` et vérifier la configuration fiscale WooCommerce.
-- [ ] Ouvrir ou confirmer le compte bancaire dédié/professionnel et obtenir l'IBAN utilisé pour Stripe et la comptabilité.
-- [ ] Créer le compte Stripe, terminer la vérification d'identité et connecter l'IBAN. Commencer en mode test.
-- [ ] Créer le compte professionnel Mondial Relay, récupérer les identifiants techniques et choisir les zones desservies.
-- [ ] Définir le délai de préparation, les tarifs d'expédition et l'éventuel seuil de livraison offerte.
-- [ ] Respecter le minimum légal de frais d'envoi des livres neufs en France : vérifier la règle applicable au moment de l'ouverture, notamment pour une commande de livres inférieure à 35 euros.
-- [ ] Choisir une adresse de retour et la reporter dans les CGV, la page Livraison et le formulaire de rétractation.
-- [ ] Adhérer à un médiateur de la consommation puis publier son nom, son adresse et son site.
-- [ ] Vérifier et compléter les pages Mentions légales, CGV, Confidentialité, Livraison et retours et Formulaire de rétractation. Une validation juridique professionnelle reste recommandée.
-- [ ] Configurer l'envoi d'e-mails du domaine par SMTP et vérifier SPF, DKIM et DMARC.
-- [ ] Configurer la facturation/comptabilité, par exemple Abby, ainsi que la numérotation continue des factures.
-- [ ] Passer une commande complète en mode test : panier, code promo, adresse, livraison, paiement, e-mails, stock, remboursement et facture.
+- [ ] **Adresse professionnelle** : la ville seule est conservée à la demande de Tony. Une adresse géographique complète reste normalement requise pour une boutique B2C. Prévoir une domiciliation professionnelle si l'adresse personnelle ne doit pas être publiée.
+- [ ] **Médiateur de la consommation** : aucune coordonnée de médiateur n'est publiée pour le moment. L'adhésion et l'affichage du médiateur restent légalement requis avant une ouverture commerciale durable.
+- [ ] **Téléphone professionnel** : aucun numéro n'est publié. Créer un numéro professionnel distinct si l'on ne souhaite pas communiquer le numéro personnel.
+- [ ] **Prix du livre** : modifier le prix éditeur dans KDP pour qu'il corresponde aux 15,00 € affichés sur la boutique, puis contrôler la fiche Amazon.
+- [ ] **Stocks** : vérifier les quantités réelles des cinq variations HeliTwist et du livre dans WooCommerce.
+- [ ] **Stripe** : une fois tous les contrôles terminés, passer du mode test au mode production.
+- [ ] **Commande réelle finale** : effectuer une commande à faible montant, vérifier Stripe, WooCommerce, l'e-mail client, l'e-mail administrateur, Sendcloud et le stock, puis rembourser la commande.
+- [ ] **Abby** : créer la facture à partir du bloc `Préparation facture Abby` présent dans l'administration de chaque commande, puis l'envoyer au client depuis Abby.
+- [ ] **Sendcloud** : créer l'étiquette de la commande test et confirmer que le point Mondial Relay choisi remonte correctement.
+- [ ] **Sauvegarde** : configurer UpdraftPlus vers un stockage extérieur à OVH et effectuer au moins un test de restauration.
+- [ ] **E-mails** : vérifier une nouvelle commande, une commande terminée, un remboursement, une réinitialisation de mot de passe et une notification d'avis en attente.
 
-## Informations produits à confirmer
+## DNS et délivrabilité e-mail
 
-- [ ] HeliTwist : confirmer la formulation juridique autorisée pour le brevet. Indiquer si le brevet est délivré ou seulement déposé, avec le numéro publiable. Tant que ce point n'est pas confirmé, le site parle de conception T-Pulse sans revendiquer un brevet.
-- [ ] HeliTwist : confirmer que le poids de 27 g est identique pour les trois filetages.
-- [ ] HeliTwist : confirmer le contenu exact du colis et ajouter, si utile, une notice de montage/usage.
-- [ ] HeliTwist : remplacer les stocks de démonstration de 10 unités pour chaque variante par les stocks réels `5/16`, `1/4` et `M8`.
-- [ ] Livre : confirmer le prix public légal. Le site est à 15,00 euros alors qu'Amazon affichait 15,82 euros le 14 août 2026.
-- [ ] Livre : renseigner l'ISBN, le poids d'un exemplaire et le stock réel.
-- [ ] Livre : confirmer les caractéristiques reprises d'Amazon : broché, français, 79 pages, 14,81 x 21,01 cm.
-- [ ] Avis Amazon : la fiche affiche uniquement la note globale 4,5/5 sur 21 évaluations, datée du 14 août 2026, avec un lien vers Amazon. Mettre à jour ce chiffre périodiquement. Ne pas recopier les textes individuels sans autorisation de leurs auteurs.
+- [x] SPF OVH présent.
+- [ ] Vérifier DKIM dans les en-têtes d'un e-mail reçu (`dkim=pass`).
+- [ ] Ajouter chez OVH un enregistrement TXT nommé `_dmarc` avec cette valeur de démarrage : `v=DMARC1; p=none; rua=mailto:contact@t-pulse-archery.com; adkim=r; aspf=r; pct=100`.
+- [ ] Après plusieurs semaines sans erreur SPF/DKIM, renforcer progressivement DMARC vers `p=quarantine`, puis éventuellement `p=reject`.
 
-## Réglages WordPress et WooCommerce
+## Contrôles de contenu
 
-- [ ] Supprimer ou remplacer l'article `Bienvenue dans l'univers T-Pulse Archery` lorsque la première vraie actualité est prête.
-- [ ] Vérifier le stock faible, le seuil de rupture et les destinataires des alertes WooCommerce.
-- [ ] Confirmer la vente avec ou sans compte client et vérifier les textes de Mon compte.
-- [ ] Configurer les taxes après confirmation du régime de TVA.
-- [ ] Configurer les zones et méthodes d'expédition. Aucune commande réelle ne doit être ouverte avant ce point.
-- [ ] Installer/configurer Stripe en mode test, puis repasser en mode réel seulement après une commande test réussie.
-- [ ] Ajouter PayPal uniquement si son coût et son intérêt commercial sont validés.
-- [ ] Configurer Mondial Relay et vérifier la sélection du point relais sur ordinateur et mobile.
-- [ ] Configurer le consentement cookies après activation des moyens de paiement, statistiques ou contenus tiers. Les boutons Accepter et Refuser doivent être proposés au même niveau.
-- [ ] Configurer les sauvegardes hors hébergement, la sécurité et les mises à jour automatiques. Tester une restauration.
-- [ ] Vérifier l'adresse e-mail qui reçoit les nouveaux avis et les avis en attente de modération.
-- [ ] Supprimer les deux avis de test restants, le cas échéant, depuis Commentaires/Avis produit.
+- [x] Mention HeliTwist corrigée en `Demande de brevet déposée - FR2506128`.
+- [x] Choix du filetage obligatoire avant ajout au panier.
+- [x] Stocks indépendants pour `5/16`, `1/4`, `M8`, `5/16 + 1/4` et `M8 + 1/4`.
+- [x] Livre à 15,00 €, ISBN-13, poids et dimensions renseignés.
+- [x] Avis Amazon présentés séparément avec lien vers Amazon, sans recopier les commentaires.
+- [x] Formulaire d'avis simplifié : une seule identité, e-mail privé, modèle, date, note et texte.
+- [ ] Remplacer l'article d'accueil du blog par une première vraie actualité lorsque celle-ci est prête.
+- [ ] Mettre à jour périodiquement la note Amazon affichée si elle évolue.
 
-## E-mails et parcours client à vérifier
+## Contrôles techniques au moment de la bascule
 
-- [ ] Nouvelle commande reçue par l'administrateur.
-- [ ] Commande en cours envoyée au client après paiement.
-- [ ] Commande terminée envoyée au client lors de l'expédition.
-- [ ] Remboursement et annulation.
-- [ ] Réinitialisation de mot de passe du compte client.
-- [ ] Notification d'un avis en attente de modération.
-- [ ] Expéditeur lisible : `T-Pulse Archery <contact@t-pulse-archery.com>`.
-- [ ] E-mails sans pixel de suivi marketing non déclaré.
+- [ ] Sauvegarder le site GitHub Pages actuel et la préproduction WordPress.
+- [ ] Conserver l'ancienne version GitHub accessible par son URL technique pendant la période de retour arrière.
+- [ ] Basculer le domaine vers OVH et remplacer les URL de préproduction par `https://t-pulse-archery.com`.
+- [ ] Regénérer ou contrôler Complianz sur le domaine final.
+- [ ] Retirer `noindex` uniquement après la bascule et les contrôles finaux.
+- [ ] Vérifier les redirections HTTPS, les en-têtes de sécurité, les liens FR/EN, les canonicals et le sitemap.
+- [ ] Réactiver Google Analytics uniquement via Complianz et après consentement, si les statistiques sont souhaitées.
 
-## Contrôle final avant bascule du domaine
+## Ce qui est volontairement différé
 
-- [ ] Sauvegarder le site public GitHub Pages et la préproduction WordPress.
-- [ ] Vérifier les pages FR et EN sur ordinateur et téléphone.
-- [ ] Contrôler l'orthographe, les prix, les stocks, les délais et les coordonnées légales une dernière fois.
-- [ ] Vérifier qu'aucune occurrence `[À COMPLÉTER` ou `[TO COMPLETE` n'est encore publiée.
-- [ ] Vérifier le certificat HTTPS et les redirections du domaine.
-- [ ] Retirer le mode de non-indexation uniquement lors de l'ouverture réelle.
-- [ ] Effectuer une commande réelle de faible montant après la bascule, puis la rembourser si nécessaire.
-- [ ] Conserver GitHub Pages accessible par son URL technique pendant la phase de retour arrière, sans modifier son contenu avant validation.
+- PayPal : non installé tant que son intérêt commercial n'est pas démontré.
+- Automatisation Abby : facturation manuelle assistée par le bloc de copie WooCommerce.
+- Politique CSP stricte : à mettre en place après validation définitive des domaines Stripe et Sendcloud afin de ne pas casser le paiement ou le sélecteur de point relais.
 
-## Sources officielles utilisées pour le brouillon juridique
+## Sources juridiques de référence
 
-- Guide DGCCRF du vendeur e-commerce : https://www.economie.gouv.fr/files/files/directions_services/dgccrf/media-document/guide-dgccrf-vendeur-e-commerce.pdf
+- Garanties légales et encadré obligatoire : https://www.legifrance.gouv.fr/codes/id/LEGIARTI000045981318/
 - Conditions générales de vente : https://entreprendre.service-public.fr/vosdroits/F33527
-- Obligations RGPD : https://entreprendre.service-public.fr/vosdroits/F24270
-- Règles relatives aux cookies : https://www.cnil.fr/fr/cookies-et-autres-traceurs/regles/cookies
-- Mentions légales OVH : https://www.ovhcloud.com/fr/terms-and-conditions/
+- Médiation de la consommation : https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/la-mediation-de-la-consommation-ce-que-vous-devez-savoir
+- Mentions obligatoires d'un site professionnel : https://www.economie.gouv.fr/entreprises/developper-son-entreprise/innover-et-numeriser-son-entreprise/mentions-sur-votre-site-internet-les-obligations-respecter
+- Cookies : https://www.cnil.fr/fr/cookies-et-autres-traceurs/regles/cookies
 
-Les pages juridiques du site sont un brouillon opérationnel fondé sur ces sources. Elles ne remplacent pas un avis juridique adapté à la situation réelle de l'entreprise.
+Les textes publiés constituent une base opérationnelle. La ville seule, l'absence de téléphone et l'absence de médiateur restent des écarts connus aux obligations généralement applicables à une boutique B2C.

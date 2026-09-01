@@ -8,7 +8,7 @@ get_header();
             <h1>HeliTwist<br>Original</h1>
             <p class="lead"><?php echo esc_html(tpulse_text('Un amortisseur de 27 g conçu pour atténuer les vibrations et adoucir la réaction de votre arc, sans oublier l’équilibre de la stabilisation.', 'A 27 g damper designed to reduce vibration and soften bow reaction while preserving stabilizer balance.')); ?></p>
             <div class="actions">
-                <a class="button" href="<?php echo esc_url(home_url('/produit/helitwist-original/')); ?>"><?php echo esc_html(tpulse_text('Choisir mon filetage – 30,50 €', 'Choose my thread – €30.50')); ?></a>
+                <a class="button" href="<?php echo esc_url(home_url('/product/helitwist-original/')); ?>"><?php echo esc_html(tpulse_text('Choisir mon filetage – 30,50 €', 'Choose my thread – €30.50')); ?></a>
                 <a class="button secondary" href="#technologie"><?php echo esc_html(tpulse_text('Comprendre le fonctionnement', 'How it works')); ?></a>
             </div>
         </div>
@@ -62,7 +62,7 @@ get_header();
 <section class="section">
     <div class="wrap cta">
         <div><span class="eyebrow">HeliTwist Original</span><h2><?php echo esc_html(tpulse_text('Prêt à essayer une autre réaction de stabilisation ?', 'Ready to try a different stabilizer reaction?')); ?></h2><p class="muted"><?php echo esc_html(tpulse_text('Choisissez le filetage adapté à votre matériel dans la boutique.', 'Choose the thread that matches your equipment in the shop.')); ?></p></div>
-        <a class="button" href="<?php echo esc_url(home_url('/produit/helitwist-original/')); ?>"><?php echo esc_html(tpulse_text('Choisir mon HeliTwist', 'Choose my HeliTwist')); ?></a>
+        <a class="button" href="<?php echo esc_url(home_url('/product/helitwist-original/')); ?>"><?php echo esc_html(tpulse_text('Choisir mon HeliTwist', 'Choose my HeliTwist')); ?></a>
     </div>
 </section>
 <?php

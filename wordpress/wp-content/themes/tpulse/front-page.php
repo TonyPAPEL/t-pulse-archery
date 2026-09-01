@@ -35,7 +35,7 @@ get_header();
             </div>
             <div class="actions">
                 <a class="button" href="<?php echo esc_url(home_url('/helitwist/')); ?>"><?php echo esc_html(tpulse_text('Comprendre HeliTwist', 'Understand HeliTwist')); ?></a>
-                <a class="button secondary" href="<?php echo esc_url(home_url('/produit/helitwist-original/')); ?>"><?php echo esc_html(tpulse_text('Choisir mon modèle – 30,50 €', 'Choose my model – €30.50')); ?></a>
+                <a class="button secondary" href="<?php echo esc_url(home_url('/product/helitwist-original/')); ?>"><?php echo esc_html(tpulse_text('Choisir mon modèle – 30,50 €', 'Choose my model – €30.50')); ?></a>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@ get_header();
                 <span class="eyebrow"><?php echo esc_html(tpulse_text('Livre', 'Book')); ?></span>
                 <h3><?php echo esc_html(tpulse_text('Jeux d’archers', 'Archery Games')); ?></h3>
                 <p><?php echo esc_html(tpulse_text('26 jeux pour varier vos entraînements, progresser et retrouver une pratique plus détendue. Livre broché, 79 pages.', '26 games to vary practice, improve and enjoy a more relaxed approach. French paperback, 79 pages.')); ?></p>
-                <a class="text-link" href="<?php echo esc_url(home_url('/produit/jeux-darchers/')); ?>"><?php echo esc_html(tpulse_text('Découvrir le livre →', 'Discover the book →')); ?></a>
+                <a class="text-link" href="<?php echo esc_url(home_url('/product/jeux-darchers/')); ?>"><?php echo esc_html(tpulse_text('Découvrir le livre →', 'Discover the book →')); ?></a>
             </article>
             <article class="offer-card">
                 <div class="offer-visual future-visual"><span>&lt;/&gt;</span></div>

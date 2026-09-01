@@ -64,13 +64,13 @@ function tpulse_english_product_content(string $sku): array {
     $products = [
         'HELITWIST-ORIGINAL' => [
             'name' => 'HeliTwist Original',
-            'short' => 'A 27 g axial damper for bow stabilizers. Its hollow spiral structure is designed to reduce vibration and soften bow reaction, with a choice of 5/16, 1/4 or M8 threads.',
-            'description' => '<div class="tpulse-product-story"><p class="product-intro"><strong>HeliTwist Original</strong> was born on the shooting line from a simple need: a softer reaction after release without adding unnecessary weight to the stabilizer.</p><h2>Axial damping</h2><p>Instead of working mainly through sideways flex, its hollow spiral structure compresses along the stabilizer axis. This geometry is designed to limit vibration transfer, soften the perceived shock and allow air to pass through to reduce wind drag.</p><div class="product-benefits"><div><strong>Softer reaction</strong><span>A cleaner, more controlled post-shot feel.</span></div><div><strong>Only 27 g</strong><span>Damping designed to preserve stabilizer balance.</span></div><div><strong>Three threads</strong><span>Choose 5/16, 1/4 or M8 for your equipment.</span></div></div><h2>Choose the correct model</h2><p>Check the thread on your stabilizer or weights before ordering. Each variation has its own stock. If you are unsure, email <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> with a photo or the reference of your stabilizer.</p><ul class="product-facts"><li><strong>Use:</strong> bow stabilizers</li><li><strong>Weight:</strong> 27 g</li><li><strong>Threads:</strong> 5/16, 1/4 or M8</li><li><strong>Design:</strong> developed in France by T-Pulse Archery</li></ul><p class="product-note">Feel and behaviour may vary with the bow, stabilizer setup and weights used.</p></div>',
+            'short' => 'A 27 g axial damper for bow stabilizers. Its hollow spiral structure is designed to reduce vibration and soften bow reaction. Patent application filed under reference FR2506128.',
+            'description' => '<div class="tpulse-product-story"><p class="product-intro"><strong>HeliTwist Original</strong> was born on the shooting line from a simple need: a softer reaction after release without adding unnecessary weight to the stabilizer.</p><h2>Axial damping</h2><p>Instead of working mainly through sideways flex, its hollow spiral structure compresses along the stabilizer axis. This geometry is designed to limit vibration transfer, soften the perceived shock and allow air to pass through to reduce wind drag.</p><div class="product-benefits"><div><strong>Softer reaction</strong><span>A cleaner, more controlled post-shot feel.</span></div><div><strong>Only 27 g</strong><span>Damping designed to preserve stabilizer balance.</span></div><div><strong>Five configurations</strong><span>Choose 5/16, 1/4, M8 or a combined version.</span></div></div><h2>Choose the correct model</h2><p>Check the thread on your stabilizer or weights before ordering. Each variation has its own stock. If you are unsure, email <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> with a photo or the reference of your stabilizer.</p><ul class="product-facts"><li><strong>Use:</strong> bow stabilizers</li><li><strong>Weight:</strong> 27 g</li><li><strong>Threads:</strong> 5/16, 1/4, M8 or combined versions</li><li><strong>Industrial property:</strong> patent application filed, FR2506128</li></ul><p class="product-note">Feel and behaviour may vary with the bow, stabilizer setup and weights used.</p></div>',
         ],
         'LIVRE-JEUX-DARCHERS' => [
             'name' => 'Archery Games',
             'short' => '26 archery games to vary practice, work on accuracy and enjoy a more relaxed approach, alone, with friends or at a club. French paperback, 79 pages.',
-            'description' => '<div class="tpulse-product-story"><p class="product-intro"><strong>Archery Games – Improve your shooting</strong> presents 26 games that break up repetition, create new challenges and help you improve without losing the enjoyment of shooting.</p><h2>Bring play back into practice</h2><p>Archery demands accuracy, concentration and consistency. Repeating the same end can, however, create pressure or monotony. The situations in this book give each session a different objective and encourage attention to the process rather than the score alone.</p><div class="product-benefits"><div><strong>26 varied games</strong><span>Ideas that are easy to include in practice.</span></div><div><strong>Solo or group use</strong><span>For archers, coaches, clubs and shooting partners.</span></div><div><strong>Playful progress</strong><span>Accuracy, adaptability, motivation and pressure management.</span></div></div><h2>What you will work on</h2><ul><li>Varying distances, objectives and shooting constraints.</li><li>Maintaining motivation and concentration throughout practice.</li><li>Approaching target panic in a more relaxed, less result-focused setting.</li><li>Developing adaptability and encouraging a smoother shot.</li></ul><ul class="product-facts"><li><strong>Format:</strong> paperback</li><li><strong>Language:</strong> French</li><li><strong>Length:</strong> 79 pages</li><li><strong>Size:</strong> 14.81 × 21.01 cm</li><li><strong>Sold by:</strong> shipped directly by T-Pulse Archery</li></ul><aside class="external-rating tpulse-amazon-rating-box"><div class="tpulse-amazon-rating"><span class="external-rating-score">4.5/5</span><span class="tpulse-amazon-stars" aria-label="4.5 stars out of 5">★★★★★</span><span>21 Amazon ratings</span></div><p>The book has already received reader feedback on Amazon. Read those comments alongside reviews left directly on the T-Pulse Archery shop.</p><a href="https://www.amazon.fr/Jeux-darchers-Perfectionnez-darcherie-samuser/dp/B0DLWNRBPQ#customerReviews" target="_blank" rel="noopener external nofollow">Read Amazon reviews</a></aside></div>',
+            'description' => '<div class="tpulse-product-story"><p class="product-intro"><strong>Archery Games – Improve your shooting</strong> presents 26 games that break up repetition, create new challenges and help you improve without losing the enjoyment of shooting.</p><h2>Bring play back into practice</h2><p>Archery demands accuracy, concentration and consistency. Repeating the same end can, however, create pressure or monotony. The situations in this book give each session a different objective and encourage attention to the process rather than the score alone.</p><div class="product-benefits"><div><strong>26 varied games</strong><span>Ideas that are easy to include in practice.</span></div><div><strong>Solo or group use</strong><span>For archers, coaches, clubs and shooting partners.</span></div><div><strong>Playful progress</strong><span>Accuracy, adaptability, motivation and pressure management.</span></div></div><h2>What you will work on</h2><ul><li>Varying distances, objectives and shooting constraints.</li><li>Maintaining motivation and concentration throughout practice.</li><li>Approaching target panic in a more relaxed, less result-focused setting.</li><li>Developing adaptability and encouraging a smoother shot.</li></ul><ul class="product-facts"><li><strong>Format:</strong> paperback</li><li><strong>Language:</strong> French</li><li><strong>Length:</strong> 79 pages</li><li><strong>ISBN-13:</strong> 979-10-415-5471-3</li><li><strong>Size:</strong> 14.81 × 0.46 × 21.01 cm</li><li><strong>Weight:</strong> 159 g</li><li><strong>Sold by:</strong> shipped directly by T-Pulse Archery</li></ul><aside class="external-rating tpulse-amazon-rating-box"><div class="tpulse-amazon-rating"><span class="external-rating-score">4.5/5</span><span class="tpulse-amazon-stars" aria-label="4.5 stars out of 5">★★★★★</span><span>21 Amazon ratings</span></div><p>The book has already received reader feedback on Amazon. Read those comments alongside reviews left directly on the T-Pulse Archery shop.</p><a href="https://www.amazon.fr/Jeux-darchers-Perfectionnez-darcherie-samuser/dp/B0DLWNRBPQ#customerReviews" target="_blank" rel="noopener external nofollow">Read Amazon reviews</a></aside></div>',
         ],
     ];
 
@@ -135,6 +135,16 @@ function tpulse_translate_managed_entry_content(string $content): string {
         return $content;
     }
 
+    if (is_product() && function_exists('wc_get_product')) {
+        $product = wc_get_product(get_the_ID());
+        if ($product instanceof WC_Product) {
+            $translation = tpulse_english_product_content($product->get_sku());
+            if (!empty($translation['description'])) {
+                return $translation['description'];
+            }
+        }
+    }
+
     $english = get_post_meta(get_the_ID(), '_tpulse_english_content', true);
     return is_string($english) && $english !== '' ? $english : $content;
 }
@@ -161,6 +171,157 @@ function tpulse_translate_managed_entry_title(string $title, int $post_id): stri
     return $post instanceof WP_Post && isset($page_titles[$post->post_name]) ? $page_titles[$post->post_name] : $title;
 }
 add_filter('the_title', 'tpulse_translate_managed_entry_title', 20, 2);
+
+function tpulse_document_title_parts(array $parts): array {
+    if (!tpulse_is_english()) {
+        return $parts;
+    }
+
+    $object = get_queried_object();
+    if (is_product() && $object instanceof WP_Post && function_exists('wc_get_product')) {
+        $product = wc_get_product($object->ID);
+        if ($product instanceof WC_Product) {
+            $translation = tpulse_english_product_content($product->get_sku());
+            $parts['title'] = $translation['name'] ?? $product->get_name();
+        }
+    } elseif ($object instanceof WP_Post) {
+        $english = get_post_meta($object->ID, '_tpulse_english_title', true);
+        $page_titles = [
+            'accueil' => 'T-Pulse Archery',
+            'boutique' => 'Shop',
+            'panier' => 'Cart',
+            'commande' => 'Checkout',
+            'mon-compte' => 'My account',
+            'actualites' => 'News',
+            'helitwist' => 'HeliTwist',
+        ];
+        $parts['title'] = is_string($english) && $english !== '' ? $english : ($page_titles[$object->post_name] ?? $parts['title']);
+    } elseif (is_shop()) {
+        $parts['title'] = 'Shop';
+    }
+
+    if (isset($parts['tagline'])) {
+        $parts['tagline'] = 'Innovation and progress for archers';
+    }
+
+    return $parts;
+}
+add_filter('document_title_parts', 'tpulse_document_title_parts', 20);
+
+function tpulse_canonical_base_url(): string {
+    if (is_front_page()) {
+        return home_url('/');
+    }
+    if (function_exists('is_shop') && is_shop()) {
+        return wc_get_page_permalink('shop');
+    }
+    if (is_singular()) {
+        return get_permalink(get_queried_object_id());
+    }
+    if (is_home()) {
+        return get_permalink((int) get_option('page_for_posts'));
+    }
+    if (is_post_type_archive('tpulse_resource')) {
+        return (string) get_post_type_archive_link('tpulse_resource');
+    }
+
+    global $wp;
+    $request = isset($wp->request) ? trim((string) $wp->request, '/') : '';
+    return home_url($request === '' ? '/' : '/' . $request . '/');
+}
+
+function tpulse_localized_public_url(string $base, string $language): string {
+    $base = remove_query_arg(['lang', 'add-to-cart', 'avis-envoye'], $base);
+    return $language === 'en' ? add_query_arg('lang', 'en', $base) : $base;
+}
+
+function tpulse_meta_description(): string {
+    $descriptions = [
+        'accueil' => tpulse_text('T-Pulse Archery conçoit des produits techniques, un livre et des outils gratuits pensés par un archer pour les archers.', 'T-Pulse Archery creates technical products, a book and free tools designed by an archer for archers.'),
+        'helitwist' => tpulse_text('Découvrez HeliTwist Original, l’amortisseur axial T-Pulse de 27 g pour stabilisateurs d’arc, disponible en plusieurs filetages.', 'Discover HeliTwist Original, the 27 g T-Pulse axial damper for bow stabilizers, available with several thread options.'),
+        'boutique' => tpulse_text('Achetez HeliTwist Original et le livre Jeux d’archers directement auprès de T-Pulse Archery, avec paiement sécurisé.', 'Buy HeliTwist Original and the Archery Games book directly from T-Pulse Archery with secure payment.'),
+        'actualites' => tpulse_text('Nouveautés, articles techniques et projets en cours de T-Pulse Archery.', 'News, technical articles and current T-Pulse Archery projects.'),
+        'ressources' => tpulse_text('Logiciels, simulateurs, articles et téléchargements gratuits créés pour les archers.', 'Free software, simulators, articles and downloads created for archers.'),
+        'retours-archers' => tpulse_text('Consultez les retours d’archers et partagez votre expérience avec les produits T-Pulse Archery.', 'Read archer feedback and share your experience with T-Pulse Archery products.'),
+        'contact' => tpulse_text('Contactez T-Pulse Archery pour une commande, un conseil sur HeliTwist ou un projet lié au tir à l’arc.', 'Contact T-Pulse Archery about an order, HeliTwist advice or an archery project.'),
+        'conditions-generales-de-vente' => tpulse_text('Conditions générales de vente de la boutique T-Pulse Archery.', 'Terms and conditions for the T-Pulse Archery shop.'),
+        'politique-de-confidentialite' => tpulse_text('Politique de confidentialité et traitement des données de T-Pulse Archery.', 'T-Pulse Archery privacy and personal data policy.'),
+        'mentions-legales' => tpulse_text('Mentions légales du site et de la boutique T-Pulse Archery.', 'Legal notice for the T-Pulse Archery website and shop.'),
+    ];
+
+    if (is_product() && function_exists('wc_get_product')) {
+        $product = wc_get_product(get_queried_object_id());
+        if ($product instanceof WC_Product) {
+            if (tpulse_is_english()) {
+                $translation = tpulse_english_product_content($product->get_sku());
+                $source = $translation['short'] ?? '';
+            } else {
+                $source = $product->get_short_description();
+            }
+            return wp_html_excerpt(wp_strip_all_tags($source), 160, '…');
+        }
+    }
+
+    $object = get_queried_object();
+    $slug = $object instanceof WP_Post ? $object->post_name : (is_post_type_archive('tpulse_resource') ? 'ressources' : '');
+    if (isset($descriptions[$slug])) {
+        return $descriptions[$slug];
+    }
+
+    if ($object instanceof WP_Post) {
+        $source = tpulse_is_english() ? get_post_meta($object->ID, '_tpulse_english_excerpt', true) : $object->post_excerpt;
+        if (!$source) {
+            $source = tpulse_is_english() ? get_post_meta($object->ID, '_tpulse_english_content', true) : $object->post_content;
+        }
+        return wp_html_excerpt(wp_strip_all_tags(strip_shortcodes((string) $source)), 160, '…');
+    }
+
+    return tpulse_text('Produits, ressources et innovations T-Pulse Archery pour le tir à l’arc.', 'T-Pulse Archery products, resources and innovation for archery.');
+}
+
+function tpulse_output_seo_metadata(): void {
+    if (is_admin() || is_404() || is_search()) {
+        return;
+    }
+
+    $base = tpulse_canonical_base_url();
+    $canonical = tpulse_localized_public_url($base, tpulse_requested_language());
+    $french = tpulse_localized_public_url($base, 'fr');
+    $english = tpulse_localized_public_url($base, 'en');
+    $description = tpulse_meta_description();
+    $title = wp_get_document_title();
+    $image = get_template_directory_uri() . '/assets/images/t-pulse-banner.png';
+
+    if (is_singular('product') && function_exists('wc_get_product')) {
+        $product = wc_get_product(get_queried_object_id());
+        if ($product instanceof WC_Product && $product->get_image_id()) {
+            $product_image = wp_get_attachment_image_url($product->get_image_id(), 'full');
+            if ($product_image) {
+                $image = $product_image;
+            }
+        }
+    } elseif (is_singular() && has_post_thumbnail(get_queried_object_id())) {
+        $featured = get_the_post_thumbnail_url(get_queried_object_id(), 'full');
+        if ($featured) {
+            $image = $featured;
+        }
+    }
+
+    echo "\n" . '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
+    echo '<link rel="canonical" href="' . esc_url($canonical) . '">' . "\n";
+    echo '<link rel="alternate" hreflang="fr-FR" href="' . esc_url($french) . '">' . "\n";
+    echo '<link rel="alternate" hreflang="en" href="' . esc_url($english) . '">' . "\n";
+    echo '<link rel="alternate" hreflang="x-default" href="' . esc_url($french) . '">' . "\n";
+    echo '<meta property="og:type" content="' . esc_attr(is_singular(['post', 'tpulse_resource', 'product']) ? 'article' : 'website') . '">' . "\n";
+    echo '<meta property="og:locale" content="' . esc_attr(tpulse_is_english() ? 'en_US' : 'fr_FR') . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr($description) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url($canonical) . '">' . "\n";
+    echo '<meta property="og:image" content="' . esc_url($image) . '">' . "\n";
+    echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+}
+remove_action('wp_head', 'rel_canonical');
+add_action('wp_head', 'tpulse_output_seo_metadata', 2);
 
 function tpulse_translate_managed_excerpt(string $excerpt): string {
     if (!tpulse_is_english()) {
@@ -367,6 +528,8 @@ add_filter('woocommerce_loop_add_to_cart_link', 'tpulse_french_loop_add_to_cart_
 function tpulse_translate_frontend_html(string $html): string {
     if (!tpulse_is_english()) {
         return strtr($html, [
+            'Amortisseur axial breveté' => 'Amortisseur axial',
+            'Technologie brevetée' => 'Demande de brevet déposée',
             'Since your browser does not support JavaScript, or it is disabled, please ensure you click the <em>Update Totals</em> button before placing your order. You may be charged more than the amount stated above if you fail to do so.' => 'Comme votre navigateur ne prend pas en charge JavaScript ou qu il est desactive, cliquez sur le bouton de mise a jour avant de valider la commande.',
             'Update country / region' => 'Mettre à jour le pays ou la région',
             'Update totals' => 'Mettre à jour les totaux',
@@ -392,8 +555,9 @@ function tpulse_translate_frontend_html(string $html): string {
         'Voir la boutique' => 'Visit the shop',
         'Innovation pensée par un archer' => 'Innovation designed by an archer',
         'Le produit fondateur' => 'The founding product',
-        'Un amortisseur axial breveté pour stabilisateurs d’arc. Sa structure spiralée creuse réduit les vibrations, adoucit le choc du tir et limite la prise au vent.' => 'A patented axial damper for bow stabilizers. Its hollow spiral structure reduces vibration, softens shot reaction and limits wind drag.',
-        'Technologie brevetée' => 'Patented technology',
+        'Un amortisseur axial breveté pour stabilisateurs d’arc. Sa structure spiralée creuse réduit les vibrations, adoucit le choc du tir et limite la prise au vent.' => 'An axial damper for bow stabilizers. Its hollow spiral structure is designed to reduce vibration, soften shot reaction and limit wind drag. Patent application filed.',
+        'Demande de brevet déposée' => 'Patent application filed',
+        'Technologie brevetée' => 'Patent application filed',
         'Acheter à 30,50 €' => 'Buy for €30.50',
         'T-Pulse aujourd’hui' => 'T-Pulse today',
         'Des idées qui prennent forme.' => 'Ideas taking shape.',
@@ -419,7 +583,7 @@ function tpulse_translate_frontend_html(string $html): string {
         'Découvrez tout l’univers de la marque.' => 'Discover the T-Pulse world.',
         'Produits disponibles, livre et prochaines innovations.' => 'Available products, book and upcoming innovations.',
         'Visiter la boutique' => 'Visit the shop',
-        'Technologie brevetée' => 'Patented technology',
+        'Technologie brevetée' => 'Patent application filed',
         'L’amortisseur axial nouvelle génération pour stabilisateurs d’arc. Moins de vibrations, moins de choc et une stabilité pensée pour votre tir.' => 'The next-generation axial damper for bow stabilizers. Less vibration, less shock and stability designed for your shot.',
         'Comprendre la technologie' => 'Understand the technology',
         'Pourquoi HeliTwist' => 'Why HeliTwist',
@@ -449,6 +613,15 @@ function tpulse_translate_frontend_html(string $html): string {
         'Produits similaires' => 'Related products',
         'Logiciel' => 'Software',
         'Gratuit · GitHub' => 'Free · GitHub',
+        'Livraison en point relais' => 'Service point delivery',
+        'Accepter' => 'Accept',
+        'Refuser' => 'Reject',
+        'Voir les préférences' => 'View preferences',
+        'Enregistrer les préférences' => 'Save preferences',
+        'Gérer le consentement' => 'Manage consent',
+        'Fonctionnel' => 'Functional',
+        'Statistiques' => 'Statistics',
+        'Pour offrir les meilleures expériences, nous utilisons des technologies telles que les cookies pour stocker et/ou accéder aux informations des appareils. Le fait de consentir à ces technologies nous permettra de traiter des données telles que le comportement de navigation ou les ID uniques sur ce site. Le fait de ne pas consentir ou de retirer son consentement peut avoir un effet négatif sur certaines caractéristiques et fonctions.' => 'We use cookies and similar technologies to operate the shop and, with your permission, measure usage. You can accept, reject or change your preferences at any time.',
     ]);
 }
 
@@ -486,6 +659,27 @@ function tpulse_attribute_label(string $label): string {
 }
 add_filter('woocommerce_attribute_label', 'tpulse_attribute_label');
 
+function tpulse_variation_dropdown_prompt(array $args): array {
+    if (($args['attribute'] ?? '') === 'filetage' || ($args['name'] ?? '') === 'attribute_filetage') {
+        $args['show_option_none'] = tpulse_text('Choisir le filetage', 'Choose the thread');
+    }
+    return $args;
+}
+add_filter('woocommerce_dropdown_variation_attribute_options_args', 'tpulse_variation_dropdown_prompt');
+
+function tpulse_variation_choice_help(): void {
+    global $product;
+    if ($product instanceof WC_Product && $product->is_type('variable')) {
+        echo '<p class="variation-choice-help">' . esc_html(tpulse_text('Sélectionnez le filetage compatible avec votre matériel pour afficher le stock et ajouter HeliTwist au panier.', 'Select the thread compatible with your equipment to view stock and add HeliTwist to the basket.')) . '</p>';
+    }
+}
+add_action('woocommerce_before_variations_form', 'tpulse_variation_choice_help');
+
+function tpulse_translate_shipping_label(string $label, $method): string {
+    return tpulse_is_english() ? str_replace('Livraison en point relais', 'Service point delivery', $label) : $label;
+}
+add_filter('woocommerce_cart_shipping_method_full_label', 'tpulse_translate_shipping_label', 20, 2);
+
 function tpulse_asset(string $name): string {
     return esc_url(get_template_directory_uri() . '/assets/images/' . $name);
 }
@@ -506,6 +700,8 @@ function tpulse_review_model_options(): array {
         'HeliTwist 5/16' => 'HeliTwist 5/16',
         'HeliTwist 1/4' => 'HeliTwist 1/4',
         'HeliTwist M8' => 'HeliTwist M8',
+        'HeliTwist 5/16 + 1/4' => 'HeliTwist 5/16 + 1/4',
+        'HeliTwist M8 + 1/4' => 'HeliTwist M8 + 1/4',
         'Jeux d archers' => tpulse_text('Livre Jeux d’archers', 'Archery Games book'),
         'Autre achat T-Pulse' => tpulse_text('Autre achat T-Pulse', 'Other T-Pulse purchase'),
     ];
@@ -529,16 +725,20 @@ function tpulse_product_review_form_args(array $args): array {
         . '<input type="radio" id="tpulse-rating-3" name="rating" value="3"><label for="tpulse-rating-3" title="3 ' . esc_attr($out_of_five) . '">★</label>'
         . '<input type="radio" id="tpulse-rating-2" name="rating" value="2"><label for="tpulse-rating-2" title="2 ' . esc_attr($out_of_five) . '">★</label>'
         . '<input type="radio" id="tpulse-rating-1" name="rating" value="1"><label for="tpulse-rating-1" title="1 ' . esc_attr($out_of_five) . '">★</label>'
-        . '</div></div>';
+        . '</div><span class="tpulse-rating-text">' . esc_html(tpulse_text('5/5 sélectionné par défaut', '5/5 selected by default')) . '</span></div>';
 
     $extra_fields = '<div class="tpulse-review-fields">'
-        . '<p class="comment-form-tpulse-name"><label for="tpulse_review_name">' . esc_html(tpulse_text('Nom, prénom ou pseudo', 'Name or display name')) . ' <span class="required">*</span></label><input id="tpulse_review_name" name="tpulse_review_name" type="text" autocomplete="name" required></p>'
         . '<p class="comment-form-tpulse-model"><label for="tpulse_review_model">' . esc_html(tpulse_text('Modèle acheté', 'Purchased model')) . ' <span class="required">*</span></label><select id="tpulse_review_model" name="tpulse_review_model" required>' . $model_options . '</select></p>'
         . '<p class="comment-form-tpulse-date"><label for="tpulse_purchase_date">' . esc_html(tpulse_text('Date d’achat approximative', 'Approximate purchase date')) . ' <span class="required">*</span></label><input id="tpulse_purchase_date" name="tpulse_purchase_date" type="month" required></p>'
         . '</div>';
 
+    $commenter = wp_get_current_commenter();
     $args['title_reply'] = tpulse_text('Laisser votre avis', 'Leave a review');
-    $args['comment_notes_before'] = '';
+    $args['fields'] = [
+        'author' => '<p class="comment-form-author"><label for="author">' . esc_html(tpulse_text('Nom, prénom ou pseudo', 'Name or display name')) . ' <span class="required">*</span></label><input id="author" name="author" type="text" value="' . esc_attr($commenter['comment_author']) . '" autocomplete="name" required></p>',
+        'email' => '<p class="comment-form-email"><label for="email">' . esc_html(tpulse_text('Adresse e-mail', 'Email address')) . ' <span class="required">*</span></label><input id="email" name="email" type="email" value="' . esc_attr($commenter['comment_author_email']) . '" autocomplete="email" required><small>' . esc_html(tpulse_text('Elle ne sera pas publiée.', 'It will not be published.')) . '</small></p>',
+    ];
+    $args['comment_notes_before'] = '<p class="comment-notes">' . esc_html(tpulse_text('Tous les champs sont obligatoires.', 'All fields are required.')) . '</p>';
     $args['comment_field'] = $rating_field . $extra_fields . '<p class="comment-form-comment"><label for="comment">' . esc_html(tpulse_text('Votre avis', 'Your review')) . ' <span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="7" required></textarea></p>';
     $args['label_submit'] = tpulse_text('Envoyer mon avis', 'Submit my review');
     unset($args['fields']['rating']);
@@ -552,19 +752,22 @@ function tpulse_validate_product_review(array $commentdata): array {
         return $commentdata;
     }
 
-    $name = sanitize_text_field(wp_unslash($_POST['tpulse_review_name'] ?? ''));
     $model = sanitize_text_field(wp_unslash($_POST['tpulse_review_model'] ?? ''));
     $purchase_date = sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''));
+    $rating = absint($_POST['rating'] ?? 0);
 
-    if ($name === '' || $model === '' || $purchase_date === '') {
-        wp_die(tpulse_text('Merci de renseigner votre nom ou pseudo, le modèle acheté et la date d’achat approximative avant d’envoyer votre avis.', 'Please enter your name or display name, the purchased model and the approximate purchase date before submitting your review.'), tpulse_text('Avis incomplet', 'Incomplete review'), ['response' => 400]);
+    if ((!is_user_logged_in() && (trim((string) ($commentdata['comment_author'] ?? '')) === '' || !is_email($commentdata['comment_author_email'] ?? ''))) || $model === '' || $purchase_date === '' || $rating < 1 || $rating > 5) {
+        wp_die(tpulse_text('Merci de renseigner votre nom ou pseudo, une adresse e-mail valide, le modèle, la date d’achat et la note.', 'Please enter your name or display name, a valid email address, the model, purchase date and rating.'), tpulse_text('Avis incomplet', 'Incomplete review'), ['response' => 400]);
     }
 
     if (!preg_match('/^\d{4}-\d{2}$/', $purchase_date)) {
         wp_die(tpulse_text('Merci d’indiquer une date d’achat au format mois/année.', 'Please enter the purchase date in month/year format.'), tpulse_text('Date invalide', 'Invalid date'), ['response' => 400]);
     }
 
-    $commentdata['comment_author'] = $name;
+    if (strtotime($purchase_date . '-01') > current_time('timestamp')) {
+        wp_die(tpulse_text('La date d’achat ne peut pas être dans le futur.', 'The purchase date cannot be in the future.'), tpulse_text('Date invalide', 'Invalid date'), ['response' => 400]);
+    }
+
     return $commentdata;
 }
 add_filter('preprocess_comment', 'tpulse_validate_product_review');
@@ -575,7 +778,6 @@ function tpulse_save_product_review_meta(int $comment_id): void {
         return;
     }
 
-    update_comment_meta($comment_id, 'tpulse_review_name', sanitize_text_field(wp_unslash($_POST['tpulse_review_name'] ?? '')));
     update_comment_meta($comment_id, 'tpulse_review_model', sanitize_text_field(wp_unslash($_POST['tpulse_review_model'] ?? '')));
     update_comment_meta($comment_id, 'tpulse_purchase_date', sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? '')));
 }
@@ -604,6 +806,22 @@ function tpulse_show_product_review_meta(WP_Comment $comment): void {
     echo '</p>';
 }
 add_action('woocommerce_review_before_comment_text', 'tpulse_show_product_review_meta');
+
+function tpulse_review_submission_redirect(string $location, WP_Comment $comment): string {
+    if ($comment->comment_type !== 'review') {
+        return $location;
+    }
+
+    return add_query_arg('avis-envoye', '1', get_permalink($comment->comment_post_ID)) . '#reviews';
+}
+add_filter('comment_post_redirect', 'tpulse_review_submission_redirect', 20, 2);
+
+function tpulse_review_submission_notice(): void {
+    if (isset($_GET['avis-envoye']) && $_GET['avis-envoye'] === '1') {
+        wc_print_notice(tpulse_text('Avis envoyé. Merci pour votre retour !', 'Review submitted. Thank you for your feedback!'), 'success');
+    }
+}
+add_action('woocommerce_before_single_product', 'tpulse_review_submission_notice', 5);
 
 function tpulse_register_resources(): void {
     register_post_type('tpulse_resource', [

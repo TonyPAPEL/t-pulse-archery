@@ -35,6 +35,13 @@ jobs:
             cp -R wordpress/wp-content/mu-plugins/. build/mu-plugins/
           fi
 
+      - name: Vérifier la syntaxe PHP
+        shell: bash
+        run: |
+          set -euo pipefail
+          php --version
+          find wordpress -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+
       - name: Configurer la connexion OVH
         shell: bash
         env:
@@ -117,6 +124,16 @@ jobs:
           RewriteRule . /index.php [L]
           </IfModule>
           # END WordPress
+
+          # BEGIN T-Pulse security headers
+          <IfModule mod_headers.c>
+          Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+          Header always set X-Content-Type-Options "nosniff"
+          Header always set X-Frame-Options "SAMEORIGIN"
+          Header always set Referrer-Policy "strict-origin-when-cross-origin"
+          Header always set Permissions-Policy "camera=(), microphone=()"
+          </IfModule>
+          # END T-Pulse security headers
           HTACCESS
           $WP cache flush
           REMOTE
@@ -127,7 +144,12 @@ jobs:
           set -euo pipefail
           for attempt in 1 2 3 4 5; do
             code="$(curl -L -sS -o /tmp/tpulse.html -w '%{http_code}' https://preprod.t-pulse-archery.com/ || true)"
-            if [ "$code" = "200" ] && grep -q 'T-Pulse Archery' /tmp/tpulse.html; then exit 0; fi
+            if [ "$code" = "200" ] && grep -q 'T-Pulse Archery' /tmp/tpulse.html && grep -q 'name="description"' /tmp/tpulse.html; then
+              for path in boutique product/helitwist-original product/jeux-darchers commande conditions-generales-de-vente; do
+                test "$(curl -L -sS -o /dev/null -w '%{http_code}' "https://preprod.t-pulse-archery.com/$path/")" = "200"
+              done
+              exit 0
+            fi
             sleep 10
           done
           cat /tmp/tpulse.html || true

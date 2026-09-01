@@ -2,7 +2,7 @@
 /**
  * Plugin Name: T-Pulse Initialisation
  * Description: Prépare le contenu et les réglages initiaux de la boutique T-Pulse.
- * Version: 1.1.0
+ * Version: 1.2.0
  */
 
 if (!defined('ABSPATH')) {
@@ -91,9 +91,7 @@ function tpulse_sync_managed_pages(): void {
         return;
     }
 
-    $version = '2026-09-01-2';
-    $required = '<mark class="tpulse-required-info">[À COMPLÉTER : %s]</mark>';
-    $required_en = '<mark class="tpulse-required-info">[TO COMPLETE: %s]</mark>';
+    $version = '2026-09-01-3';
 
     $contact_fr = '<div class="legal-document"><p class="legal-intro">Une question sur HeliTwist, le livre <em>Jeux d’archers</em>, une commande ou un projet avec T-Pulse Archery ?</p><div class="legal-card"><h2>Nous contacter</h2><p><strong>E-mail :</strong> <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a><br><strong>Localisation :</strong> Thaon-les-Vosges (88150), France</p><p>Pour une commande, indiquez si possible son numéro afin que nous puissions vous répondre plus rapidement.</p></div></div>';
     $contact_en = '<div class="legal-document"><p class="legal-intro">Have a question about HeliTwist, the <em>Archery Games</em> book, an order or a project with T-Pulse Archery?</p><div class="legal-card"><h2>Contact us</h2><p><strong>Email:</strong> <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a><br><strong>Location:</strong> Thaon-les-Vosges (88150), France</p><p>For an order enquiry, please include your order number whenever possible.</p></div></div>';
@@ -101,14 +99,88 @@ function tpulse_sync_managed_pages(): void {
 
     $reviews_fr = '<div class="legal-document"><p class="legal-intro">Vos retours aident les autres archers à choisir et T-Pulse Archery à faire évoluer ses produits.</p><div class="legal-card"><h2>Déposer un avis</h2><p>Choisissez le produit concerné. Tous les avis, positifs comme négatifs, sont relus avant publication afin de garder des retours utiles, honnêtes et liés au produit.</p><div class="wp-block-buttons"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/produit/helitwist-original/#reviews">Noter HeliTwist</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/produit/jeux-darchers/#reviews">Noter le livre</a></div></div></div><div class="legal-card tpulse-product-review-card"><span class="eyebrow">Avis HeliTwist</span><h2>Vous utilisez déjà HeliTwist ?</h2><div class="tpulse-review-empty-state"><span class="tpulse-amazon-stars" aria-label="Aucun avis publié pour le moment">★★★★★</span><strong>Les premiers avis arrivent bientôt</strong></div><p>Votre retour sur le ressenti après la décoche, le filetage utilisé et votre configuration peut vraiment aider les prochains archers à choisir le bon modèle.</p><a class="button secondary" href="/produit/helitwist-original/#reviews">Laisser un avis HeliTwist</a></div><div class="legal-card tpulse-amazon-review-card"><span class="eyebrow">Avis du livre</span><h2>Le livre est aussi noté sur Amazon</h2><div class="tpulse-amazon-rating"><span class="external-rating-score">4,5/5</span><span class="tpulse-amazon-stars" aria-label="4,5 étoiles sur 5">★★★★★</span><span>21 évaluations Amazon</span></div><p>Une partie des premiers lecteurs a acheté <em>Jeux d’archers</em> sur Amazon. Pour consulter ces retours, la fiche Amazon reste accessible en complément des avis déposés ici.</p><a class="button secondary" href="https://www.amazon.fr/Jeux-darchers-Perfectionnez-darcherie-samuser/dp/B0DLWNRBPQ#customerReviews" target="_blank" rel="noopener external nofollow">Voir les avis Amazon</a></div></div>';
     $reviews_en = '<div class="legal-document"><p class="legal-intro">Your feedback helps other archers make an informed choice and helps T-Pulse Archery improve its products.</p><div class="legal-card"><h2>Leave a review</h2><p>Select the relevant product. Positive and negative reviews are checked before publication so the page remains useful, honest and product-focused.</p><div class="wp-block-buttons"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/produit/helitwist-original/?lang=en#reviews">Review HeliTwist</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/produit/jeux-darchers/?lang=en#reviews">Review the book</a></div></div></div><div class="legal-card tpulse-product-review-card"><span class="eyebrow">HeliTwist reviews</span><h2>Already using HeliTwist?</h2><div class="tpulse-review-empty-state"><span class="tpulse-amazon-stars" aria-label="No published review yet">★★★★★</span><strong>The first reviews are coming soon</strong></div><p>Your feedback on post-shot feel, thread choice and stabilizer setup can really help the next archers choose the right model.</p><a class="button secondary" href="/produit/helitwist-original/?lang=en#reviews">Leave a HeliTwist review</a></div><div class="legal-card tpulse-amazon-review-card"><span class="eyebrow">Book reviews</span><h2>The book is also rated on Amazon</h2><div class="tpulse-amazon-rating"><span class="external-rating-score">4.5/5</span><span class="tpulse-amazon-stars" aria-label="4.5 stars out of 5">★★★★★</span><span>21 Amazon ratings</span></div><p>Some early readers bought <em>Archery Games</em> on Amazon. You can read those comments on the Amazon listing, alongside reviews left directly on this shop.</p><a class="button secondary" href="https://www.amazon.fr/Jeux-darchers-Perfectionnez-darcherie-samuser/dp/B0DLWNRBPQ#customerReviews" target="_blank" rel="noopener external nofollow">Read Amazon reviews</a></div></div>';
+    $reviews_fr = str_replace('/produit/', '/product/', $reviews_fr);
+    $reviews_en = str_replace('/produit/', '/product/', $reviews_en);
     tpulse_update_managed_page('Retours d’archers', 'Archer reviews', 'retours-archers', $reviews_fr, $reviews_en, $version);
 
-    $legal_fr = '<div class="legal-document"><p class="legal-intro">Dernière mise à jour : 1er septembre 2026.</p><h2>1. Éditeur du site</h2><p>Le site <strong>t-pulse-archery.com</strong> est édité par <strong>Tony P. Créations EI</strong>, entrepreneur individuel exerçant sous la marque commerciale <strong>T-Pulse Archery</strong>.</p><ul><li>Localisation professionnelle affichée : Thaon-les-Vosges (88150), France.</li><li>SIRET : 800 156 507 00025.</li><li>Code APE : 5811Z.</li><li>TVA : TVA non applicable, art. 293 B du CGI.</li><li>Contact principal : <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</li></ul><h2>2. Direction de la publication</h2><p>Directeur de la publication : Tony P. Créations EI.</p><h2>3. Hébergement</h2><p>Le site est hébergé par <strong>OVH SAS</strong>, 2 rue Kellermann, 59100 Roubaix, France. RCS Lille Métropole 424 761 419 00045. Téléphone : 1007 depuis la France.</p><h2>4. Propriété intellectuelle</h2><p>Les textes, photographies, éléments graphiques, logiciels, marques et contenus publiés sur ce site sont protégés par les droits de propriété intellectuelle applicables. Sauf mention contraire, leur reproduction, adaptation ou diffusion nécessite l’autorisation préalable de T-Pulse Archery ou du titulaire concerné.</p><p>HeliTwist fait l’objet d’un dépôt référencé <strong>FR2506128</strong>.</p><h2>5. Contact</h2><p>Pour toute question concernant le site, une commande, un retour ou un droit à exercer : <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p></div>';
-    $legal_en = '<div class="legal-document"><p class="legal-intro">Last updated: 1 September 2026.</p><h2>1. Website publisher</h2><p><strong>t-pulse-archery.com</strong> is published by <strong>Tony P. Créations EI</strong>, a French sole trader operating under the commercial brand <strong>T-Pulse Archery</strong>.</p><ul><li>Displayed business location: Thaon-les-Vosges (88150), France.</li><li>SIRET: 800 156 507 00025.</li><li>APE business code: 5811Z.</li><li>VAT: VAT not applicable, Article 293 B of the French General Tax Code.</li><li>Main contact: <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</li></ul><h2>2. Publication director</h2><p>Publication director: Tony P. Créations EI.</p><h2>3. Hosting</h2><p>The website is hosted by <strong>OVH SAS</strong>, 2 rue Kellermann, 59100 Roubaix, France. RCS Lille Métropole 424 761 419 00045.</p><h2>4. Intellectual property</h2><p>Texts, photographs, graphics, software, trademarks and other content published on this website are protected by applicable intellectual property laws. Unless otherwise stated, they may not be reproduced, adapted or distributed without prior permission from T-Pulse Archery or the relevant rights holder.</p><p>HeliTwist is covered by filing reference <strong>FR2506128</strong>.</p><h2>5. Contact</h2><p>For questions about this website, an order, a return or a right to exercise: <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p></div>';
+    $legal_fr = '<div class="legal-document"><p class="legal-intro">Dernière mise à jour : 1er septembre 2026.</p><h2>1. Éditeur du site</h2><p>Le site <strong>t-pulse-archery.com</strong> est édité par <strong>Tony P. Créations EI</strong>, entrepreneur individuel exerçant sous la marque commerciale <strong>T-Pulse Archery</strong>.</p><ul><li>Localisation professionnelle affichée : Thaon-les-Vosges (88150), France.</li><li>SIRET : 800 156 507 00025.</li><li>Code APE : 5811Z.</li><li>TVA : TVA non applicable, art. 293 B du CGI.</li><li>Contact principal : <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</li></ul><h2>2. Direction de la publication</h2><p>Directeur de la publication : Tony P. Créations EI.</p><h2>3. Hébergement</h2><p>Le site est hébergé par <strong>OVH SAS</strong>, 2 rue Kellermann, 59100 Roubaix, France. RCS Lille Métropole 424 761 419 00045. Téléphone : 1007 depuis la France.</p><h2>4. Propriété intellectuelle</h2><p>Les textes, photographies, éléments graphiques, logiciels, marques et contenus publiés sur ce site sont protégés par les droits de propriété intellectuelle applicables. Sauf mention contraire, leur reproduction, adaptation ou diffusion nécessite l’autorisation préalable de T-Pulse Archery ou du titulaire concerné.</p><p>Une <strong>demande de brevet a été déposée</strong> pour HeliTwist sous la référence <strong>FR2506128</strong>.</p><h2>5. Contact</h2><p>Pour toute question concernant le site, une commande, un retour ou un droit à exercer : <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p></div>';
+    $legal_en = '<div class="legal-document"><p class="legal-intro">Last updated: 1 September 2026.</p><h2>1. Website publisher</h2><p><strong>t-pulse-archery.com</strong> is published by <strong>Tony P. Créations EI</strong>, a French sole trader operating under the commercial brand <strong>T-Pulse Archery</strong>.</p><ul><li>Displayed business location: Thaon-les-Vosges (88150), France.</li><li>SIRET: 800 156 507 00025.</li><li>APE business code: 5811Z.</li><li>VAT: VAT not applicable, Article 293 B of the French General Tax Code.</li><li>Main contact: <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</li></ul><h2>2. Publication director</h2><p>Publication director: Tony P. Créations EI.</p><h2>3. Hosting</h2><p>The website is hosted by <strong>OVH SAS</strong>, 2 rue Kellermann, 59100 Roubaix, France. RCS Lille Métropole 424 761 419 00045.</p><h2>4. Intellectual property</h2><p>Texts, photographs, graphics, software, trademarks and other content published on this website are protected by applicable intellectual property laws. Unless otherwise stated, they may not be reproduced, adapted or distributed without prior permission from T-Pulse Archery or the relevant rights holder.</p><p>A <strong>patent application has been filed</strong> for HeliTwist under reference <strong>FR2506128</strong>.</p><h2>5. Contact</h2><p>For questions about this website, an order, a return or a right to exercise: <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p></div>';
     tpulse_update_managed_page('Mentions légales', 'Legal notice', 'mentions-legales', $legal_fr, $legal_en, $version);
 
-    $terms_fr = '<div class="legal-document"><p class="legal-intro">Conditions générales de vente applicables aux commandes passées sur t-pulse-archery.com. Dernière mise à jour : 1er septembre 2026.</p><h2>1. Vendeur et champ d’application</h2><p>Les présentes CGV régissent les ventes à distance conclues entre <strong>Tony P. Créations EI</strong>, marque commerciale T-Pulse Archery, SIRET 800 156 507 00025, situé à Thaon-les-Vosges (88150), France, et tout consommateur commandant un produit sur le site. Contact : <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p><h2>2. Produits</h2><p>Les caractéristiques essentielles, le prix et la disponibilité de chaque produit figurent sur sa fiche. Les photographies sont présentées avec le plus grand soin mais ne peuvent garantir une restitution parfaite des couleurs. Le client choisit sous sa responsabilité le filetage HeliTwist compatible avec son matériel.</p><h2>3. Prix</h2><p>Les prix sont indiqués en euros. TVA non applicable, art. 293 B du CGI. Les prix sont affichés hors frais de livraison, lesquels sont indiqués avant la validation définitive de la commande.</p><p>Le livre neuf est soumis à la réglementation française sur le prix du livre. Les frais d’expédition applicables aux commandes de livres sont indiqués lors de la commande et doivent respecter le tarif minimal légal en vigueur.</p><h2>4. Commande</h2><p>Le client sélectionne les produits, vérifie son panier, renseigne ses coordonnées, choisit la livraison et le paiement, puis vérifie le récapitulatif. Il peut corriger sa commande avant de cliquer sur le bouton confirmant explicitement son obligation de paiement. La commande devient définitive après acceptation du paiement. Un e-mail d’accusé de réception est alors envoyé à l’adresse fournie.</p><h2>5. Paiement</h2><p>Le paiement est exigible à la commande par carte bancaire via Stripe. Les données de carte sont traitées directement par Stripe et ne sont pas enregistrées par T-Pulse Archery.</p><h2>6. Disponibilité</h2><p>Les offres sont valables dans la limite des stocks disponibles. En cas d’indisponibilité après commande, le client est informé rapidement et remboursé des sommes correspondantes selon les délais légaux.</p><h2>7. Livraison</h2><p>Zone desservie par défaut : France métropolitaine via Mondial Relay en point relais. Toute autre destination ou tout autre mode de livraison peut être étudié sur demande via <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>. Les commandes sont généralement préparées sous 2 à 5 jours ouvrés.</p><p>Les frais et le délai estimatif sont communiqués avant paiement. À défaut de date ou de délai convenu, la livraison intervient au plus tard dans les trente jours suivant la commande. Le risque de perte ou d’endommagement est transféré au consommateur lorsqu’il prend physiquement possession du bien.</p><h2>8. Réception</h2><p>Le client est invité à vérifier l’état du colis et des produits à réception et à signaler rapidement toute anomalie, idéalement avec des photographies. Cette vérification ne limite pas ses garanties légales.</p><h2>9. Droit de rétractation</h2><p>Le consommateur dispose de quatorze jours à compter du lendemain de la réception du bien pour notifier sa rétractation, sans avoir à la motiver. Il peut utiliser le <a href="/formulaire-retractation/">formulaire type de rétractation</a> ou toute déclaration dénuée d’ambiguïté envoyée à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p><p>Le produit doit être renvoyé dans les quatorze jours suivant cette notification. L’adresse de retour complète est communiquée par e-mail après la demande de rétractation. Les frais directs de retour sont à la charge du client, sauf erreur de T-Pulse Archery ou produit défectueux.</p><p>Le remboursement des sommes dues, frais de livraison standard compris, intervient au plus tard quatorze jours après la notification. Il peut être différé jusqu’à récupération du bien ou réception d’une preuve d’expédition.</p><h2>10. Garanties légales</h2><p>Le consommateur bénéficie de la garantie légale de conformité prévue par le Code de la consommation et de la garantie des vices cachés prévue par les articles 1641 et suivants du Code civil. Pour un bien neuf, il dispose notamment de deux ans à compter de la délivrance pour agir au titre de la conformité.</p><h2>11. Responsabilité et utilisation</h2><p>Les produits doivent être utilisés conformément à leur destination et avec un matériel compatible. T-Pulse Archery ne peut être tenue responsable d’un dommage résultant d’un montage incorrect, d’une modification du produit, d’une utilisation anormale ou du non-respect des consignes, sans préjudice des responsabilités qui ne peuvent être exclues par la loi.</p><h2>12. Facturation et données personnelles</h2><p>La facturation et la comptabilité sont gérées avec Abby. Le traitement des données nécessaires aux commandes est décrit dans la <a href="/politique-de-confidentialite/">politique de confidentialité</a>.</p><h2>13. Médiation de la consommation</h2><p>Après une réclamation écrite préalable restée sans solution, le consommateur pourra recourir gratuitement au médiateur de la consommation désigné par le vendeur. Le médiateur est en cours de désignation et cette mention sera complétée avant l’ouverture commerciale complète.</p><h2>14. Droit applicable et litiges</h2><p>Les présentes CGV sont soumises au droit français. Le consommateur conserve les protections impératives de son pays de résidence lorsque celles-ci sont applicables. À défaut d’accord amiable ou de médiation, le litige relève des juridictions compétentes selon les règles de droit commun.</p></div>';
-    $terms_en = '<div class="legal-document"><p class="legal-intro">Terms and conditions applying to orders placed on t-pulse-archery.com. Last updated: 1 September 2026.</p><h2>1. Seller and scope</h2><p>These terms govern distance sales between <strong>Tony P. Créations EI</strong>, commercial brand T-Pulse Archery, SIRET 800 156 507 00025, located in Thaon-les-Vosges (88150), France, and consumers ordering through this website. Contact: <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p><h2>2. Products</h2><p>Each product page states its essential characteristics, price and availability. Product photography is prepared carefully but cannot guarantee exact colour reproduction. Customers are responsible for selecting the HeliTwist thread compatible with their equipment.</p><h2>3. Prices</h2><p>Prices are shown in euros. VAT is not applicable under Article 293 B of the French General Tax Code. Prices exclude delivery charges, which are displayed before final order confirmation.</p><p>New books are subject to French fixed book price rules. Delivery charges for book orders are displayed during checkout and must comply with the statutory minimum in force.</p><h2>4. Orders</h2><p>The customer selects products, checks the basket, enters contact details, selects delivery and payment, and reviews the summary. Errors can be corrected before clicking the button that clearly confirms the obligation to pay. The order is accepted once payment is approved, after which an acknowledgement email is sent.</p><h2>5. Payment</h2><p>Payment is due at the time of order by bank card through Stripe. Card data is handled directly by Stripe and is not stored by T-Pulse Archery.</p><h2>6. Availability</h2><p>Products are offered while stocks last. If an item becomes unavailable after ordering, the customer will be informed promptly and the relevant amount refunded within the statutory period.</p><h2>7. Delivery</h2><p>Default delivery area: mainland France through Mondial Relay service points. Any other destination or delivery method may be discussed on request by email at <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>. Orders are generally prepared within 2 to 5 business days.</p><p>Charges and estimated timing are provided before payment. If no date or period is agreed, delivery will occur no later than thirty days after the order. Risk passes to the consumer when they, or a designated third party, take physical possession of the goods.</p><h2>8. Delivery checks</h2><p>Customers are encouraged to inspect parcels and products on receipt and report any issue promptly, preferably with photographs. This does not restrict statutory rights.</p><h2>9. Right of withdrawal</h2><p>Consumers have fourteen days from the day after receipt to notify withdrawal without giving a reason. They may use the <a href="/formulaire-retractation/?lang=en">model withdrawal form</a> or send any unambiguous statement to <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p><p>Goods must be returned within fourteen days of that notice. The full return address is provided by email after the withdrawal request. Direct return costs are paid by the customer unless T-Pulse Archery made an error or the product is defective.</p><p>Amounts due, including standard outbound delivery, are refunded no later than fourteen days after notice. Refund may be withheld until the goods are received or proof of return is supplied.</p><h2>10. Statutory guarantees</h2><p>Consumers benefit from the French statutory guarantee of conformity and the guarantee against hidden defects under Articles 1641 and following of the French Civil Code. For new goods, the conformity guarantee may be exercised for two years from delivery.</p><h2>11. Liability and use</h2><p>Products must be used for their intended purpose and with compatible equipment. T-Pulse Archery is not liable for damage caused by incorrect fitting, product modification, abnormal use or failure to follow instructions, without prejudice to liability that cannot legally be excluded.</p><h2>12. Invoicing and personal data</h2><p>Invoicing and accounting are managed with Abby. Processing necessary for orders is described in the <a href="/politique-de-confidentialite/?lang=en">privacy policy</a>.</p><h2>13. Consumer mediation</h2><p>After first making a written complaint that remains unresolved, consumers may use the seller’s appointed consumer mediator free of charge. The mediator is currently being selected and this section will be completed before the full commercial launch.</p><h2>14. Governing law and disputes</h2><p>These terms are governed by French law. Consumers retain any mandatory protections of their country of residence. If no amicable or mediated solution is reached, disputes are heard by the courts competent under ordinary legal rules.</p></div>';
+    // Keep the consumer guarantees readable and visually distinct, as required for B2C sales of goods.
+    $terms_fr = <<<'HTML'
+<div class="legal-document">
+<p class="legal-intro">Conditions générales de vente applicables aux commandes passées sur t-pulse-archery.com. Dernière mise à jour : 1er septembre 2026.</p>
+<h2>1. Vendeur et champ d’application</h2>
+<p>Les présentes CGV régissent les ventes à distance conclues entre <strong>Tony P. Créations EI</strong>, marque commerciale T-Pulse Archery, SIRET 800 156 507 00025, situé à Thaon-les-Vosges (88150), France, et tout consommateur commandant un produit sur le site. Contact : <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p>
+<h2>2. Produits</h2>
+<p>Les caractéristiques essentielles, le prix et la disponibilité figurent sur chaque fiche produit. Les photographies sont présentées avec soin mais ne peuvent garantir une restitution parfaite des couleurs. Pour HeliTwist, le client doit sélectionner le filetage compatible avec son matériel avant l’ajout au panier. En cas de doute, il peut demander conseil avant la commande.</p>
+<h2>3. Prix</h2>
+<p>Les prix sont indiqués en euros. TVA non applicable, art. 293 B du CGI. Les frais de livraison, présentés séparément, sont indiqués avant la validation définitive de la commande.</p>
+<p>Le livre neuf est soumis à la réglementation française sur le prix du livre. Son prix de vente est fixé à 15 €. Les frais d’expédition applicables aux commandes de livres sont indiqués lors de la commande.</p>
+<h2>4. Commande</h2>
+<p>Le client sélectionne les produits, vérifie son panier, renseigne ses coordonnées, choisit la livraison et le paiement puis contrôle le récapitulatif. Il peut corriger sa commande avant de cliquer sur le bouton confirmant explicitement son obligation de paiement. La commande est enregistrée après acceptation du paiement. Un e-mail d’accusé de réception récapitulant la commande est envoyé à l’adresse fournie.</p>
+<h2>5. Paiement</h2>
+<p>Le paiement est exigible à la commande par carte bancaire via Stripe. Les données de carte sont traitées directement par Stripe et ne sont pas enregistrées par T-Pulse Archery. En cas de refus du paiement, la commande n’est pas validée.</p>
+<h2>6. Disponibilité</h2>
+<p>Les offres sont valables dans la limite des stocks disponibles. En cas d’indisponibilité après commande, le client est informé rapidement et remboursé des sommes correspondantes dans les délais légaux.</p>
+<h2>7. Livraison</h2>
+<p>La livraison standard est proposée en France métropolitaine via Mondial Relay en point relais. Toute autre destination ou tout autre mode de livraison peut être étudié avant commande par e-mail à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>. Les commandes sont généralement préparées sous 2 à 5 jours ouvrés.</p>
+<p>Les frais et le délai estimatif sont communiqués avant paiement. À défaut de date ou de délai convenu, la livraison intervient au plus tard dans les trente jours suivant la commande. Le risque de perte ou d’endommagement est transféré au consommateur lorsqu’il prend physiquement possession du bien.</p>
+<h2>8. Réception</h2>
+<p>Le client est invité à vérifier l’état du colis et des produits à réception et à signaler rapidement toute anomalie, idéalement avec des photographies. Cette vérification ne limite pas ses garanties légales.</p>
+<h2>9. Droit de rétractation</h2>
+<p>Le consommateur dispose de quatorze jours à compter du lendemain de la réception du bien pour notifier sa rétractation, sans avoir à la motiver. Il peut utiliser le <a href="/formulaire-retractation/">formulaire type de rétractation</a> ou envoyer toute déclaration dénuée d’ambiguïté à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p>
+<p>Le produit doit être renvoyé dans les quatorze jours suivant cette notification. L’adresse de retour est communiquée par e-mail après la demande. Le produit peut être manipulé uniquement dans la mesure nécessaire pour en établir la nature, les caractéristiques et le bon fonctionnement. La responsabilité du client peut être engagée en cas de dépréciation résultant de manipulations excessives. Les frais directs de retour sont à sa charge, sauf erreur de T-Pulse Archery ou produit défectueux.</p>
+<p>Le remboursement des sommes dues, frais de livraison standard compris, intervient au plus tard quatorze jours après la notification, par le même moyen de paiement sauf accord contraire. Il peut être différé jusqu’à récupération du bien ou réception d’une preuve d’expédition.</p>
+<h2>10. Garanties légales</h2>
+<div class="legal-guarantee"><p><strong>Tony P. Créations EI, Thaon-les-Vosges (88150), France, contact@t-pulse-archery.com, répond des garanties légales.</strong></p>
+<p>Le consommateur dispose d’un délai de deux ans à compter de la délivrance du bien pour obtenir la mise en œuvre de la garantie légale de conformité en cas d’apparition d’un défaut de conformité. Durant ce délai, le consommateur n’est tenu d’établir que l’existence du défaut de conformité et non la date d’apparition de celui-ci.</p>
+<p>Lorsque le contrat de vente du bien prévoit la fourniture d’un contenu numérique ou d’un service numérique de manière continue pendant une durée supérieure à deux ans, la garantie légale est applicable à ce contenu numérique ou ce service numérique tout au long de la période de fourniture prévue. Durant ce délai, le consommateur n’est tenu d’établir que l’existence du défaut de conformité affectant le contenu numérique ou le service numérique et non la date d’apparition de celui-ci.</p>
+<p>La garantie légale de conformité emporte obligation pour le professionnel, le cas échéant, de fournir toutes les mises à jour nécessaires au maintien de la conformité du bien.</p>
+<p>La garantie légale de conformité donne au consommateur droit à la réparation ou au remplacement du bien dans un délai de trente jours suivant sa demande, sans frais et sans inconvénient majeur pour lui.</p>
+<p>Si le bien est réparé dans le cadre de la garantie légale de conformité, le consommateur bénéficie d’une extension de six mois de la garantie initiale.</p>
+<p>Si le consommateur demande la réparation du bien, mais que le vendeur impose le remplacement, la garantie légale de conformité est renouvelée pour une période de deux ans à compter de la date de remplacement du bien.</p>
+<p>Le consommateur peut obtenir une réduction du prix d’achat en conservant le bien ou mettre fin au contrat en se faisant rembourser intégralement contre restitution du bien, si :</p>
+<ol><li>Le professionnel refuse de réparer ou de remplacer le bien ;</li><li>La réparation ou le remplacement du bien intervient après un délai de trente jours ;</li><li>La réparation ou le remplacement du bien occasionne un inconvénient majeur pour le consommateur, notamment lorsque le consommateur supporte définitivement les frais de reprise ou d’enlèvement du bien non conforme, ou s’il supporte les frais d’installation du bien réparé ou de remplacement ;</li><li>La non-conformité du bien persiste en dépit de la tentative de mise en conformité du vendeur restée infructueuse.</li></ol>
+<p>Le consommateur a également droit à une réduction du prix du bien ou à la résolution du contrat lorsque le défaut de conformité est si grave qu’il justifie que la réduction du prix ou la résolution du contrat soit immédiate. Le consommateur n’est alors pas tenu de demander la réparation ou le remplacement du bien au préalable.</p>
+<p>Le consommateur n’a pas droit à la résolution de la vente si le défaut de conformité est mineur.</p>
+<p>Toute période d’immobilisation du bien en vue de sa réparation ou de son remplacement suspend la garantie qui restait à courir jusqu’à la délivrance du bien remis en état.</p>
+<p>Les droits mentionnés ci-dessus résultent de l’application des articles L. 217-1 à L. 217-32 du Code de la consommation.</p>
+<p>Le vendeur qui fait obstacle de mauvaise foi à la mise en œuvre de la garantie légale de conformité encourt une amende civile d’un montant maximal de 300 000 euros, qui peut être porté jusqu’à 10 % du chiffre d’affaires moyen annuel (article L. 241-5 du Code de la consommation).</p>
+<p>Le consommateur bénéficie également de la garantie légale des vices cachés en application des articles 1641 à 1649 du Code civil, pendant une durée de deux ans à compter de la découverte du défaut. Cette garantie donne droit à une réduction de prix si le bien est conservé ou à un remboursement intégral contre restitution du bien.</p></div>
+<h2>11. Utilisation et responsabilité</h2>
+<p>Les produits doivent être utilisés conformément à leur destination et avec un matériel compatible. T-Pulse Archery ne peut être tenue responsable d’un dommage résultant d’un montage incorrect, d’une modification du produit, d’une utilisation anormale ou du non-respect des consignes, sans préjudice des responsabilités et garanties qui ne peuvent être exclues par la loi.</p>
+<h2>12. Facturation et données personnelles</h2>
+<p>La facturation et la comptabilité sont gérées avec Abby. Une facture peut être adressée au client par e-mail. Le traitement des données nécessaires aux commandes est décrit dans la <a href="/politique-de-confidentialite/">politique de confidentialité</a>.</p>
+<h2>13. Réclamations</h2>
+<p>Toute réclamation doit d’abord être adressée à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> avec le numéro de commande et les éléments utiles à son traitement.</p>
+<h2>14. Droit applicable et litiges</h2>
+<p>Les présentes CGV sont soumises au droit français. Le consommateur conserve les protections impératives de son pays de résidence lorsqu’elles sont applicables. À défaut d’accord amiable, le litige relève des juridictions compétentes selon les règles de droit commun.</p>
+</div>
+HTML;
+
+    $terms_en = <<<'HTML'
+<div class="legal-document">
+<p class="legal-intro">Terms and conditions applying to orders placed on t-pulse-archery.com. Last updated: 1 September 2026.</p>
+<h2>1. Seller and scope</h2><p>These terms govern distance sales between <strong>Tony P. Créations EI</strong>, commercial brand T-Pulse Archery, SIRET 800 156 507 00025, located in Thaon-les-Vosges (88150), France, and consumers ordering through this website. Contact: <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p>
+<h2>2. Products</h2><p>Each product page states its essential characteristics, price and availability. Product photographs are prepared carefully but cannot guarantee exact colour reproduction. Customers must select the HeliTwist thread compatible with their equipment before adding it to the basket and may ask for advice before ordering.</p>
+<h2>3. Prices</h2><p>Prices are shown in euros. VAT is not applicable under Article 293 B of the French General Tax Code. Delivery charges are shown separately before final order confirmation. The new book is subject to French fixed book price rules and is sold for €15.</p>
+<h2>4. Orders</h2><p>The customer selects products, checks the basket, enters contact details, chooses delivery and payment, and reviews the summary. Errors can be corrected before clicking the button that clearly confirms the obligation to pay. The order is recorded once payment is approved and an acknowledgement email is sent.</p>
+<h2>5. Payment</h2><p>Payment is due at the time of order by bank card through Stripe. Card data is handled directly by Stripe and is not stored by T-Pulse Archery. A declined payment does not validate the order.</p>
+<h2>6. Availability</h2><p>Products are offered while stocks last. If an item becomes unavailable after ordering, the customer is informed promptly and the corresponding amount is refunded within the statutory period.</p>
+<h2>7. Delivery</h2><p>Standard delivery is available in mainland France through Mondial Relay service points. Another destination or delivery method may be discussed before ordering at <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>. Orders are generally prepared within 2 to 5 business days. Charges and estimated timing are shown before payment. If no delivery date or period is agreed, delivery occurs no later than thirty days after the order. Risk passes when the consumer takes physical possession of the goods.</p>
+<h2>8. Delivery checks</h2><p>Customers are encouraged to inspect parcels and products on receipt and report any issue promptly, preferably with photographs. This does not restrict statutory rights.</p>
+<h2>9. Right of withdrawal</h2><p>Consumers have fourteen days from the day after receipt to notify withdrawal without giving a reason. They may use the <a href="/formulaire-retractation/?lang=en">model withdrawal form</a> or email any unambiguous statement to <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>. Goods must be returned within the following fourteen days to the address supplied by email. Direct return costs are paid by the customer unless the product is defective or T-Pulse Archery made an error. The customer may be liable for loss of value caused by handling beyond what is necessary to inspect the goods.</p>
+<p>Amounts due, including standard outbound delivery, are refunded by the original payment method no later than fourteen days after notice. Refund may be withheld until the goods are received or proof of return is supplied.</p>
+<h2>10. Statutory guarantees</h2><div class="legal-guarantee"><p><strong>Tony P. Créations EI, Thaon-les-Vosges (88150), France, contact@t-pulse-archery.com, is responsible for the statutory guarantees.</strong></p><p>Consumers may invoke the statutory conformity guarantee for two years from delivery. They are entitled to repair or replacement, free of charge and without major inconvenience, within thirty days. Depending on the circumstances provided by law, they may instead obtain a price reduction or terminate the contract. Repair extends the initial guarantee by six months; replacement imposed instead of a requested repair starts a new two-year period. Rights arise under Articles L. 217-1 to L. 217-32 of the French Consumer Code.</p><p>Consumers also benefit from the statutory guarantee against hidden defects under Articles 1641 to 1649 of the French Civil Code for two years from discovery of the defect. It gives a right to a price reduction if the goods are kept or a full refund against return.</p></div>
+<h2>11. Use and liability</h2><p>Products must be used for their intended purpose and with compatible equipment. T-Pulse Archery is not liable for damage caused by incorrect fitting, modification, abnormal use or failure to follow instructions, without prejudice to rights and liability that cannot legally be excluded.</p>
+<h2>12. Invoicing and personal data</h2><p>Invoicing and accounting are managed with Abby. An invoice may be emailed to the customer. Processing necessary for orders is described in the <a href="/politique-de-confidentialite/?lang=en">privacy policy</a>.</p>
+<h2>13. Complaints</h2><p>Complaints must first be sent to <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> with the order number and relevant supporting information.</p>
+<h2>14. Governing law and disputes</h2><p>These terms are governed by French law. Consumers retain any mandatory protections in their country of residence. If no amicable solution is reached, disputes are heard by the courts competent under ordinary legal rules. The French version prevails if this translation differs from it.</p>
+</div>
+HTML;
+
     $terms_id = tpulse_update_managed_page('Conditions générales de vente', 'Terms and conditions', 'conditions-generales-de-vente', $terms_fr, $terms_en, $version);
 
     $privacy_fr = '<div class="legal-document"><p class="legal-intro">Cette politique explique comment T-Pulse Archery traite les données personnelles des visiteurs et clients. Dernière mise à jour : 1er septembre 2026.</p><h2>1. Responsable du traitement</h2><p>Le responsable du traitement est <strong>Tony P. Créations EI</strong>, marque commerciale T-Pulse Archery, SIRET 800 156 507 00025, situé à Thaon-les-Vosges (88150), France. Contact relatif aux données : <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p><h2>2. Données traitées</h2><p>Selon votre utilisation du site : identité et coordonnées, adresses de facturation et de livraison, contenu du panier et des commandes, statut du paiement, compte client, échanges avec le service client, avis et pseudonyme, choix de langue, adresse IP et journaux techniques de sécurité. T-Pulse Archery ne reçoit ni ne conserve le numéro complet de votre carte bancaire.</p><h2>3. Finalités et bases légales</h2><div class="legal-table"><table><thead><tr><th>Finalité</th><th>Base légale</th></tr></thead><tbody><tr><td>Panier, commande, paiement, livraison et service après-vente</td><td>Exécution du contrat</td></tr><tr><td>Facturation, comptabilité et obligations fiscales</td><td>Obligation légale</td></tr><tr><td>Prévention de la fraude, sécurité et défense des droits</td><td>Intérêt légitime</td></tr><tr><td>Gestion et modération des avis</td><td>Intérêt légitime</td></tr><tr><td>Cookies non essentiels et mesure d’audience non exemptée</td><td>Consentement</td></tr></tbody></table></div><h2>4. Destinataires et prestataires</h2><p>Les données peuvent être transmises, uniquement lorsque cela est nécessaire, aux prestataires suivants : OVH pour l’hébergement et l’e-mail, WordPress/WooCommerce/Automattic pour le fonctionnement de la boutique, Stripe pour le paiement par carte bancaire, Sendcloud et Mondial Relay pour l’expédition en point relais, Abby pour la facturation et la comptabilité, Fluent SMTP pour l’envoi des e-mails du site, ainsi que Wordfence, UpdraftPlus et Complianz pour la sécurité, la sauvegarde et la gestion du consentement.</p><h2>5. Transferts hors Espace économique européen</h2><p>Certains prestataires internationaux peuvent traiter des données hors de l’EEE. Le cas échéant, ces transferts reposent sur une décision d’adéquation ou des garanties reconnues par le RGPD, telles que les clauses contractuelles types proposées par les prestataires concernés.</p><h2>6. Durées de conservation</h2><ul><li>Commandes, factures et pièces comptables : durée nécessaire à la relation commerciale puis durée légale, généralement dix ans pour les pièces comptables.</li><li>Compte client : pendant son utilisation puis jusqu’à trois ans après la dernière activité, hors obligations légales.</li><li>Demandes de contact et service client : temps de traitement puis jusqu’à trois ans après le dernier échange, sauf nécessité contentieuse.</li><li>Avis : pendant leur publication et le temps nécessaire à leur modération ou à la défense des droits.</li><li>Journaux techniques et de sécurité : durée définie par les outils utilisés, en principe limitée au nécessaire et réévaluée périodiquement.</li><li>Choix relatifs aux cookies : pendant la durée définie dans l’outil de consentement, généralement jusqu’à treize mois.</li></ul><h2>7. Vos droits</h2><p>Vous pouvez demander l’accès, la rectification, l’effacement, la limitation ou la portabilité de vos données, vous opposer à certains traitements et retirer un consentement à tout moment. Écrivez à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> en précisant votre demande. Une preuve d’identité peut être demandée uniquement en cas de doute raisonnable. Vous pouvez également déposer une réclamation auprès de la <a href="https://www.cnil.fr/" target="_blank" rel="noopener">CNIL</a>.</p><h2>8. Cookies</h2><p>Les cookies strictement nécessaires au panier, à la commande, à la sécurité et au choix de langue peuvent être déposés sans consentement. Tout traceur non essentiel doit rester désactivé jusqu’à votre choix. Vous devez pouvoir accepter, refuser et retirer votre consentement aussi facilement.</p><h2>9. Sécurité et mise à jour</h2><p>Des mesures techniques et organisationnelles raisonnables sont mises en œuvre pour protéger les données. Cette politique sera mise à jour lors de l’ajout ou du changement d’un prestataire ou d’une finalité.</p></div>';
@@ -272,8 +344,12 @@ function tpulse_setup_woocommerce_product(): void {
     $product->set_slug('helitwist-original');
     $product->set_status($product->get_status() === 'publish' ? 'publish' : 'draft');
     $product->set_catalog_visibility('visible');
-    $product->set_description('Amortisseur breveté pour stabilisateurs d’arc, conçu pour réduire les vibrations, le choc du tir, le bruit et la sensibilité au vent.');
-    $product->set_short_description('Structure spiralée creuse, amortissement axial et compatibilité 5/16, 1/4, M8 et versions combinées.');
+    if ($product->get_description() === '') {
+        $product->set_description('Amortisseur axial pour stabilisateurs d’arc. Demande de brevet déposée sous la référence FR2506128.');
+    }
+    if ($product->get_short_description() === '') {
+        $product->set_short_description('Structure spiralée creuse, amortissement axial et compatibilité 5/16, 1/4, M8 et versions combinées.');
+    }
     $product->set_sku('HELITWIST-ORIGINAL');
     $product->set_weight('0.027');
     $product->set_manage_stock(false);
@@ -286,7 +362,8 @@ function tpulse_setup_woocommerce_product(): void {
     $attribute->set_visible(true);
     $attribute->set_variation(true);
     $product->set_attributes([$attribute]);
-    $product->set_default_attributes(['filetage' => '5/16']);
+    // No default: the customer must deliberately choose the compatible thread.
+    $product->set_default_attributes([]);
     $product->save();
 
     $image_path = get_template_directory() . '/assets/images/helitwist-1.png';
@@ -412,6 +489,13 @@ function tpulse_create_book_product(): void {
     $product->set_manage_stock(true);
     $product->set_stock_quantity(10);
     $product->set_stock_status('instock');
+    $product->set_weight('0.159');
+    $product->set_length('21.01');
+    $product->set_width('14.81');
+    $product->set_height('0.46');
+    if (method_exists($product, 'set_global_unique_id')) {
+        $product->set_global_unique_id('9791041554713');
+    }
     $product->save();
 
     $logo_path = get_template_directory() . '/assets/images/logo-t-pulse.png';
@@ -456,6 +540,13 @@ function tpulse_convert_book_to_direct_product(): void {
     $product->set_manage_stock(true);
     $product->set_stock_quantity(10);
     $product->set_stock_status('instock');
+    $product->set_weight('0.159');
+    $product->set_length('21.01');
+    $product->set_width('14.81');
+    $product->set_height('0.46');
+    if (method_exists($product, 'set_global_unique_id')) {
+        $product->set_global_unique_id('9791041554713');
+    }
     $product->set_short_description('Des idées pour perfectionner vos séances d’archerie tout en vous amusant.');
     $product->set_description('Le livre Jeux d’archers propose des idées pour enrichir et perfectionner les séances d’archerie en conservant une approche ludique.');
     $product->save();
@@ -528,14 +619,14 @@ function tpulse_set_book_cover(): void {
 add_action('wp_loaded', 'tpulse_set_book_cover', 30);
 
 function tpulse_refresh_commercial_content(): void {
-    if (!class_exists('WooCommerce') || get_option('tpulse_commercial_content_version') === '2026-08-31-1') {
+    if (!class_exists('WooCommerce') || get_option('tpulse_commercial_content_version') === '2026-09-01-2') {
         return;
     }
 
     $helitwist_id = (int) wc_get_product_id_by_sku('HELITWIST-ORIGINAL');
     $helitwist = $helitwist_id ? wc_get_product($helitwist_id) : false;
     if ($helitwist instanceof WC_Product) {
-        $helitwist->set_short_description('Amortisseur axial de 27 g pour stabilisateurs d’arc. Sa structure spiralée creuse est conçue pour atténuer les vibrations et adoucir la réaction de l’arc, avec trois filetages au choix : 5/16, 1/4 ou M8.');
+        $helitwist->set_short_description('Amortisseur axial de 27 g pour stabilisateurs d’arc. Sa structure spiralée creuse est conçue pour atténuer les vibrations et adoucir la réaction de l’arc. Demande de brevet déposée sous la référence FR2506128.');
         $helitwist->set_description(
             '<div class="tpulse-product-story">' .
             '<p class="product-intro"><strong>HeliTwist Original</strong> est né sur le pas de tir, à partir d’un besoin simple : obtenir une réaction plus douce après la décoche sans alourdir inutilement la stabilisation.</p>' .
@@ -544,7 +635,7 @@ function tpulse_refresh_commercial_content(): void {
             '<div class="product-benefits"><div><strong>Réaction plus douce</strong><span>Une sensation post-tir plus propre et mieux maîtrisée.</span></div><div><strong>Seulement 27 g</strong><span>Un amortissement pensé pour préserver l’équilibre de la stabilisation.</span></div><div><strong>Trois filetages</strong><span>Choisissez 5/16, 1/4 ou M8 selon votre matériel.</span></div></div>' .
             '<h2>Bien choisir votre modèle</h2>' .
             '<p>Vérifiez le filetage de votre stabilisateur ou de vos masses avant de commander. Chaque variante possède son propre stock. En cas de doute, écrivez à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> avec une photo ou la référence de votre stabilisation.</p>' .
-            '<ul class="product-facts"><li><strong>Usage :</strong> stabilisateurs d’arc</li><li><strong>Poids :</strong> 27 g</li><li><strong>Filetages :</strong> 5/16, 1/4 ou M8</li><li><strong>Conception :</strong> développée en France par T-Pulse Archery</li></ul>' .
+            '<ul class="product-facts"><li><strong>Usage :</strong> stabilisateurs d’arc</li><li><strong>Poids :</strong> 27 g</li><li><strong>Filetages :</strong> 5/16, 1/4, M8 ou versions combinées</li><li><strong>Propriété industrielle :</strong> demande de brevet déposée, FR2506128</li></ul>' .
             '<p class="product-note">Les sensations et le comportement peuvent varier selon l’arc, la configuration de stabilisation et les masses utilisées.</p>' .
             '</div>'
         );
@@ -555,6 +646,14 @@ function tpulse_refresh_commercial_content(): void {
     $book_id = (int) wc_get_product_id_by_sku('LIVRE-JEUX-DARCHERS');
     $book = $book_id ? wc_get_product($book_id) : false;
     if ($book instanceof WC_Product) {
+        $book->set_regular_price('15.00');
+        $book->set_weight('0.159');
+        $book->set_length('21.01');
+        $book->set_width('14.81');
+        $book->set_height('0.46');
+        if (method_exists($book, 'set_global_unique_id')) {
+            $book->set_global_unique_id('9791041554713');
+        }
         $book->set_short_description('26 jeux d’archerie pour varier les entraînements, travailler la précision et retrouver une pratique plus détendue, seul, entre amis ou en club. Livre broché en français, 79 pages.');
         $book->set_description(
             '<div class="tpulse-product-story">' .
@@ -564,7 +663,7 @@ function tpulse_refresh_commercial_content(): void {
             '<div class="product-benefits"><div><strong>26 jeux variés</strong><span>Des idées faciles à intégrer à vos entraînements.</span></div><div><strong>Seul ou en groupe</strong><span>Pour les archers, entraîneurs, clubs et compagnons de pas de tir.</span></div><div><strong>Progression ludique</strong><span>Précision, adaptabilité, motivation et gestion de la pression.</span></div></div>' .
             '<h2>Ce que vous allez travailler</h2>' .
             '<ul><li>Varier les distances, les objectifs et les contraintes de tir.</li><li>Entretenir la motivation et la concentration au fil des séances.</li><li>Aborder le target panic dans un cadre plus détendu et moins centré sur le résultat.</li><li>Développer l’adaptabilité et favoriser un tir plus fluide.</li></ul>' .
-            '<ul class="product-facts"><li><strong>Format :</strong> livre broché</li><li><strong>Langue :</strong> français</li><li><strong>Longueur :</strong> 79 pages</li><li><strong>Dimensions :</strong> 14,81 × 21,01 cm</li><li><strong>Vente :</strong> expédié directement par T-Pulse Archery</li></ul>' .
+            '<ul class="product-facts"><li><strong>Format :</strong> livre broché</li><li><strong>Langue :</strong> français</li><li><strong>Longueur :</strong> 79 pages</li><li><strong>ISBN-13 :</strong> 979-10-415-5471-3</li><li><strong>Dimensions :</strong> 14,81 × 0,46 × 21,01 cm</li><li><strong>Poids :</strong> 159 g</li><li><strong>Vente :</strong> expédié directement par T-Pulse Archery</li></ul>' .
             '<aside class="external-rating tpulse-amazon-rating-box"><div class="tpulse-amazon-rating"><span class="external-rating-score">4,5/5</span><span class="tpulse-amazon-stars" aria-label="4,5 étoiles sur 5">★★★★★</span><span>21 évaluations Amazon</span></div><p>Le livre a déjà reçu des retours de lecteurs sur Amazon. Consultez-les en complément des avis déposés directement sur la boutique T-Pulse Archery.</p><a href="https://www.amazon.fr/Jeux-darchers-Perfectionnez-darcherie-samuser/dp/B0DLWNRBPQ#customerReviews" target="_blank" rel="noopener external nofollow">Voir les avis Amazon</a></aside>' .
             '</div>'
         );
@@ -572,7 +671,8 @@ function tpulse_refresh_commercial_content(): void {
         wc_delete_product_transients($book_id);
     }
 
-    update_option('tpulse_commercial_content_version', '2026-08-31-1');
+    update_option('woocommerce_dimension_unit', 'cm');
+    update_option('tpulse_commercial_content_version', '2026-09-01-2');
 }
 add_action('wp_loaded', 'tpulse_refresh_commercial_content', 40);
 
@@ -774,7 +874,7 @@ function tpulse_disable_local_coming_soon(): void {
 add_action('wp_loaded', 'tpulse_disable_local_coming_soon', 30);
 
 function tpulse_enable_product_reviews(): void {
-    if (!class_exists('WooCommerce') || get_option('tpulse_product_reviews_enabled') === '2') {
+    if (!class_exists('WooCommerce') || get_option('tpulse_product_reviews_enabled') === '3') {
         return;
     }
 
@@ -786,6 +886,7 @@ function tpulse_enable_product_reviews(): void {
     update_option('comment_moderation', '1');
     update_option('comments_notify', '1');
     update_option('moderation_notify', '1');
+    update_option('require_name_email', '1');
 
     $products = wc_get_products(['limit' => -1, 'return' => 'ids']);
     foreach ($products as $product_id) {
@@ -795,7 +896,7 @@ function tpulse_enable_product_reviews(): void {
         ]);
     }
 
-    update_option('tpulse_product_reviews_enabled', '2');
+    update_option('tpulse_product_reviews_enabled', '3');
 }
 add_action('wp_loaded', 'tpulse_enable_product_reviews', 35);
 
@@ -804,9 +905,77 @@ function tpulse_admin_notice(): void {
         return;
     }
 
-    echo '<div class="notice notice-warning"><p><strong>T-Pulse :</strong> avant toute vente, renseignez le prix, le stock, la livraison, les taxes, les pages légales et testez Stripe en mode test.</p></div>';
+    echo '<div class="notice notice-warning"><p><strong>T-Pulse :</strong> la boutique est en préproduction. Avant l’ouverture, passez Stripe en mode production, effectuez une vraie commande à petit montant, vérifiez les e-mails, l’étiquette Sendcloud et la facture Abby, puis remboursez le test.</p></div>';
 }
 add_action('admin_notices', 'tpulse_admin_notice');
+
+function tpulse_register_abby_order_box(): void {
+    if (!class_exists('WooCommerce')) {
+        return;
+    }
+
+    $screens = ['shop_order'];
+    if (function_exists('wc_get_page_screen_id')) {
+        $screens[] = wc_get_page_screen_id('shop-order');
+    }
+
+    foreach (array_unique($screens) as $screen) {
+        add_meta_box('tpulse-abby-order', 'Préparation facture Abby', 'tpulse_render_abby_order_box', $screen, 'side', 'high');
+    }
+}
+add_action('add_meta_boxes', 'tpulse_register_abby_order_box');
+
+function tpulse_render_abby_order_box($object): void {
+    $order = $object instanceof WC_Order ? $object : wc_get_order((int) ($object->ID ?? 0));
+    if (!$order instanceof WC_Order) {
+        echo '<p>Commande introuvable.</p>';
+        return;
+    }
+
+    $customer_name = trim($order->get_billing_first_name() . ' ' . $order->get_billing_last_name());
+    $address = array_filter([
+        $order->get_billing_company(),
+        $order->get_billing_address_1(),
+        $order->get_billing_address_2(),
+        trim($order->get_billing_postcode() . ' ' . $order->get_billing_city()),
+        $order->get_billing_country(),
+    ]);
+    $lines = [
+        'Commande WooCommerce : #' . $order->get_order_number(),
+        'Date : ' . wc_format_datetime($order->get_date_created(), 'd/m/Y'),
+        'Client : ' . $customer_name,
+        'E-mail : ' . $order->get_billing_email(),
+        'Téléphone : ' . $order->get_billing_phone(),
+        'Adresse : ' . implode(', ', $address),
+        '',
+        'Produits :',
+    ];
+
+    foreach ($order->get_items() as $item) {
+        $description = $item->get_name() . ' × ' . $item->get_quantity();
+        $meta = [];
+        foreach ($item->get_formatted_meta_data() as $meta_item) {
+            $meta[] = wp_strip_all_tags($meta_item->display_key . ' : ' . $meta_item->display_value);
+        }
+        if ($meta) {
+            $description .= ' (' . implode(', ', $meta) . ')';
+        }
+        $lines[] = '- ' . $description . ' : ' . html_entity_decode(wp_strip_all_tags(wc_price($item->get_total(), ['currency' => $order->get_currency()])), ENT_QUOTES, 'UTF-8');
+    }
+
+    $lines[] = '';
+    $lines[] = 'Livraison : ' . html_entity_decode(wp_strip_all_tags(wc_price($order->get_shipping_total(), ['currency' => $order->get_currency()])), ENT_QUOTES, 'UTF-8') . ' - ' . $order->get_shipping_method();
+    $lines[] = 'Total payé : ' . html_entity_decode(wp_strip_all_tags($order->get_formatted_order_total()), ENT_QUOTES, 'UTF-8');
+    $lines[] = 'Paiement : ' . $order->get_payment_method_title();
+    $lines[] = 'TVA non applicable, art. 293 B du CGI.';
+
+    $field_id = 'tpulse-abby-copy-' . $order->get_id();
+    echo '<p>Copiez ce bloc dans Abby : les coordonnées, produits et montants sont déjà regroupés.</p>';
+    echo '<textarea id="' . esc_attr($field_id) . '" readonly rows="12" style="width:100%;font-family:monospace;font-size:11px">' . esc_textarea(implode("\n", $lines)) . '</textarea>';
+    echo '<p><button type="button" class="button button-primary" data-tpulse-copy="' . esc_attr($field_id) . '">Copier pour Abby</button> <span class="tpulse-copy-status" aria-live="polite"></span></p>';
+    echo '<ol style="margin-left:1.2em"><li>Vérifier le paiement dans Stripe.</li><li>Créer et envoyer la facture dans Abby.</li><li>Créer l’étiquette dans Sendcloud.</li><li>Passer la commande en « Terminée » après expédition.</li></ol>';
+    echo '<script>document.querySelectorAll("[data-tpulse-copy]").forEach(function(button){button.addEventListener("click",function(){var field=document.getElementById(button.dataset.tpulseCopy);navigator.clipboard.writeText(field.value).then(function(){button.parentNode.querySelector(".tpulse-copy-status").textContent="Copié";});});});</script>';
+}
 
 function tpulse_security_auto_updates(?bool $update, object $item): ?bool {
     $trusted_plugins = [

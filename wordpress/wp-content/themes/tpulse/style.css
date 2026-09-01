@@ -200,7 +200,7 @@ h3 { font-size: 1.25rem; }
 .resource-download { margin-top: 2rem; }
 .woocommerce .woocommerce-products-header__title,
 .woocommerce-page .entry-title { margin-bottom: 1rem; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.04em; }
-.woocommerce .woocommerce-products-header__title.page-title { font-size: clamp(2.5rem, 5vw, 4.25rem); }
+.woocommerce .woocommerce-products-header__title.page-title { font-size: clamp(2.15rem, 4vw, 3.35rem); }
 .woocommerce .woocommerce-result-count,
 .woocommerce .woocommerce-ordering { margin-bottom: 1.5rem; color: var(--muted); font-size: .9rem; }
 .shop-intro { max-width: 62ch; margin: -.25rem 0 1.5rem; color: var(--muted); font-size: 1.02rem; }
@@ -215,7 +215,8 @@ h3 { font-size: 1.25rem; }
 .woocommerce ul.products li.product .price { margin: .35rem 0 .8rem; color: var(--pulse); font-size: 1.05rem; font-weight: 850; }
 .woocommerce ul.products li.product .button { margin-top: auto; padding: .75rem .9rem; font-size: .82rem; }
 .woocommerce div.product { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 2.5rem; }
-.woocommerce div.product div.images, .woocommerce div.product div.summary { width: auto; float: none; }
+.woocommerce div.product div.images, .woocommerce div.product div.summary { width: auto; min-width: 0; float: none; }
+.woocommerce div.product div.images { overflow: hidden; }
 .woocommerce div.product .product_title { margin-bottom: .75rem; font-size: clamp(2rem, 4vw, 3.35rem); line-height: 1; letter-spacing: -.05em; }
 .woocommerce div.product div.images img { border-radius: 18px; object-fit: contain; background: linear-gradient(145deg, rgba(255,255,255,.045), rgba(137,240,113,.06)); }
 .woocommerce div.product p.price, .woocommerce div.product span.price { color: var(--pulse); font-size: 1.35rem; font-weight: 850; }
@@ -232,6 +233,7 @@ h3 { font-size: 1.25rem; }
 .woocommerce div.product form.cart .variations td { display: block; padding: 0; line-height: 1.4; text-align: left; }
 .woocommerce div.product form.cart .variations label { color: var(--paper); font-size: .86rem; font-weight: 850; text-transform: uppercase; letter-spacing: .06em; }
 .woocommerce div.product form.cart .variations select { min-width: min(100%, 280px); padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--paper); }
+.variation-choice-help { max-width: 62ch; margin: 1rem 0 .35rem; padding: .8rem 1rem; border-left: 3px solid var(--pulse); border-radius: 0 10px 10px 0; background: rgba(137,240,113,.07); color: var(--paper); font-size: .92rem; }
 .woocommerce div.product .single_variation_wrap { width: 100%; }
 .woocommerce div.product .woocommerce-variation-price { margin: .65rem 0; }
 .woocommerce div.product .stock { color: var(--pulse); font-size: .9rem; font-weight: 750; }
@@ -249,6 +251,8 @@ h3 { font-size: 1.25rem; }
 .tpulse-product-story .product-intro { max-width: 68ch; color: var(--paper); font-size: 1.08rem; }
 .tpulse-product-story h2 { margin: 1.5rem 0 0; font-size: clamp(1.45rem, 2.7vw, 2.1rem); }
 .tpulse-product-story p, .tpulse-product-story li { color: var(--muted); }
+.legal-guarantee { margin: 1rem 0 1.5rem; padding: 1.2rem; border: 2px solid rgba(137,240,113,.5); border-radius: 16px; background: rgba(137,240,113,.07); }
+.legal-guarantee p { color: var(--paper); font-size: .94rem; }
 .product-benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; margin: 1rem 0; }
 .product-benefits > div { padding: 1rem; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.03); }
 .product-benefits strong, .product-benefits span { display: block; }
@@ -302,7 +306,11 @@ h3 { font-size: 1.25rem; }
 .woocommerce #review_form select { width: 100%; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--paper); }
 .woocommerce #review_form label { display: block; margin-bottom: .35rem; color: var(--paper); font-size: .9rem; font-weight: 800; }
 .woocommerce #review_form .comment-notes { color: var(--muted); }
-.tpulse-review-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; margin: 1rem 0; }
+.woocommerce #review_form .comment-form-author,
+.woocommerce #review_form .comment-form-email { display: inline-block; width: calc(50% - .55rem); margin-right: .75rem; vertical-align: top; }
+.woocommerce #review_form .comment-form-email { margin-right: 0; }
+.woocommerce #review_form small { display: block; margin-top: .35rem; color: var(--muted); }
+.tpulse-review-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; margin: 1rem 0; }
 .tpulse-review-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin: .25rem 0 1rem; color: var(--muted); font-size: .85rem; }
 .tpulse-review-meta span { padding: .3rem .55rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); }
 .wp-block-buttons { display: flex; flex-wrap: wrap; gap: .85rem; margin: 1.5rem 0; }
@@ -372,12 +380,14 @@ h3 { font-size: 1.25rem; }
   .woocommerce table.shop_table_responsive tr td,
   .woocommerce-page table.shop_table_responsive tr td { padding: .75rem; }
   .tpulse-review-fields { grid-template-columns: 1fr; }
+  .woocommerce #review_form .comment-form-author,
+  .woocommerce #review_form .comment-form-email { display: block; width: 100%; margin-right: 0; }
   .product-benefits, .product-facts { grid-template-columns: 1fr; }
   .woocommerce .cart-collaterals .cart_totals,
   .woocommerce-page .cart-collaterals .cart_totals { width: 100%; }
   .woocommerce-cart table.cart .product-thumbnail { display: flex; width: 100%; align-items: center; justify-content: center; text-align: center !important; }
   .woocommerce-cart table.cart .product-thumbnail::before { display: none; content: none; }
-  .woocommerce-cart table.cart img { display: inline-block; width: 78px; min-width: 78px; }
+  .woocommerce-cart table.cart img { display: inline-block; width: 88px; min-width: 88px; }
 }
 
 @media (max-width: 480px) {
@@ -396,4 +406,7 @@ h3 { font-size: 1.25rem; }
   .gallery img { min-height: 220px; }
   .helitwist-technology .gallery img, .helitwist-technology .gallery .tall { min-height: 0; max-height: 300px; }
   .woocommerce div.product { gap: 1.5rem; }
+  .woocommerce div.product div.images .zoomImg { display: none !important; }
+  .woocommerce form .form-row-first,
+  .woocommerce form .form-row-last { width: 100%; float: none; }
 }
