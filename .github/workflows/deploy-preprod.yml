@@ -1,0 +1,186 @@
+name: Déployer WordPress OVH
+
+on:
+  push:
+    branches: ["agent/woocommerce-preprod"]
+    paths:
+      - "wordpress/**"
+      - "images/**"
+      - ".github/workflows/deploy-preprod.yml"
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Cible de déploiement"
+        required: true
+        default: "preproduction"
+        type: choice
+        options:
+          - preproduction
+          - production
+
+concurrency:
+  group: tpulse-wordpress-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'preproduction' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: preproduction
+    env:
+      DEPLOY_TARGET: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'preproduction' }}
+    steps:
+      - name: Récupérer les sources
+        uses: actions/checkout@v4
+
+      - name: Préparer le thème
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf build
+          mkdir -p build/tpulse build/mu-plugins
+          cp -R wordpress/wp-content/themes/tpulse/. build/tpulse/
+          if [ -d wordpress/wp-content/mu-plugins ]; then
+            cp -R wordpress/wp-content/mu-plugins/. build/mu-plugins/
+          fi
+
+      - name: Vérifier la syntaxe PHP
+        shell: bash
+        run: |
+          set -euo pipefail
+          php --version
+          find wordpress -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Configurer la connexion OVH
+        shell: bash
+        env:
+          OVH_SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$OVH_SSH_PRIVATE_KEY" > "$HOME/.ssh/id_ed25519"
+          chmod 600 "$HOME/.ssh/id_ed25519"
+          ssh-keyscan -t ed25519 ssh.cluster131.hosting.ovh.net > "$HOME/.ssh/known_hosts"
+          fingerprint="$(ssh-keygen -lf "$HOME/.ssh/known_hosts" -E sha256 | awk '{print $2}')"
+          test "$fingerprint" = "SHA256:N4DQHF8Pzfs8s5/QgV8tEx5NgKZeghhkDfpnO+ZG7Fo"
+
+      - name: Déployer le thème
+        shell: bash
+        run: |
+          set -euo pipefail
+          rsync -az --delete build/tpulse/ veugfyg@ssh.cluster131.hosting.ovh.net:~/www/wp-content/themes/tpulse/
+          rsync -az --delete build/mu-plugins/ veugfyg@ssh.cluster131.hosting.ovh.net:~/www/wp-content/mu-plugins/
+
+      - name: Configurer WordPress et WooCommerce
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$DEPLOY_TARGET" = "production" ]; then
+            WP_SITE_URL="https://t-pulse-archery.com"
+            WP_BLOG_PUBLIC="1"
+          else
+            WP_SITE_URL="https://preprod.t-pulse-archery.com"
+            WP_BLOG_PUBLIC="0"
+          fi
+          ssh veugfyg@ssh.cluster131.hosting.ovh.net "WP_SITE_URL='$WP_SITE_URL' WP_BLOG_PUBLIC='$WP_BLOG_PUBLIC' WP_DEPLOY_TARGET='$DEPLOY_TARGET' bash -s" <<'REMOTE'
+          set -euo pipefail
+          cd "$HOME/www"
+          if [ ! -f "$HOME/wp-cli.phar" ]; then
+            curl -fsSL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o "$HOME/wp-cli.phar"
+            chmod 700 "$HOME/wp-cli.phar"
+          fi
+          WP="php $HOME/wp-cli.phar --path=$HOME/www"
+          $WP core is-installed
+          stripe_settings_before="$($WP option get woocommerce_stripe_settings --format=json 2>/dev/null || true)"
+          $WP option update home "$WP_SITE_URL"
+          $WP option update siteurl "$WP_SITE_URL"
+          $WP option update blogname 'T-Pulse Archery'
+          $WP option update blogdescription 'Innovation et progression pour les archers'
+          $WP option update blog_public "$WP_BLOG_PUBLIC"
+          $WP plugin install woocommerce --activate
+          $WP plugin install wordfence --activate
+          $WP plugin install updraftplus --activate
+          $WP plugin install fluent-smtp --activate
+          $WP plugin install complianz-gdpr --activate
+          $WP plugin install woocommerce-gateway-stripe --activate
+          $WP plugin install sendcloud-connected-shipping --activate
+          $WP language core install fr_FR --activate
+          $WP language plugin install woocommerce fr_FR || true
+          $WP option update WPLANG 'fr_FR'
+          $WP theme activate tpulse
+          shop_id="$($WP post list --post_type=page --name=boutique --field=ID --format=ids | head -n1)"
+          if [ -z "$shop_id" ]; then
+            shop_id="$($WP post create --post_type=page --post_status=publish --post_title='Boutique' --post_name=boutique --porcelain)"
+          fi
+          cart_id="$($WP post list --post_type=page --name=panier --field=ID --format=ids | head -n1)"
+          if [ -z "$cart_id" ]; then
+            cart_id="$($WP post create --post_type=page --post_status=publish --post_title='Panier' --post_name=panier --post_content='[woocommerce_cart]' --porcelain)"
+          fi
+          checkout_id="$($WP post list --post_type=page --name=commande --field=ID --format=ids | head -n1)"
+          if [ -z "$checkout_id" ]; then
+            checkout_id="$($WP post create --post_type=page --post_status=publish --post_title='Commande' --post_name=commande --post_content='[woocommerce_checkout]' --porcelain)"
+          fi
+          account_id="$($WP post list --post_type=page --name=mon-compte --field=ID --format=ids | head -n1)"
+          if [ -z "$account_id" ]; then
+            account_id="$($WP post create --post_type=page --post_status=publish --post_title='Mon compte' --post_name=mon-compte --post_content='[woocommerce_my_account]' --porcelain)"
+          fi
+          $WP option update woocommerce_shop_page_id "$shop_id"
+          $WP option update woocommerce_cart_page_id "$cart_id"
+          $WP option update woocommerce_checkout_page_id "$checkout_id"
+          $WP option update woocommerce_myaccount_page_id "$account_id"
+          $WP rewrite structure '/%postname%/' --hard
+          cat > "$HOME/www/.htaccess" <<'HTACCESS'
+          # BEGIN WordPress
+          <IfModule mod_rewrite.c>
+          RewriteEngine On
+          RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+          RewriteBase /
+          RewriteRule ^index\.php$ - [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule . /index.php [L]
+          </IfModule>
+          # END WordPress
+
+          # BEGIN T-Pulse security headers
+          <IfModule mod_headers.c>
+          Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+          Header always set X-Content-Type-Options "nosniff"
+          Header always set X-Frame-Options "SAMEORIGIN"
+          Header always set Referrer-Policy "strict-origin-when-cross-origin"
+          Header always set Permissions-Policy "camera=(), microphone=()"
+          </IfModule>
+          # END T-Pulse security headers
+          HTACCESS
+          $WP cache flush
+          stripe_settings_after="$($WP option get woocommerce_stripe_settings --format=json 2>/dev/null || true)"
+          if [ -n "$stripe_settings_before" ] && [ "$stripe_settings_before" != "$stripe_settings_after" ]; then
+            $WP option update woocommerce_stripe_settings "$stripe_settings_before" --format=json
+            $WP cache flush
+            echo 'Configuration Stripe restaurée après le déploiement.'
+          fi
+          REMOTE
+
+      - name: Vérifier le site déployé
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$DEPLOY_TARGET" = "production" ]; then
+            BASE_URL="https://t-pulse-archery.com"
+          else
+            BASE_URL="https://preprod.t-pulse-archery.com"
+          fi
+          for attempt in 1 2 3 4 5; do
+            code="$(curl -L -sS -o /tmp/tpulse.html -w '%{http_code}' "$BASE_URL/" || true)"
+            if [ "$code" = "200" ] && grep -q 'T-Pulse Archery' /tmp/tpulse.html && grep -q 'name="description"' /tmp/tpulse.html; then
+              for path in boutique product/helitwist-original product/jeux-darchers commande conditions-generales-de-vente; do
+                test "$(curl -L -sS -o /dev/null -w '%{http_code}' "$BASE_URL/$path/")" = "200"
+              done
+              exit 0
+            fi
+            sleep 10
+          done
+          cat /tmp/tpulse.html || true
+          exit 1
