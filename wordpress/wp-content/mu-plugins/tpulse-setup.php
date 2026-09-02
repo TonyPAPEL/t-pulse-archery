@@ -918,6 +918,11 @@ function tpulse_admin_notice(): void {
         return;
     }
 
+    $host = wp_parse_url(home_url(), PHP_URL_HOST);
+    if (wp_get_environment_type() !== 'local' && $host !== 'preprod.t-pulse-archery.com') {
+        return;
+    }
+
     echo '<div class="notice notice-warning"><p><strong>T-Pulse :</strong> la boutique est en préproduction. Avant l’ouverture, passez Stripe en mode production, effectuez une vraie commande à petit montant, vérifiez les e-mails, l’étiquette Sendcloud et la facture Abby, puis remboursez le test.</p></div>';
 }
 add_action('admin_notices', 'tpulse_admin_notice');

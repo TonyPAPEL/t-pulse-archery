@@ -1,6 +1,6 @@
 # T-Pulse Archery - checklist avant mise en production
 
-Dernière mise à jour : 1er septembre 2026.
+Dernière mise à jour : 2 septembre 2026.
 
 Cette liste ne contient plus que les contrôles ou actions qui nécessitent l'intervention de Tony. Les corrections de contenu, de traduction, de produit, d'avis, de SEO et d'interface sont gérées dans le dépôt et déployées en préproduction.
 
@@ -11,10 +11,10 @@ Cette liste ne contient plus que les contrôles ou actions qui nécessitent l'in
 - [ ] **Téléphone professionnel** : aucun numéro n'est publié. Créer un numéro professionnel distinct si l'on ne souhaite pas communiquer le numéro personnel.
 - [ ] **Prix du livre** : modifier le prix éditeur dans KDP pour qu'il corresponde aux 15,00 € affichés sur la boutique, puis contrôler la fiche Amazon.
 - [ ] **Stocks** : vérifier les quantités réelles des cinq variations HeliTwist et du livre dans WooCommerce.
-- [ ] **Stripe** : une fois tous les contrôles terminés, passer du mode test au mode production.
-- [ ] **Commande réelle finale** : effectuer une commande à faible montant, vérifier Stripe, WooCommerce, l'e-mail client, l'e-mail administrateur, Sendcloud et le stock, puis rembourser la commande.
+- [x] **Stripe** : mode production activé et paiement réel validé.
+- [x] **Commande réelle finale** : commande à faible montant effectuée, Stripe, WooCommerce, e-mails, Sendcloud/Mondial Relay et stock vérifiés.
 - [ ] **Abby** : créer la facture à partir du bloc `Préparation facture Abby` présent dans l'administration de chaque commande, puis l'envoyer au client depuis Abby.
-- [ ] **Sendcloud** : créer l'étiquette de la commande test et confirmer que le point Mondial Relay choisi remonte correctement.
+- [ ] **Sendcloud** : point Mondial Relay confirmé dans Sendcloud. Étiquette non générée pour éviter une facturation inutile ; à générer lors de la première vraie expédition.
 - [ ] **Sauvegarde** : configurer UpdraftPlus vers un stockage extérieur à OVH et effectuer au moins un test de restauration.
 - [ ] **E-mails** : vérifier une nouvelle commande, une commande terminée, un remboursement, une réinitialisation de mot de passe et une notification d'avis en attente.
 

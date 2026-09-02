@@ -1,4 +1,4 @@
-name: Déployer la préproduction OVH
+name: Déployer WordPress OVH
 
 on:
   push:
@@ -8,9 +8,18 @@ on:
       - "images/**"
       - ".github/workflows/deploy-preprod.yml"
   workflow_dispatch:
+    inputs:
+      target:
+        description: "Cible de déploiement"
+        required: true
+        default: "preproduction"
+        type: choice
+        options:
+          - preproduction
+          - production
 
 concurrency:
-  group: tpulse-preprod
+  group: tpulse-wordpress-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'preproduction' }}
   cancel-in-progress: true
 
 permissions:
@@ -20,6 +29,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: preproduction
+    env:
+      DEPLOY_TARGET: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'preproduction' }}
     steps:
       - name: Récupérer les sources
         uses: actions/checkout@v4
@@ -66,7 +77,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          ssh veugfyg@ssh.cluster131.hosting.ovh.net 'bash -s' <<'REMOTE'
+          if [ "$DEPLOY_TARGET" = "production" ]; then
+            WP_SITE_URL="https://t-pulse-archery.com"
+            WP_BLOG_PUBLIC="1"
+          else
+            WP_SITE_URL="https://preprod.t-pulse-archery.com"
+            WP_BLOG_PUBLIC="0"
+          fi
+          ssh veugfyg@ssh.cluster131.hosting.ovh.net "WP_SITE_URL='$WP_SITE_URL' WP_BLOG_PUBLIC='$WP_BLOG_PUBLIC' WP_DEPLOY_TARGET='$DEPLOY_TARGET' bash -s" <<'REMOTE'
           set -euo pipefail
           cd "$HOME/www"
           if [ ! -f "$HOME/wp-cli.phar" ]; then
@@ -76,11 +94,11 @@ jobs:
           WP="php $HOME/wp-cli.phar --path=$HOME/www"
           $WP core is-installed
           stripe_settings_before="$($WP option get woocommerce_stripe_settings --format=json 2>/dev/null || true)"
-          $WP option update home 'https://preprod.t-pulse-archery.com'
-          $WP option update siteurl 'https://preprod.t-pulse-archery.com'
+          $WP option update home "$WP_SITE_URL"
+          $WP option update siteurl "$WP_SITE_URL"
           $WP option update blogname 'T-Pulse Archery'
           $WP option update blogdescription 'Innovation et progression pour les archers'
-          $WP option update blog_public 0
+          $WP option update blog_public "$WP_BLOG_PUBLIC"
           $WP plugin install woocommerce --activate
           $WP plugin install wordfence --activate
           $WP plugin install updraftplus --activate
@@ -145,15 +163,20 @@ jobs:
           fi
           REMOTE
 
-      - name: Vérifier la préproduction
+      - name: Vérifier le site déployé
         shell: bash
         run: |
           set -euo pipefail
+          if [ "$DEPLOY_TARGET" = "production" ]; then
+            BASE_URL="https://t-pulse-archery.com"
+          else
+            BASE_URL="https://preprod.t-pulse-archery.com"
+          fi
           for attempt in 1 2 3 4 5; do
-            code="$(curl -L -sS -o /tmp/tpulse.html -w '%{http_code}' https://preprod.t-pulse-archery.com/ || true)"
+            code="$(curl -L -sS -o /tmp/tpulse.html -w '%{http_code}' "$BASE_URL/" || true)"
             if [ "$code" = "200" ] && grep -q 'T-Pulse Archery' /tmp/tpulse.html && grep -q 'name="description"' /tmp/tpulse.html; then
               for path in boutique product/helitwist-original product/jeux-darchers commande conditions-generales-de-vente; do
-                test "$(curl -L -sS -o /dev/null -w '%{http_code}' "https://preprod.t-pulse-archery.com/$path/")" = "200"
+                test "$(curl -L -sS -o /dev/null -w '%{http_code}' "$BASE_URL/$path/")" = "200"
               done
               exit 0
             fi
