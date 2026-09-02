@@ -157,7 +157,7 @@ function tpulse_contact_recipient_email(): string {
 function tpulse_contact_email_shortcode(): string {
     $label = tpulse_text('contact [arobase] t-pulse-archery [point] com', 'contact [at] t-pulse-archery [dot] com');
 
-    return '<span class="tpulse-obfuscated-email" data-user="contact" data-domain="t-pulse-archery.com">' . esc_html($label) . '</span>';
+    return '<span class="tpulse-obfuscated-email">' . esc_html($label) . '</span>';
 }
 add_shortcode('tpulse_contact_email', 'tpulse_contact_email_shortcode');
 
