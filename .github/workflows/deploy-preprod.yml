@@ -75,6 +75,7 @@ jobs:
           fi
           WP="php $HOME/wp-cli.phar --path=$HOME/www"
           $WP core is-installed
+          stripe_settings_before="$($WP option get woocommerce_stripe_settings --format=json 2>/dev/null || true)"
           $WP option update home 'https://preprod.t-pulse-archery.com'
           $WP option update siteurl 'https://preprod.t-pulse-archery.com'
           $WP option update blogname 'T-Pulse Archery'
@@ -136,6 +137,12 @@ jobs:
           # END T-Pulse security headers
           HTACCESS
           $WP cache flush
+          stripe_settings_after="$($WP option get woocommerce_stripe_settings --format=json 2>/dev/null || true)"
+          if [ -n "$stripe_settings_before" ] && [ "$stripe_settings_before" != "$stripe_settings_after" ]; then
+            $WP option update woocommerce_stripe_settings "$stripe_settings_before" --format=json
+            $WP cache flush
+            echo 'Configuration Stripe restaurée après le déploiement.'
+          fi
           REMOTE
 
       - name: Vérifier la préproduction
