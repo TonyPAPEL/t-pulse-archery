@@ -13,8 +13,9 @@ get_header();
             </div>
         </div>
         <div class="brand-stage">
-            <img src="<?php echo tpulse_asset('logo-t-pulse.png'); ?>" alt="T-Pulse Archery">
-            <p><?php echo esc_html(tpulse_text('Imaginé et développé en France', 'Designed and developed in France')); ?></p>
+            <img class="brand-stage-logo" src="<?php echo tpulse_asset('t-pulse-banner.png'); ?>" alt="T-Pulse Archery">
+            <img class="brand-stage-product" src="<?php echo tpulse_asset('helitwist-2.png'); ?>" alt="<?php echo esc_attr(tpulse_text('HeliTwist Original monté sur stabilisateur', 'HeliTwist Original fitted to a stabilizer')); ?>">
+            <p><?php echo esc_html(tpulse_text('HeliTwist Original · livre · ressources', 'HeliTwist Original · book · resources')); ?></p>
         </div>
     </div>
 </section>
@@ -120,6 +121,20 @@ get_header();
     <div class="wrap cta">
         <div><span class="eyebrow">T-Pulse Archery</span><h2><?php echo esc_html(tpulse_text('Découvrez les produits disponibles.', 'Discover the available products.')); ?></h2><p class="muted"><?php echo esc_html(tpulse_text('HeliTwist Original, le livre Jeux d’archers et les prochaines innovations.', 'HeliTwist Original, the Archery Games book and upcoming innovations.')); ?></p></div>
         <a class="button" href="<?php echo esc_url(tpulse_shop_url()); ?>"><?php echo esc_html(tpulse_text('Visiter la boutique', 'Visit the shop')); ?></a>
+    </div>
+</section>
+
+<section class="section contact-section">
+    <div class="wrap contact-layout">
+        <div>
+            <span class="eyebrow">Contact</span>
+            <h2><?php echo esc_html(tpulse_text('Une question, une commande, un projet ?', 'A question, an order, a project?')); ?></h2>
+            <p class="lead"><?php echo esc_html(tpulse_text('Écrivez à T-Pulse Archery sans exposer votre adresse : le formulaire arrive directement dans la boîte de contact.', 'Write to T-Pulse Archery without exposing your address: the form goes straight to the contact inbox.')); ?></p>
+            <p class="muted"><?php echo do_shortcode(wp_kses_post(tpulse_text('Adresse de contact : [tpulse_contact_email]', 'Contact address: [tpulse_contact_email]'))); ?></p>
+        </div>
+        <div class="contact-panel">
+            <?php echo do_shortcode('[tpulse_contact_form]'); ?>
+        </div>
     </div>
 </section>
 <?php

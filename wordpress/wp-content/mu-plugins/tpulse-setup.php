@@ -38,7 +38,20 @@ function tpulse_create_page(string $title, string $slug, string $content = ''): 
     ]);
 }
 
+function tpulse_prepare_managed_content(string $content): string {
+    return str_replace(
+        [
+            '<a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>',
+            'contact@t-pulse-archery.com',
+        ],
+        '[tpulse_contact_email]',
+        $content
+    );
+}
+
 function tpulse_update_managed_page(string $title, string $english_title, string $slug, string $french_content, string $english_content, string $version): int {
+    $french_content = tpulse_prepare_managed_content($french_content);
+    $english_content = tpulse_prepare_managed_content($english_content);
     $page_id = tpulse_create_page($title, $slug, $french_content);
     if (!$page_id || get_post_meta($page_id, '_tpulse_content_version', true) === $version) {
         return $page_id;
@@ -73,7 +86,7 @@ function tpulse_initial_setup(): void {
     update_option('permalink_structure', '/%postname%/');
 
     $home = tpulse_create_page('Accueil', 'accueil');
-    tpulse_create_page('Contact', 'contact', '<p>Une question sur HeliTwist, une demande archerie ou un projet de partenariat ? Écrivez-nous à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a>.</p>');
+    tpulse_create_page('Contact', 'contact', '<p>Une question sur HeliTwist, une demande archerie ou un projet de partenariat ? Utilisez le formulaire de contact.</p>[tpulse_contact_form]');
     tpulse_create_page('Mentions légales', 'mentions-legales', '<p><strong>À compléter avant la mise en ligne :</strong> identité de l’entreprise, adresse, SIREN/SIRET, directeur de publication et hébergeur.</p>');
     tpulse_create_page('Conditions générales de vente', 'conditions-generales-de-vente', '<p><strong>À compléter et faire valider avant l’ouverture des ventes.</strong></p>');
     tpulse_create_page('Politique de confidentialité', 'politique-de-confidentialite', '<p><strong>À compléter avant la mise en ligne.</strong> Cette page devra expliquer les données collectées, leur finalité, leur durée de conservation et les droits des visiteurs.</p>');
@@ -91,10 +104,10 @@ function tpulse_sync_managed_pages(): void {
         return;
     }
 
-    $version = '2026-09-01-3';
+    $version = '2026-09-02-1';
 
-    $contact_fr = '<div class="legal-document"><p class="legal-intro">Une question sur HeliTwist, le livre <em>Jeux d’archers</em>, une commande ou un projet avec T-Pulse Archery ?</p><div class="legal-card"><h2>Nous contacter</h2><p><strong>E-mail :</strong> <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a><br><strong>Localisation :</strong> Thaon-les-Vosges (88150), France</p><p>Pour une commande, indiquez si possible son numéro afin que nous puissions vous répondre plus rapidement.</p></div></div>';
-    $contact_en = '<div class="legal-document"><p class="legal-intro">Have a question about HeliTwist, the <em>Archery Games</em> book, an order or a project with T-Pulse Archery?</p><div class="legal-card"><h2>Contact us</h2><p><strong>Email:</strong> <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a><br><strong>Location:</strong> Thaon-les-Vosges (88150), France</p><p>For an order enquiry, please include your order number whenever possible.</p></div></div>';
+    $contact_fr = '<div class="legal-document"><p class="legal-intro">Une question sur HeliTwist, le livre <em>Jeux d’archers</em>, une commande ou un projet avec T-Pulse Archery ?</p><div class="legal-card contact-page-card"><h2>Nous contacter</h2><p><strong>E-mail :</strong> [tpulse_contact_email]<br><strong>Localisation :</strong> Thaon-les-Vosges (88150), France</p><p>Utilisez le formulaire ci-dessous. Pour une commande, indiquez si possible son numéro afin que nous puissions vous répondre plus rapidement.</p>[tpulse_contact_form]</div></div>';
+    $contact_en = '<div class="legal-document"><p class="legal-intro">Have a question about HeliTwist, the <em>Archery Games</em> book, an order or a project with T-Pulse Archery?</p><div class="legal-card contact-page-card"><h2>Contact us</h2><p><strong>Email:</strong> [tpulse_contact_email]<br><strong>Location:</strong> Thaon-les-Vosges (88150), France</p><p>Use the form below. For an order enquiry, please include your order number whenever possible.</p>[tpulse_contact_form]</div></div>';
     tpulse_update_managed_page('Contact', 'Contact', 'contact', $contact_fr, $contact_en, $version);
 
     $reviews_fr = '<div class="legal-document"><p class="legal-intro">Vos retours aident les autres archers à choisir et T-Pulse Archery à faire évoluer ses produits.</p><div class="legal-card"><h2>Déposer un avis</h2><p>Choisissez le produit concerné. Tous les avis, positifs comme négatifs, sont relus avant publication afin de garder des retours utiles, honnêtes et liés au produit.</p><div class="wp-block-buttons"><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="/produit/helitwist-original/#reviews">Noter HeliTwist</a></div><div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/produit/jeux-darchers/#reviews">Noter le livre</a></div></div></div><div class="legal-card tpulse-product-review-card"><span class="eyebrow">Avis HeliTwist</span><h2>Vous utilisez déjà HeliTwist ?</h2><div class="tpulse-review-empty-state"><span class="tpulse-amazon-stars" aria-label="Aucun avis publié pour le moment">★★★★★</span><strong>Les premiers avis arrivent bientôt</strong></div><p>Votre retour sur le ressenti après la décoche, le filetage utilisé et votre configuration peut vraiment aider les prochains archers à choisir le bon modèle.</p><a class="button secondary" href="/produit/helitwist-original/#reviews">Laisser un avis HeliTwist</a></div><div class="legal-card tpulse-amazon-review-card"><span class="eyebrow">Avis du livre</span><h2>Le livre est aussi noté sur Amazon</h2><div class="tpulse-amazon-rating"><span class="external-rating-score">4,5/5</span><span class="tpulse-amazon-stars" aria-label="4,5 étoiles sur 5">★★★★★</span><span>21 évaluations Amazon</span></div><p>Une partie des premiers lecteurs a acheté <em>Jeux d’archers</em> sur Amazon. Pour consulter ces retours, la fiche Amazon reste accessible en complément des avis déposés ici.</p><a class="button secondary" href="https://www.amazon.fr/Jeux-darchers-Perfectionnez-darcherie-samuser/dp/B0DLWNRBPQ#customerReviews" target="_blank" rel="noopener external nofollow">Voir les avis Amazon</a></div></div>';
@@ -619,7 +632,7 @@ function tpulse_set_book_cover(): void {
 add_action('wp_loaded', 'tpulse_set_book_cover', 30);
 
 function tpulse_refresh_commercial_content(): void {
-    if (!class_exists('WooCommerce') || get_option('tpulse_commercial_content_version') === '2026-09-01-3') {
+    if (!class_exists('WooCommerce') || get_option('tpulse_commercial_content_version') === '2026-09-02-1') {
         return;
     }
 
@@ -634,7 +647,7 @@ function tpulse_refresh_commercial_content(): void {
             '<p>À la différence d’un amortisseur qui travaille principalement par flexion latérale, sa structure spiralée creuse se comprime dans l’axe de la stabilisation. Cette géométrie est conçue pour limiter le transfert des vibrations, atténuer le choc ressenti et laisser circuler l’air afin de réduire la prise au vent.</p>' .
             '<div class="product-benefits"><div><strong>Réaction plus douce</strong><span>Une sensation post-tir plus propre et mieux maîtrisée.</span></div><div><strong>Seulement 27 g</strong><span>Un amortissement pensé pour préserver l’équilibre de la stabilisation.</span></div><div><strong>Cinq configurations</strong><span>Choisissez 5/16, 1/4, M8 ou une version combinée.</span></div></div>' .
             '<h2>Bien choisir votre modèle</h2>' .
-            '<p>Vérifiez le filetage de votre stabilisateur ou de vos masses avant de commander. Chaque variante possède son propre stock. En cas de doute, écrivez à <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> avec une photo ou la référence de votre stabilisation.</p>' .
+            '<p>Vérifiez le filetage de votre stabilisateur ou de vos masses avant de commander. Chaque variante possède son propre stock. En cas de doute, utilisez le <a href="/contact/">formulaire de contact</a> avec une photo ou la référence de votre stabilisation.</p>' .
             '<ul class="product-facts"><li><strong>Usage :</strong> stabilisateurs d’arc</li><li><strong>Poids :</strong> 27 g</li><li><strong>Filetages :</strong> 5/16, 1/4, M8 ou versions combinées</li><li><strong>Propriété industrielle :</strong> demande de brevet déposée, FR2506128</li></ul>' .
             '<p class="product-note">Les sensations et le comportement peuvent varier selon l’arc, la configuration de stabilisation et les masses utilisées.</p>' .
             '</div>'
@@ -672,7 +685,7 @@ function tpulse_refresh_commercial_content(): void {
     }
 
     update_option('woocommerce_dimension_unit', 'cm');
-    update_option('tpulse_commercial_content_version', '2026-09-01-3');
+    update_option('tpulse_commercial_content_version', '2026-09-02-1');
 }
 add_action('wp_loaded', 'tpulse_refresh_commercial_content', 40);
 

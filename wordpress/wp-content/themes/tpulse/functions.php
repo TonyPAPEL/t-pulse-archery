@@ -65,7 +65,7 @@ function tpulse_english_product_content(string $sku): array {
         'HELITWIST-ORIGINAL' => [
             'name' => 'HeliTwist Original',
             'short' => 'A 27 g axial damper for bow stabilizers. Its hollow spiral structure is designed to reduce vibration and soften bow reaction. Patent application filed under reference FR2506128.',
-            'description' => '<div class="tpulse-product-story"><p class="product-intro"><strong>HeliTwist Original</strong> was born on the shooting line from a simple need: a softer reaction after release without adding unnecessary weight to the stabilizer.</p><h2>Axial damping</h2><p>Instead of working mainly through sideways flex, its hollow spiral structure compresses along the stabilizer axis. This geometry is designed to limit vibration transfer, soften the perceived shock and allow air to pass through to reduce wind drag.</p><div class="product-benefits"><div><strong>Softer reaction</strong><span>A cleaner, more controlled post-shot feel.</span></div><div><strong>Only 27 g</strong><span>Damping designed to preserve stabilizer balance.</span></div><div><strong>Five configurations</strong><span>Choose 5/16, 1/4, M8 or a combined version.</span></div></div><h2>Choose the correct model</h2><p>Check the thread on your stabilizer or weights before ordering. Each variation has its own stock. If you are unsure, email <a href="mailto:contact@t-pulse-archery.com">contact@t-pulse-archery.com</a> with a photo or the reference of your stabilizer.</p><ul class="product-facts"><li><strong>Use:</strong> bow stabilizers</li><li><strong>Weight:</strong> 27 g</li><li><strong>Threads:</strong> 5/16, 1/4, M8 or combined versions</li><li><strong>Industrial property:</strong> patent application filed, FR2506128</li></ul><p class="product-note">Feel and behaviour may vary with the bow, stabilizer setup and weights used.</p></div>',
+            'description' => '<div class="tpulse-product-story"><p class="product-intro"><strong>HeliTwist Original</strong> was born on the shooting line from a simple need: a softer reaction after release without adding unnecessary weight to the stabilizer.</p><h2>Axial damping</h2><p>Instead of working mainly through sideways flex, its hollow spiral structure compresses along the stabilizer axis. This geometry is designed to limit vibration transfer, soften the perceived shock and allow air to pass through to reduce wind drag.</p><div class="product-benefits"><div><strong>Softer reaction</strong><span>A cleaner, more controlled post-shot feel.</span></div><div><strong>Only 27 g</strong><span>Damping designed to preserve stabilizer balance.</span></div><div><strong>Five configurations</strong><span>Choose 5/16, 1/4, M8 or a combined version.</span></div></div><h2>Choose the correct model</h2><p>Check the thread on your stabilizer or weights before ordering. Each variation has its own stock. If you are unsure, use the <a href="/contact/?lang=en">contact form</a> with a photo or the reference of your stabilizer.</p><ul class="product-facts"><li><strong>Use:</strong> bow stabilizers</li><li><strong>Weight:</strong> 27 g</li><li><strong>Threads:</strong> 5/16, 1/4, M8 or combined versions</li><li><strong>Industrial property:</strong> patent application filed, FR2506128</li></ul><p class="product-note">Feel and behaviour may vary with the bow, stabilizer setup and weights used.</p></div>',
         ],
         'LIVRE-JEUX-DARCHERS' => [
             'name' => 'Archery Games',
@@ -146,9 +146,105 @@ function tpulse_translate_managed_entry_content(string $content): string {
     }
 
     $english = get_post_meta(get_the_ID(), '_tpulse_english_content', true);
-    return is_string($english) && $english !== '' ? $english : $content;
+    return is_string($english) && $english !== '' ? do_shortcode($english) : $content;
 }
 add_filter('the_content', 'tpulse_translate_managed_entry_content', 20);
+
+function tpulse_contact_recipient_email(): string {
+    return 'contact' . '@' . 't-pulse-archery.com';
+}
+
+function tpulse_contact_email_shortcode(): string {
+    $label = tpulse_text('contact [arobase] t-pulse-archery [point] com', 'contact [at] t-pulse-archery [dot] com');
+
+    return '<span class="tpulse-obfuscated-email" data-user="contact" data-domain="t-pulse-archery.com">' . esc_html($label) . '</span>';
+}
+add_shortcode('tpulse_contact_email', 'tpulse_contact_email_shortcode');
+
+function tpulse_contact_form_shortcode(): string {
+    $status = '';
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tpulse_contact_submit'])) {
+        $nonce = isset($_POST['tpulse_contact_nonce']) ? sanitize_text_field(wp_unslash($_POST['tpulse_contact_nonce'])) : '';
+        $trap = isset($_POST['tpulse_company']) ? trim((string) wp_unslash($_POST['tpulse_company'])) : '';
+        $name = isset($_POST['tpulse_name']) ? sanitize_text_field(wp_unslash($_POST['tpulse_name'])) : '';
+        $email = isset($_POST['tpulse_email']) ? sanitize_email(wp_unslash($_POST['tpulse_email'])) : '';
+        $subject = isset($_POST['tpulse_subject']) ? sanitize_text_field(wp_unslash($_POST['tpulse_subject'])) : '';
+        $order = isset($_POST['tpulse_order']) ? sanitize_text_field(wp_unslash($_POST['tpulse_order'])) : '';
+        $message = isset($_POST['tpulse_message']) ? sanitize_textarea_field(wp_unslash($_POST['tpulse_message'])) : '';
+
+        if (!wp_verify_nonce($nonce, 'tpulse_contact_form')) {
+            $status = '<div class="tpulse-form-message error">' . esc_html(tpulse_text('Le formulaire a expiré. Rechargez la page puis réessayez.', 'The form has expired. Please reload the page and try again.')) . '</div>';
+        } elseif ($trap !== '') {
+            $status = '<div class="tpulse-form-message success">' . esc_html(tpulse_text('Merci, votre message a été envoyé.', 'Thank you, your message has been sent.')) . '</div>';
+        } elseif ($name === '' || !is_email($email) || $subject === '' || $message === '') {
+            $status = '<div class="tpulse-form-message error">' . esc_html(tpulse_text('Merci de renseigner votre nom, une adresse e-mail valide, le sujet et le message.', 'Please enter your name, a valid email address, the subject and your message.')) . '</div>';
+        } else {
+            $body = [
+                'Nouveau message depuis t-pulse-archery.com',
+                '',
+                'Nom : ' . $name,
+                'E-mail : ' . $email,
+                $order !== '' ? 'Commande : ' . $order : '',
+                '',
+                'Sujet : ' . $subject,
+                '',
+                $message,
+                '',
+                'Page : ' . esc_url_raw((is_ssl() ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? '') . ($_SERVER['REQUEST_URI'] ?? '')),
+                'Date : ' . wp_date('d/m/Y H:i'),
+            ];
+            $body = implode("\n", array_filter($body, static fn($line) => $line !== ''));
+            $headers = ['Reply-To: ' . $name . ' <' . $email . '>'];
+            $sent = wp_mail(tpulse_contact_recipient_email(), '[T-Pulse] ' . $subject, $body, $headers);
+
+            $status = $sent
+                ? '<div class="tpulse-form-message success">' . esc_html(tpulse_text('Merci, votre message a été envoyé.', 'Thank you, your message has been sent.')) . '</div>'
+                : '<div class="tpulse-form-message error">' . esc_html(tpulse_text('Le message n’a pas pu être envoyé. Vous pouvez réessayer dans un instant.', 'The message could not be sent. Please try again in a moment.')) . '</div>';
+        }
+    }
+
+    ob_start();
+    ?>
+    <form class="tpulse-contact-form" method="post" action="#contact-form">
+        <div id="contact-form"></div>
+        <?php echo $status; ?>
+        <?php wp_nonce_field('tpulse_contact_form', 'tpulse_contact_nonce'); ?>
+        <p class="tpulse-hp-field" aria-hidden="true">
+            <label for="tpulse_company"><?php echo esc_html(tpulse_text('Entreprise', 'Company')); ?></label>
+            <input id="tpulse_company" name="tpulse_company" type="text" tabindex="-1" autocomplete="off">
+        </p>
+        <div class="tpulse-form-grid">
+            <p>
+                <label for="tpulse_name"><?php echo esc_html(tpulse_text('Nom ou pseudo', 'Name or display name')); ?> <span class="required">*</span></label>
+                <input id="tpulse_name" name="tpulse_name" type="text" autocomplete="name" required>
+            </p>
+            <p>
+                <label for="tpulse_email"><?php echo esc_html(tpulse_text('Adresse e-mail', 'Email address')); ?> <span class="required">*</span></label>
+                <input id="tpulse_email" name="tpulse_email" type="email" autocomplete="email" required>
+            </p>
+        </div>
+        <div class="tpulse-form-grid">
+            <p>
+                <label for="tpulse_subject"><?php echo esc_html(tpulse_text('Sujet', 'Subject')); ?> <span class="required">*</span></label>
+                <input id="tpulse_subject" name="tpulse_subject" type="text" required>
+            </p>
+            <p>
+                <label for="tpulse_order"><?php echo esc_html(tpulse_text('Numéro de commande si besoin', 'Order number if relevant')); ?></label>
+                <input id="tpulse_order" name="tpulse_order" type="text" inputmode="numeric">
+            </p>
+        </div>
+        <p>
+            <label for="tpulse_message"><?php echo esc_html(tpulse_text('Message', 'Message')); ?> <span class="required">*</span></label>
+            <textarea id="tpulse_message" name="tpulse_message" rows="7" required></textarea>
+        </p>
+        <p class="form-note"><?php echo esc_html(tpulse_text('Votre adresse e-mail sert uniquement à répondre à votre demande.', 'Your email address is only used to answer your request.')); ?></p>
+        <button class="button" type="submit" name="tpulse_contact_submit" value="1"><?php echo esc_html(tpulse_text('Envoyer le message', 'Send message')); ?></button>
+    </form>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('tpulse_contact_form', 'tpulse_contact_form_shortcode');
 
 function tpulse_translate_managed_entry_title(string $title, int $post_id): string {
     if (!tpulse_is_english() || is_admin() || $post_id <= 0) {

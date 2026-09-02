@@ -3,7 +3,7 @@ Theme Name: T-Pulse Archery
 Theme URI: https://t-pulse-archery.com/
 Author: T-Pulse Archery
 Description: Theme WooCommerce sur mesure pour T-Pulse Archery.
-Version: 1.1.2
+Version: 1.1.3
 Text Domain: tpulse
 Requires at least: 6.5
 Requires PHP: 8.1
@@ -113,7 +113,8 @@ h3 { font-size: 1.25rem; }
 .floating-note { position: absolute; right: 0; bottom: 1rem; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 18px; background: rgba(13, 26, 20, .88); backdrop-filter: blur(10px); font-size: .9rem; }
 .floating-note strong { display: block; color: var(--pulse); font-size: 1.2rem; }
 .brand-stage { min-height: 460px; display: grid; place-items: center; align-content: center; gap: 1rem; text-align: center; }
-.brand-stage img { width: min(85%, 430px); filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .55)); }
+.brand-stage-logo { width: min(86%, 420px); filter: drop-shadow(0 24px 40px rgba(0, 0, 0, .5)); }
+.brand-stage-product { width: min(78%, 380px); max-height: 270px; object-fit: contain; filter: drop-shadow(0 30px 45px rgba(0, 0, 0, .58)); }
 .brand-stage p { color: var(--pulse); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .feature-product { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
 .feature-product-media { min-height: 440px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(circle, rgba(137, 240, 113, .15), transparent 55%); }
@@ -354,6 +355,31 @@ h3 { font-size: 1.25rem; }
 .post-card .text-link { margin-top: auto; }
 .post-list { display: grid; gap: 1.25rem; }
 .single-post .entry-meta { margin-bottom: 1.5rem; color: var(--pulse); font-size: .9rem; font-weight: 800; }
+.contact-section { background: linear-gradient(180deg, rgba(255,255,255,.015), transparent); }
+.contact-layout { display: grid; grid-template-columns: .85fr 1.15fr; gap: 2.5rem; align-items: start; }
+.contact-panel { padding: 1.35rem; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.025); box-shadow: 0 16px 44px rgba(0,0,0,.18); }
+.tpulse-contact-form { display: grid; gap: 1rem; }
+.tpulse-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
+.tpulse-contact-form p { margin: 0; }
+.tpulse-contact-form label { display: block; margin-bottom: .35rem; color: var(--paper); font-size: .9rem; font-weight: 850; }
+.tpulse-contact-form input,
+.tpulse-contact-form textarea {
+  width: 100%;
+  padding: .85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  color: var(--paper);
+  outline: none;
+}
+.tpulse-contact-form textarea { min-height: 150px; resize: vertical; }
+.tpulse-contact-form input:focus,
+.tpulse-contact-form textarea:focus { border-color: rgba(137, 240, 113, .55); box-shadow: 0 0 0 3px rgba(137, 240, 113, .1); }
+.tpulse-hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.tpulse-form-message { padding: .85rem 1rem; border-radius: 12px; font-weight: 750; }
+.tpulse-form-message.success { border: 1px solid rgba(137, 240, 113, .45); background: rgba(137, 240, 113, .12); color: var(--paper); }
+.tpulse-form-message.error { border: 1px solid rgba(255, 133, 133, .45); background: rgba(255, 133, 133, .1); color: #ffd9d9; }
+.tpulse-obfuscated-email { color: var(--pulse); font-weight: 850; overflow-wrap: anywhere; }
 
 .site-footer { padding: 3rem 0; border-top: 1px solid var(--line); color: var(--muted); }
 .footer-grid { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 2rem; }
@@ -366,7 +392,7 @@ h3 { font-size: 1.25rem; }
   .main-nav { display: none; position: absolute; z-index: 20; top: 78px; left: 1rem; right: 1rem; padding: 1rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); flex-direction: column; align-items: stretch; box-shadow: var(--shadow); }
   .main-nav.open { display: flex; }
   .hero { padding-top: 2.5rem; }
-  .hero-grid, .story-grid, .gallery, .footer-grid, .feature-product, .woocommerce div.product { grid-template-columns: 1fr; }
+  .hero-grid, .story-grid, .gallery, .footer-grid, .feature-product, .contact-layout, .woocommerce div.product { grid-template-columns: 1fr; }
   .grid-3, .brand-offers, .posts-grid, .woocommerce .products ul, .woocommerce ul.products { grid-template-columns: 1fr; }
   .resource-grid { grid-template-columns: 1fr; }
   .product-stage { min-height: 320px; }
@@ -388,6 +414,10 @@ h3 { font-size: 1.25rem; }
   .woocommerce-cart table.cart .product-thumbnail { display: flex; width: 100%; align-items: center; justify-content: center; text-align: center !important; }
   .woocommerce-cart table.cart .product-thumbnail::before { display: none; content: none; }
   .woocommerce-cart table.cart img { display: inline-block; width: 88px; min-width: 88px; }
+  .brand-stage { min-height: 310px; gap: .75rem; }
+  .brand-stage-logo { width: min(92%, 340px); }
+  .brand-stage-product { width: min(86%, 320px); max-height: 210px; }
+  .contact-panel { padding: 1rem; }
 }
 
 @media (max-width: 480px) {
@@ -395,14 +425,19 @@ h3 { font-size: 1.25rem; }
   .brand span { font-size: .9rem; }
   .brand img { width: 48px; height: 48px; }
   .main-nav { top: 66px; left: .625rem; right: .625rem; }
-  .hero { padding: 2rem 0 3.5rem; }
-  .hero h1 { font-size: clamp(2.35rem, 13vw, 3.5rem); }
+  .hero { padding: 1.6rem 0 3rem; }
+  .hero::after { display: none; }
+  .hero h1 { margin: .9rem 0; font-size: clamp(2.35rem, 12vw, 3.25rem); letter-spacing: -.045em; }
+  .brand-hero .lead { font-size: 1rem; }
   .section { padding: 3.5rem 0; }
   .actions { align-items: stretch; flex-direction: column; }
   .woocommerce form.cart { align-items: flex-start; }
   .button, button, input[type="submit"], .woocommerce a.button, .woocommerce button.button, .woocommerce input.button { width: 100%; text-align: center; }
   .offer-card, .card, .cta { padding: 1.35rem; }
   .offer-visual { height: 220px; }
+  .brand-stage { min-height: 260px; }
+  .brand-stage-product { max-height: 180px; }
+  .tpulse-form-grid { grid-template-columns: 1fr; }
   .gallery img { min-height: 220px; }
   .helitwist-technology .gallery img, .helitwist-technology .gallery .tall { min-height: 0; max-height: 300px; }
   .woocommerce div.product { gap: 1.5rem; }
