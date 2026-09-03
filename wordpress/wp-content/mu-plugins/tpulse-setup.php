@@ -448,6 +448,10 @@ function tpulse_setup_woocommerce_product(): void {
     update_option('woocommerce_manage_stock', 'yes');
     update_option('woocommerce_enable_guest_checkout', 'yes');
     update_option('woocommerce_enable_checkout_login_reminder', 'yes');
+    update_option('woocommerce_enable_signup_and_login_from_checkout', 'yes');
+    update_option('woocommerce_enable_myaccount_registration', 'no');
+    update_option('woocommerce_registration_generate_username', 'yes');
+    update_option('woocommerce_registration_generate_password', 'yes');
     update_option('woocommerce_coming_soon', 'no');
     update_option('woocommerce_store_pages_only', 'no');
     update_option('tpulse_product_created', $product->get_id());

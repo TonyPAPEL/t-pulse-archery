@@ -19,6 +19,9 @@ if (!defined('ABSPATH')) {
             </div>
             <div class="footer-links">
                 <p class="footer-title"><?php echo esc_html(tpulse_text('Informations', 'Information')); ?></p>
+                <?php if (function_exists('wc_get_page_permalink')) : ?>
+                    <a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>"><?php echo esc_html(tpulse_text('Mon compte', 'My account')); ?></a>
+                <?php endif; ?>
                 <a href="<?php echo esc_url(home_url('/livraison-retours/')); ?>"><?php echo esc_html(tpulse_text('Livraison et retours', 'Delivery and returns')); ?></a>
                 <a href="<?php echo esc_url(home_url('/mentions-legales/')); ?>"><?php echo esc_html(tpulse_text('Mentions légales', 'Legal notice')); ?></a>
                 <a href="<?php echo esc_url(home_url('/conditions-generales-de-vente/')); ?>"><?php echo esc_html(tpulse_text('Conditions générales de vente', 'Terms and conditions')); ?></a>
