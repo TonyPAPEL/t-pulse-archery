@@ -832,6 +832,49 @@ function tpulse_normalize_purchase_date(string $value): string {
     return sprintf('%04d-%02d', $year, $month);
 }
 
+function tpulse_normalize_purchase_date_from_parts(int $month, int $year): string {
+    if ($year < 2000 || $month < 1 || $month > 12) {
+        return '';
+    }
+
+    return sprintf('%04d-%02d', $year, $month);
+}
+
+function tpulse_purchase_month_options(): string {
+    $month_names = [
+        1 => tpulse_text('Janvier', 'January'),
+        2 => tpulse_text('Février', 'February'),
+        3 => tpulse_text('Mars', 'March'),
+        4 => tpulse_text('Avril', 'April'),
+        5 => tpulse_text('Mai', 'May'),
+        6 => tpulse_text('Juin', 'June'),
+        7 => tpulse_text('Juillet', 'July'),
+        8 => tpulse_text('Août', 'August'),
+        9 => tpulse_text('Septembre', 'September'),
+        10 => tpulse_text('Octobre', 'October'),
+        11 => tpulse_text('Novembre', 'November'),
+        12 => tpulse_text('Décembre', 'December'),
+    ];
+
+    $options = '<option value="">' . esc_html(tpulse_text('Mois', 'Month')) . '</option>';
+    foreach ($month_names as $month => $label) {
+        $options .= sprintf('<option value="%s">%s</option>', esc_attr((string) $month), esc_html($label));
+    }
+
+    return $options;
+}
+
+function tpulse_purchase_year_options(): string {
+    $current_year = (int) current_time('Y');
+    $options = '<option value="">' . esc_html(tpulse_text('Année', 'Year')) . '</option>';
+
+    for ($year = $current_year; $year >= 2020; $year--) {
+        $options .= sprintf('<option value="%s">%s</option>', esc_attr((string) $year), esc_html((string) $year));
+    }
+
+    return $options;
+}
+
 function tpulse_product_review_form_args(array $args): array {
     if (!is_product()) {
         return $args;
@@ -854,7 +897,7 @@ function tpulse_product_review_form_args(array $args): array {
 
     $extra_fields = '<div class="tpulse-review-fields">'
         . '<p class="comment-form-tpulse-model"><label for="tpulse_review_model">' . esc_html(tpulse_text('Modèle acheté', 'Purchased model')) . ' <span class="required">*</span></label><select id="tpulse_review_model" name="tpulse_review_model" required>' . $model_options . '</select></p>'
-        . '<p class="comment-form-tpulse-date"><label for="tpulse_purchase_date">' . esc_html(tpulse_text('Date d’achat approximative', 'Approximate purchase date')) . ' <span class="required">*</span></label><input id="tpulse_purchase_date" name="tpulse_purchase_date" type="text" inputmode="numeric" autocomplete="off" placeholder="' . esc_attr(tpulse_text('MM/AAAA', 'MM/YYYY')) . '" required><small>' . esc_html(tpulse_text('Exemple : 07/2026', 'Example: 07/2026')) . '</small></p>'
+        . '<div class="comment-form-tpulse-date"><label>' . esc_html(tpulse_text('Date d’achat approximative', 'Approximate purchase date')) . ' <span class="required">*</span></label><div class="tpulse-review-date-selects"><select id="tpulse_purchase_month" name="tpulse_purchase_month" required>' . tpulse_purchase_month_options() . '</select><select id="tpulse_purchase_year" name="tpulse_purchase_year" required>' . tpulse_purchase_year_options() . '</select></div><small>' . esc_html(tpulse_text('Choisissez le mois et l’année, même approximatifs.', 'Select the month and year, even approximately.')) . '</small></div>'
         . '</div>';
 
     $commenter = wp_get_current_commenter();
@@ -894,15 +937,15 @@ function tpulse_validate_product_review(array $commentdata): array {
 
     $model = sanitize_text_field(wp_unslash($_POST['tpulse_review_model'] ?? ''));
     $purchase_date_input = sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''));
-    $purchase_date = tpulse_normalize_purchase_date($purchase_date_input);
+    $purchase_month = absint($_POST['tpulse_purchase_month'] ?? 0);
+    $purchase_year = absint($_POST['tpulse_purchase_year'] ?? 0);
+    $purchase_date = $purchase_date_input !== ''
+        ? tpulse_normalize_purchase_date($purchase_date_input)
+        : tpulse_normalize_purchase_date_from_parts($purchase_month, $purchase_year);
     $rating = absint($_POST['rating'] ?? 0);
 
-    if ((!is_user_logged_in() && (trim((string) ($commentdata['comment_author'] ?? '')) === '' || !is_email($commentdata['comment_author_email'] ?? ''))) || $model === '' || $purchase_date_input === '' || $rating < 1 || $rating > 5) {
+    if ((!is_user_logged_in() && (trim((string) ($commentdata['comment_author'] ?? '')) === '' || !is_email($commentdata['comment_author_email'] ?? ''))) || $model === '' || $purchase_date === '' || $rating < 1 || $rating > 5) {
         wp_die(tpulse_text('Merci de renseigner votre nom ou pseudo, une adresse e-mail valide, le modèle, la date d’achat et la note.', 'Please enter your name or display name, a valid email address, the model, purchase date and rating.'), tpulse_text('Avis incomplet', 'Incomplete review'), ['response' => 400]);
-    }
-
-    if ($purchase_date === '') {
-        wp_die(tpulse_text('Merci d’indiquer la date au format MM/AAAA, par exemple 07/2026.', 'Please enter the date in MM/YYYY format, for example 07/2026.'), tpulse_text('Date invalide', 'Invalid date'), ['response' => 400]);
     }
 
     if (strtotime($purchase_date . '-01') > current_time('timestamp')) {
@@ -920,7 +963,11 @@ function tpulse_save_product_review_meta(int $comment_id): void {
     }
 
     update_comment_meta($comment_id, 'tpulse_review_model', sanitize_text_field(wp_unslash($_POST['tpulse_review_model'] ?? '')));
-    update_comment_meta($comment_id, 'tpulse_purchase_date', tpulse_normalize_purchase_date(sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''))));
+    $purchase_date_input = sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''));
+    $purchase_date = $purchase_date_input !== ''
+        ? tpulse_normalize_purchase_date($purchase_date_input)
+        : tpulse_normalize_purchase_date_from_parts(absint($_POST['tpulse_purchase_month'] ?? 0), absint($_POST['tpulse_purchase_year'] ?? 0));
+    update_comment_meta($comment_id, 'tpulse_purchase_date', $purchase_date);
 }
 add_action('comment_post', 'tpulse_save_product_review_meta');
 

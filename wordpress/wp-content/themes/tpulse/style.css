@@ -3,7 +3,7 @@ Theme Name: T-Pulse Archery
 Theme URI: https://t-pulse-archery.com/
 Author: T-Pulse Archery
 Description: Theme WooCommerce sur mesure pour T-Pulse Archery.
-Version: 1.1.4
+Version: 1.1.5
 Text Domain: tpulse
 Requires at least: 6.5
 Requires PHP: 8.1
@@ -312,6 +312,7 @@ h3 { font-size: 1.25rem; }
 .woocommerce #review_form .comment-form-email { margin-right: 0; }
 .woocommerce #review_form small { display: block; margin-top: .35rem; color: var(--muted); }
 .tpulse-review-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; margin: 1rem 0; }
+.tpulse-review-date-selects { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(96px, .75fr); gap: .6rem; }
 .tpulse-review-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin: .25rem 0 1rem; color: var(--muted); font-size: .85rem; }
 .tpulse-review-meta span { padding: .3rem .55rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); }
 .tpulse-live-reviews { margin: 1rem 0 1.25rem; }
@@ -422,6 +423,7 @@ h3 { font-size: 1.25rem; }
   .woocommerce table.shop_table_responsive tr td,
   .woocommerce-page table.shop_table_responsive tr td { padding: .75rem; }
   .tpulse-review-fields { grid-template-columns: 1fr; }
+  .tpulse-review-date-selects { grid-template-columns: 1fr; }
   .woocommerce #review_form .comment-form-author,
   .woocommerce #review_form .comment-form-email { display: block; width: 100%; margin-right: 0; }
   .tpulse-live-review header { grid-template-columns: auto 1fr; }
