@@ -812,6 +812,26 @@ function tpulse_review_model_options(): array {
     ];
 }
 
+function tpulse_normalize_purchase_date(string $value): string {
+    $value = trim($value);
+
+    if (preg_match('/^(\d{4})[-\/.](\d{1,2})$/', $value, $matches)) {
+        $year = (int) $matches[1];
+        $month = (int) $matches[2];
+    } elseif (preg_match('/^(\d{1,2})[-\/.](\d{4})$/', $value, $matches)) {
+        $month = (int) $matches[1];
+        $year = (int) $matches[2];
+    } else {
+        return '';
+    }
+
+    if ($year < 2000 || $month < 1 || $month > 12) {
+        return '';
+    }
+
+    return sprintf('%04d-%02d', $year, $month);
+}
+
 function tpulse_product_review_form_args(array $args): array {
     if (!is_product()) {
         return $args;
@@ -834,7 +854,7 @@ function tpulse_product_review_form_args(array $args): array {
 
     $extra_fields = '<div class="tpulse-review-fields">'
         . '<p class="comment-form-tpulse-model"><label for="tpulse_review_model">' . esc_html(tpulse_text('Modèle acheté', 'Purchased model')) . ' <span class="required">*</span></label><select id="tpulse_review_model" name="tpulse_review_model" required>' . $model_options . '</select></p>'
-        . '<p class="comment-form-tpulse-date"><label for="tpulse_purchase_date">' . esc_html(tpulse_text('Date d’achat approximative', 'Approximate purchase date')) . ' <span class="required">*</span></label><input id="tpulse_purchase_date" name="tpulse_purchase_date" type="month" required></p>'
+        . '<p class="comment-form-tpulse-date"><label for="tpulse_purchase_date">' . esc_html(tpulse_text('Date d’achat approximative', 'Approximate purchase date')) . ' <span class="required">*</span></label><input id="tpulse_purchase_date" name="tpulse_purchase_date" type="text" inputmode="numeric" autocomplete="off" placeholder="' . esc_attr(tpulse_text('MM/AAAA', 'MM/YYYY')) . '" required><small>' . esc_html(tpulse_text('Exemple : 07/2026', 'Example: 07/2026')) . '</small></p>'
         . '</div>';
 
     $commenter = wp_get_current_commenter();
@@ -873,15 +893,16 @@ function tpulse_validate_product_review(array $commentdata): array {
     }
 
     $model = sanitize_text_field(wp_unslash($_POST['tpulse_review_model'] ?? ''));
-    $purchase_date = sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''));
+    $purchase_date_input = sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''));
+    $purchase_date = tpulse_normalize_purchase_date($purchase_date_input);
     $rating = absint($_POST['rating'] ?? 0);
 
-    if ((!is_user_logged_in() && (trim((string) ($commentdata['comment_author'] ?? '')) === '' || !is_email($commentdata['comment_author_email'] ?? ''))) || $model === '' || $purchase_date === '' || $rating < 1 || $rating > 5) {
+    if ((!is_user_logged_in() && (trim((string) ($commentdata['comment_author'] ?? '')) === '' || !is_email($commentdata['comment_author_email'] ?? ''))) || $model === '' || $purchase_date_input === '' || $rating < 1 || $rating > 5) {
         wp_die(tpulse_text('Merci de renseigner votre nom ou pseudo, une adresse e-mail valide, le modèle, la date d’achat et la note.', 'Please enter your name or display name, a valid email address, the model, purchase date and rating.'), tpulse_text('Avis incomplet', 'Incomplete review'), ['response' => 400]);
     }
 
-    if (!preg_match('/^\d{4}-\d{2}$/', $purchase_date)) {
-        wp_die(tpulse_text('Merci d’indiquer une date d’achat au format mois/année.', 'Please enter the purchase date in month/year format.'), tpulse_text('Date invalide', 'Invalid date'), ['response' => 400]);
+    if ($purchase_date === '') {
+        wp_die(tpulse_text('Merci d’indiquer la date au format MM/AAAA, par exemple 07/2026.', 'Please enter the date in MM/YYYY format, for example 07/2026.'), tpulse_text('Date invalide', 'Invalid date'), ['response' => 400]);
     }
 
     if (strtotime($purchase_date . '-01') > current_time('timestamp')) {
@@ -899,7 +920,7 @@ function tpulse_save_product_review_meta(int $comment_id): void {
     }
 
     update_comment_meta($comment_id, 'tpulse_review_model', sanitize_text_field(wp_unslash($_POST['tpulse_review_model'] ?? '')));
-    update_comment_meta($comment_id, 'tpulse_purchase_date', sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? '')));
+    update_comment_meta($comment_id, 'tpulse_purchase_date', tpulse_normalize_purchase_date(sanitize_text_field(wp_unslash($_POST['tpulse_purchase_date'] ?? ''))));
 }
 add_action('comment_post', 'tpulse_save_product_review_meta');
 
@@ -926,6 +947,96 @@ function tpulse_show_product_review_meta(WP_Comment $comment): void {
     echo '</p>';
 }
 add_action('woocommerce_review_before_comment_text', 'tpulse_show_product_review_meta');
+
+function tpulse_review_author_initials(string $author): string {
+    $words = preg_split('/\s+/u', trim($author)) ?: [];
+    $initials = '';
+
+    foreach (array_slice($words, 0, 2) as $word) {
+        $initials .= function_exists('mb_substr') ? mb_substr($word, 0, 1) : substr($word, 0, 1);
+    }
+
+    return function_exists('mb_strtoupper') ? mb_strtoupper($initials) : strtoupper($initials);
+}
+
+function tpulse_product_reviews_shortcode(array $attributes): string {
+    if (!function_exists('wc_get_product')) {
+        return '';
+    }
+
+    $attributes = shortcode_atts(['product' => ''], $attributes, 'tpulse_product_reviews');
+    $product_post = get_page_by_path(sanitize_title($attributes['product']), OBJECT, 'product');
+    if (!$product_post instanceof WP_Post) {
+        return '';
+    }
+
+    $reviews = get_comments([
+        'post_id' => $product_post->ID,
+        'status' => 'approve',
+        'type' => 'review',
+        'orderby' => 'comment_date_gmt',
+        'order' => 'DESC',
+        'number' => 50,
+    ]);
+
+    if (!$reviews) {
+        return '<div class="tpulse-review-empty-state"><span class="tpulse-review-stars is-empty" aria-hidden="true">☆☆☆☆☆</span><strong>' . esc_html(tpulse_text('Aucun avis publié pour le moment', 'No published reviews yet')) . '</strong></div>';
+    }
+
+    $rating_total = 0;
+    $rated_reviews = 0;
+    foreach ($reviews as $review) {
+        $rating = (int) get_comment_meta($review->comment_ID, 'rating', true);
+        if ($rating > 0) {
+            $rating_total += $rating;
+            $rated_reviews++;
+        }
+    }
+    $average = $rated_reviews ? $rating_total / $rated_reviews : 0;
+    $count = count($reviews);
+    $count_label = sprintf(
+        tpulse_is_english() ? _n('%d published review', '%d published reviews', $count, 'tpulse') : _n('%d avis publié', '%d avis publiés', $count, 'tpulse'),
+        $count
+    );
+
+    ob_start();
+    ?>
+    <div class="tpulse-live-reviews">
+        <div class="tpulse-live-reviews-summary">
+            <?php if ($rated_reviews) : ?>
+                <strong><?php echo esc_html(number_format_i18n($average, 1)); ?>/5</strong>
+                <span class="tpulse-review-stars" aria-label="<?php echo esc_attr(sprintf(tpulse_text('Note moyenne : %s sur 5', 'Average rating: %s out of 5'), number_format_i18n($average, 1))); ?>">★★★★★</span>
+            <?php endif; ?>
+            <span><?php echo esc_html($count_label); ?></span>
+        </div>
+        <div class="tpulse-live-reviews-list">
+            <?php foreach ($reviews as $review) :
+                $rating = max(0, min(5, (int) get_comment_meta($review->comment_ID, 'rating', true)));
+                $model = (string) get_comment_meta($review->comment_ID, 'tpulse_review_model', true);
+                $purchase_date = (string) get_comment_meta($review->comment_ID, 'tpulse_purchase_date', true);
+                $author = get_comment_author($review);
+                ?>
+                <article class="tpulse-live-review">
+                    <header>
+                        <span class="tpulse-review-author-mark" aria-hidden="true"><?php echo esc_html(tpulse_review_author_initials($author)); ?></span>
+                        <div><strong><?php echo esc_html($author); ?></strong><time datetime="<?php echo esc_attr(get_comment_date('c', $review)); ?>"><?php echo esc_html(get_comment_date('d/m/Y', $review)); ?></time></div>
+                        <?php if ($rating) : ?><span class="tpulse-review-stars" aria-label="<?php echo esc_attr(sprintf(tpulse_text('%d étoiles sur 5', '%d stars out of 5'), $rating)); ?>"><?php echo esc_html(str_repeat('★', $rating) . str_repeat('☆', 5 - $rating)); ?></span><?php endif; ?>
+                    </header>
+                    <?php if ($model || $purchase_date) : ?>
+                        <p class="tpulse-review-meta">
+                            <?php if ($model) : ?><span><?php echo esc_html(tpulse_text('Modèle :', 'Model:') . ' ' . $model); ?></span><?php endif; ?>
+                            <?php if ($purchase_date && preg_match('/^\d{4}-\d{2}$/', $purchase_date)) : ?><span><?php echo esc_html(tpulse_text('Achat :', 'Purchased:') . ' ' . date_i18n('m/Y', strtotime($purchase_date . '-01'))); ?></span><?php endif; ?>
+                        </p>
+                    <?php endif; ?>
+                    <div class="tpulse-live-review-content"><?php echo wp_kses_post(wpautop($review->comment_content)); ?></div>
+                </article>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <?php
+    return (string) ob_get_clean();
+}
+add_shortcode('tpulse_product_reviews', 'tpulse_product_reviews_shortcode');
 
 function tpulse_review_submission_redirect(string $location, WP_Comment $comment): string {
     if ($comment->comment_type !== 'review') {

@@ -3,7 +3,7 @@ Theme Name: T-Pulse Archery
 Theme URI: https://t-pulse-archery.com/
 Author: T-Pulse Archery
 Description: Theme WooCommerce sur mesure pour T-Pulse Archery.
-Version: 1.1.3
+Version: 1.1.4
 Text Domain: tpulse
 Requires at least: 6.5
 Requires PHP: 8.1
@@ -280,7 +280,8 @@ h3 { font-size: 1.25rem; }
 .woocommerce #reviews h2,
 .woocommerce #review_form #reply-title { color: var(--paper); font-size: 1.35rem; line-height: 1.25; }
 .woocommerce #reviews .commentlist { padding-left: 0; }
-.woocommerce #reviews #comments ol.commentlist li .comment-text { border-color: var(--line); border-radius: 16px; background: rgba(0,0,0,.16); }
+.woocommerce #reviews #comments ol.commentlist li img.avatar { display: none; }
+.woocommerce #reviews #comments ol.commentlist li .comment-text { margin-left: 0; border-color: var(--line); border-radius: 16px; background: rgba(0,0,0,.16); }
 .woocommerce #reviews .star-rating,
 .woocommerce #reviews .star-rating::before,
 .woocommerce #reviews .star-rating span::before,
@@ -303,7 +304,6 @@ h3 { font-size: 1.25rem; }
 .woocommerce #review_form textarea,
 .woocommerce #review_form input[type="text"],
 .woocommerce #review_form input[type="email"],
-.woocommerce #review_form input[type="month"],
 .woocommerce #review_form select { width: 100%; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--paper); }
 .woocommerce #review_form label { display: block; margin-bottom: .35rem; color: var(--paper); font-size: .9rem; font-weight: 800; }
 .woocommerce #review_form .comment-notes { color: var(--muted); }
@@ -314,6 +314,22 @@ h3 { font-size: 1.25rem; }
 .tpulse-review-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; margin: 1rem 0; }
 .tpulse-review-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin: .25rem 0 1rem; color: var(--muted); font-size: .85rem; }
 .tpulse-review-meta span { padding: .3rem .55rem; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); }
+.tpulse-live-reviews { margin: 1rem 0 1.25rem; }
+.tpulse-live-reviews-summary { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .75rem; margin-bottom: 1rem; }
+.tpulse-live-reviews-summary > strong { color: var(--pulse); font-size: 1.7rem; line-height: 1; }
+.tpulse-live-reviews-summary > span:last-child { color: var(--muted); font-size: .9rem; }
+.tpulse-review-stars { color: var(--pulse); font-size: 1.05rem; letter-spacing: .08em; white-space: nowrap; }
+.tpulse-review-stars.is-empty { color: var(--muted); }
+.tpulse-live-reviews-list { display: grid; gap: .75rem; }
+.tpulse-live-review { padding: 1rem; border: 1px solid var(--line); border-radius: 15px; background: rgba(0,0,0,.16); }
+.tpulse-live-review header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: .75rem; margin-bottom: .8rem; }
+.tpulse-review-author-mark { display: grid; width: 2.4rem; height: 2.4rem; place-items: center; border: 1px solid rgba(137,240,113,.4); border-radius: 50%; background: rgba(137,240,113,.12); color: var(--pulse); font-size: .78rem; font-weight: 900; }
+.tpulse-live-review header strong,
+.tpulse-live-review header time { display: block; }
+.tpulse-live-review header time { margin-top: .12rem; color: var(--muted); font-size: .78rem; }
+.tpulse-live-review .tpulse-review-meta { margin: 0 0 .7rem 3.15rem; }
+.tpulse-live-review-content { margin-left: 3.15rem; color: var(--paper); }
+.tpulse-live-review-content p { margin: 0; max-width: none; }
 .wp-block-buttons { display: flex; flex-wrap: wrap; gap: .85rem; margin: 1.5rem 0; }
 .wp-block-button__link { display: inline-flex; align-items: center; justify-content: center; padding: .9rem 1.15rem; border-radius: 999px; background: var(--pulse); color: #071009; font-weight: 850; text-decoration: none !important; }
 .is-style-outline .wp-block-button__link { border: 1px solid var(--line); background: transparent; color: var(--paper); }
@@ -408,6 +424,10 @@ h3 { font-size: 1.25rem; }
   .tpulse-review-fields { grid-template-columns: 1fr; }
   .woocommerce #review_form .comment-form-author,
   .woocommerce #review_form .comment-form-email { display: block; width: 100%; margin-right: 0; }
+  .tpulse-live-review header { grid-template-columns: auto 1fr; }
+  .tpulse-live-review header .tpulse-review-stars { grid-column: 2; }
+  .tpulse-live-review .tpulse-review-meta,
+  .tpulse-live-review-content { margin-left: 0; }
   .product-benefits, .product-facts { grid-template-columns: 1fr; }
   .woocommerce .cart-collaterals .cart_totals,
   .woocommerce-page .cart-collaterals .cart_totals { width: 100%; }

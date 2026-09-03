@@ -9,6 +9,8 @@ if (!defined('ABSPATH')) {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php wp_head(); ?>
+    <link rel="icon" href="<?php echo tpulse_asset('favicon.png'); ?>" sizes="48x48" type="image/png">
+    <link rel="shortcut icon" href="<?php echo tpulse_asset('favicon.png'); ?>" type="image/png">
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
