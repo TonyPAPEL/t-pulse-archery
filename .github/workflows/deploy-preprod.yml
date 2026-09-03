@@ -19,7 +19,7 @@ on:
           - production
 
 concurrency:
-  group: tpulse-wordpress-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'preproduction' }}
+  group: tpulse-wordpress-${{ github.event_name == 'workflow_dispatch' && inputs.target || 'production' }}
   cancel-in-progress: true
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: preproduction
     env:
-      DEPLOY_TARGET: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'preproduction' }}
+      DEPLOY_TARGET: ${{ github.event_name == 'workflow_dispatch' && inputs.target || 'production' }}
     steps:
       - name: Récupérer les sources
         uses: actions/checkout@v4
